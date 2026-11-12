@@ -115,3 +115,4 @@ When passing `--ai "<prompt>"`, follow this structure:
 - **Datacenter / Cloud:** `"massive glowing futuristic server rack array with neon teal fiber optic cables, cinematic perspective"`
 - **Coding / Bugs:** `"futuristic hologram terminal showing glowing code matrices with red warning error pulses"`
 - **AI Models / Neural Networks:** `"glowing 3D synaptic neural network brain connected to microchip circuits, volumetric lights"`
+
