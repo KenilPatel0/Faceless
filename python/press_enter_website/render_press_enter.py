@@ -125,10 +125,11 @@ def render_short():
     for f in range(total_frames):
         t = f / FPS
 
-        # Determine active scene
-        current_scene = scenes[-1]
-        for sc in scenes:
-            if sc["start"] <= t < sc["end"]:
+        # Determine active scene: scene i remains active until scene i+1 starts (no gap/flicker)
+        current_scene = scenes[0]
+        for i, sc in enumerate(scenes):
+            next_start = scenes[i + 1]["start"] if i + 1 < len(scenes) else total_dur + 1.0
+            if sc["start"] <= t < next_start:
                 current_scene = sc
                 break
 
@@ -502,3 +503,4 @@ def render_short():
 
 if __name__ == "__main__":
     render_short()
+

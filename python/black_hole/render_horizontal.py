@@ -140,10 +140,11 @@ def render_horizontal():
     for f in range(total_frames):
         t = f / FPS
         
-        # Determine active beat
-        current_beat = beats[-1]
-        for b in beats:
-            if b["start"] <= t < b["end"]:
+        # Determine active beat: beat i remains active until beat i+1 starts (no gap/flicker)
+        current_beat = beats[0]
+        for i, b in enumerate(beats):
+            next_start = beats[i + 1]["start"] if i + 1 < len(beats) else total_dur + 1.0
+            if b["start"] <= t < next_start:
                 current_beat = b
                 break
                 
