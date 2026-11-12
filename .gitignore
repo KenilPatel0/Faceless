@@ -23,6 +23,9 @@ ENV/
 *youtube_metadata*
 sample_frames/
 
+# YouTube Channel Video Projects (local only, do not push to GitHub)
+VideoFiles/*/
+
 # Python Cache & Build Artifacts
 __pycache__/
 *.py[cod]
