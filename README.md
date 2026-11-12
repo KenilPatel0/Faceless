@@ -74,6 +74,14 @@ Experience autonomous AI video production generated with local neural voice synt
 - **Official Brand Lock Outro:** Purple TXK ring circle, smooth quadratic Bezier cursor glide (`arc_point`), click ripple, and button transforming from red `SUBSCRIBE` into green `✓ SUBSCRIBED!`.
 - **Automated QA Gate Passed:** 0 decode errors (`ffmpeg -v error -f null -`), -15.2 LUFS loudness mastering, and 0 static holds.
 
+<details>
+  <summary><b>🔍 Click to View Full Scene QA Contact Sheet (1920×1500 Keyframes)</b></summary>
+  <br />
+  <div align="center">
+    <img src="media/demo_showcase.jpg" width="100%" alt="TechXKenil Black Hole Production QA Contact Sheet" />
+  </div>
+</details>
+
 ---
 
 ## 🔄 Autonomous Production Pipeline
