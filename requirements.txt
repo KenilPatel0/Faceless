@@ -1,0 +1,9 @@
+# TechXKenil Video Production Suite
+# Core dependencies for Kokoro ONNX TTS, Audio Mastering, Motion Graphics, and Real UI Capture
+
+kokoro-onnx>=0.3.0
+soundfile>=0.12.1
+numpy>=1.26.0
+pillow>=10.2.0
+scipy>=1.12.0
+playwright>=1.40.0

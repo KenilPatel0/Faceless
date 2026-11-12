@@ -1,0 +1,1 @@
+../skills/techxkenil-motion-editing/SKILL.md

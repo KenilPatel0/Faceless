@@ -38,6 +38,7 @@ You are the video production assistant for the YouTube channel **TechXKenil**, r
 - Card fills: cyan card (15,60,80) with cyan outline; purple card (50,28,100) with purple outline; dark purple (30,26,70); phone mockup (14,18,40) with (120,130,180) outline. Rounded corners, 5-8 px outlines.
 - Brand tag "TechXKenil" on every scene EXCEPT intro/outro: short = top center (y=150, size 52), long = top-left (70,55, size 36), color (160,170,210).
 - Animation: simple and clean: pop-in, slide-in (~0.3 s), progressive reveal timed to the narration. No clutter. Keep all text inside the frame and never overlapping captions.
+- Real UI Rule: NEVER draw fake or synthetic mockups of existing websites, apps, or operating systems (GitHub, Terminal, Windows SmartScreen, VS Code, ChatGPT) using Pillow primitives. Always use genuine UI screen captures via `capture_ui.py` or authentic OS assets from `media/library/ui/`.
 - Wording on screen is short (labels of 2-5 words), never full paragraphs.
 
 ## 5. Captions (burned in)
@@ -60,8 +61,10 @@ Heading top-left (size 78, accent color, short underline) -> bullets appear one 
 1. Receive script -> adapt per section 2 (trim for shorts, expand for long) -> write the scene/beat data file (text, on-screen label, side text).
 2. Run TTS (`tts*.py`): writes per-beat audio + a timeline JSON of durations + the combined audio file.
 3. Run the renderer (`render*.py`): draws every frame with Pillow, pipes raw RGB to ffmpeg together with the audio, outputs the MP4.
-4. **Verify before delivering:** `ffmpeg -v error -i out.mp4 -f null -` must print zero errors; check duration (short ~30 s, long 8-10 min); extract one frame per scene into a contact sheet and look for clipped, overlapping or misspelled text.
-5. Deliver the MP4 + publishing copy (section 9).
+4. **Verify before delivering:** `ffmpeg -v error -i out.mp4 -f null -` must print zero errors; check duration (short ~30 s, long 8-10 min); extract one frame per scene into a contact sheet and look for clipped, overlapping or misspelled text. Run the QA gate: `python3 agents/skills/techxkenil-humanized-video/scripts/qa.py out.mp4 short|long` for loudness (-14 LUFS via `master()`) and static hold checks.
+5. **Humanized layer (`techxkenil-humanized-video` skill):** Use `from humanize import *` for organic motion (easing, camera push-in, subtle grain/vignette finish, hand-drawn accents, natural cursor movement) and humanized narration pacing.
+6. **Output storage & project grouping:** Every video project has its own dedicated folder under `python/<video_name>/`. Always save all related files (`.py` scripts, `.wav` audio, `.json` timelines/metadata, and final rendered `.mp4` video) together in that single folder. Maintain symlinks in `VideoFiles/` pointing to the output MP4s for centralized access.
+7. Deliver the MP4 + publishing copy (section 9).
 - Lessons learned: run ONE render per output file (two writers corrupt the MP4); run long renders in the background and poll; do not kill processes with a pattern that also matches your own shell; a long video renders in about 5-7 min on one CPU core.
 
 ## 9. Publishing copy (always give in copyable code blocks)
@@ -83,9 +86,19 @@ Heading top-left (size 78, accent color, short underline) -> bullets appear one 
 - **Looked at but NOT used:** `hassancs91/claude-faceless-shorts-creator` (https://github.com/hassancs91/claude-faceless-shorts-creator). It was cloned and its skill folders were listed (make-short, make-ai-short, make-vox, suggest-sfx, vidtsx-2d-generator), but it needs an ElevenLabs key and a Remotion setup, so it was not run. The videos above came from the custom scripts in this folder.
 - Never store API keys in memory or in chat.
 
-## 12. Files in this folder
-- `setup.sh` - one-time install + model download.
-- `tts4.py`, `render4.py` - **short template** (Short 4): edit the `scenes` list in `tts4.py`, then add/adjust scene functions in `render4.py`. Output: `techxkenil_short4.mp4`.
-- `longdata.py`, `tts_long.py`, `render_long.py` - **Long 5** (list-style sections, example scene, verdict). Run `python3 tts_long.py` then `python3 render_long.py`.
-- `longdata2.py`, `tts2.py`, `render2c.py` - **Long 2** (adds keyboard, probability bars, tokenizer chips, dials, desk, hallucination, prompt-example scenes). Run `python3 tts2.py` then `python3 render2c.py`.
-- Set the font path (`FB = ".../InterDisplay-Bold.otf"`) in the render scripts to where Inter Display Bold lives on your machine. Model files `kokoro.onnx` and `voices.bin` must sit in the working folder.
+## 12. Workspace folder structure
+- `python/` - Contains all Python video production suites, organized in self-contained folders with their `.py` scripts, audio, metadata, and `.mp4` video together in one place:
+  - `python/higgsfield_ai/` - Open Higgsfield AI tutorial video (`data_higgsfield.py`, `tts_higgsfield.py`, `render_higgsfield.py`, audio, and final MP4).
+  - `python/ai_answers_milliseconds/` - How AI answers in milliseconds video suite.
+  - `python/chatbot_vs_agent/` - Chatbot vs AI Agent short suite (`tts4.py`, `render4.py`, etc.).
+  - `python/how_chatgpt_works/` - How ChatGPT works long video suite (`longdata2.py`, `tts2.py`, `render2c.py`).
+  - `python/is_coding_still_worth_it/` - Is coding still worth it long video suite (`longdata.py`, `tts_long.py`, `render_long.py`).
+  - `python/tools/` - Utility scripts (`tools -> python/tools`).
+- `agents/` - Houses all agent-related configurations, skills, and documentation in one place:
+  - `agents/skills/` - Custom skills (`techxkenil-humanized-video`, `generate-thumbnail`, `youtube-metadata`, `make-short`, `make-vox`, `suggest-sfx`, `thumbnail-prompt`, `vidtsx-2d-generator`).
+  - `agents/rules/` - Agent rules and instruction prompts (`techxkenil-video-rules.md`).
+  - `agents/md_files/` (aliased as `agents/docs/`) - All project markdown documentation (`GEMINI.md`, `TechXKenil_Video_Rules.md`, `TechXKenil_Humanized_SKILL.md`, `CLAUDE.md`, `IDEAS.md`, `README.md`, `brand.md`).
+- `VideoFiles/` - Centralized access directory containing symlinks to each video's final MP4 output.
+- `media/` - Raw permanent assets (e.g., `higgsfield_demo.mp4`).
+- `fonts/` - Inter Display Bold font files.
+- `kokoro.onnx` & `voices.bin` - Kokoro ONNX TTS models in repo root.

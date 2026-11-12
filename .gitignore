@@ -1,14 +1,56 @@
+# Dependencies & Virtual Environments
 node_modules/
 remotion/node_modules/
 .venv/
+env/
+venv/
+ENV/
+
+# Environment Variables & Secrets
 .env
+.env.local
+.env.*.local
+
+# Models & Heavy Binary Assets
 *.onnx
 *.bin
 *.wav
 *.aiff
 *.mp4
-meta*.json
+
+# Python Cache & Build Artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Test & Log Artifacts
+*.log
+.pytest_cache/
 remotion/out-test.png
 remotion/out-short-test.png
-.DS_Store
 
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,157 +1,169 @@
-# claude-faceless-shorts-creator
+# 🎬 TechXKenil — Autonomous AI Faceless Video Production Suite
 
-**A faceless YouTube-Shorts factory you drive with [Claude Code](https://claude.com/claude-code).**
-Three production tracks in one repo — you just describe the video, and the right pipeline runs:
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
+[![Antigravity: Ready](https://img.shields.io/badge/Antigravity-AI_Agent_Ready-purple.svg)](https://deepmind.google)
+[![TTS: Kokoro ONNX](https://img.shields.io/badge/TTS-Kokoro_v1.0_ONNX-orange.svg)](https://github.com/thewh1teagle/kokoro-onnx)
+[![Encoding: ffmpeg BT.709](https://img.shields.io/badge/Encoding-ffmpeg_BT.709-red.svg)](https://ffmpeg.org)
 
-| You say… | Track | The pixels |
-|---|---|---|
-| *"make a short about the ×11 trick"* | **TSX** (`/make-short`) | 100% code — a [Remotion](https://remotion.dev) composition, no footage, no stock |
-| *"make an AI video short with blue-man"* | **Generative** (`/make-ai-short`) | a fal video model animating a **locked recurring character** |
-| *"make a vox-style short about coffee"* | **Collage** (`/make-vox`) | Vox-documentary paper collage — AI-image layers, die-cuts, a traveling camera |
-
-Every track shares the same backbone: ElevenLabs voice with **word-exact synced captions**,
-frame-by-frame QA at phone scale, a reusable self-growing SFX/music library, seamless
-frame-0==last-frame loops, and no dated engagement-CTA outros.
-
-## 📖 Read the guide
-
-I wrote up the whole system on my site, including the six-beat grammar that decides whether a
-40-second short is worth finishing:
-**[Make Faceless YouTube Shorts With Claude Code](https://learnwithhasan.com/guide/how-to-make-faceless-youtube-shorts-with-claude-code/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=body)**
-
-Free to read, no login. More build guides at
-**[learnwithhasan.com/guides](https://learnwithhasan.com/guides/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=body)**.
-
-## The example videos (more coming)
-
-**TSX shorts** (`shorts/`) — 12 complete productions; each folder has the script, beats
-contract, and SFX cue sheet, and the committed composition renders the exact video:
-
-| # | Niche | Title / hook |
-|---|---|---|
-| 1 | Chess | The 4-Move Checkmate — Punished |
-| 2 | Math | The ×11 Trick |
-| 3 | Algorithms | Bubble vs Quick: The Race |
-| 4 | Dev tips | `git reflog` undoes any mistake |
-| 5 | Probability | Monty Hall, Finally Intuitive |
-| 6 | Excel | Excel Reads Your Mind (Flash Fill / Ctrl+E) |
-| 7 | Kids story | Little Pip (AI-image storybook, ages 4–6) |
-| 8 | Cybersecurity | The URL That Isn't PayPal |
-| 9 | Music theory | The 4 Chords In Every Hit |
-| 10 | Money math | The 1% Fee That Eats 24% Of Your Retirement |
-| 11 | Geography | The Map Lied To You |
-| 12 | Physics | Astronauts Aren't Weightless. They're Falling. |
-
-**Generative** (`ai-shorts/blue-man/`) — *The Door*: a clay-render character walking through
-doors across worlds, thesis "arrival is a myth". Includes the **locked character sheet**
-(`character.json` + reference PNG), the model bake-off records (Seedance vs Kling vs Veo, with
-derived per-second costs), and the six generated clips — committed, because video-model pixels
-are not reproducible.
-
-**Collage** (`vox-shorts/vox-1-coffee/`) — a Vox-style documentary short on coffee's journey:
-generated map/archival/cutout layers (committed), a camera choreographed across scenes, and
-`DESIGN.md` — the full visual-language spec of the collage engine.
-
-Rendered videos aren't committed (they're reproducible from the repo); links to published
-versions will be added here as they go live.
-
-## How a short gets made
-
-```
-topic ──▶ script.md + beats.json      the beat grammar: HOOK (frame 0 = the thumbnail)
-                │                      → SETUP → QUIZ → REVEAL → TWIST → seamless LOOP
-                ▼
-        the visuals                    TSX composition / video-model clips / collage layers
-                │                      (per track — but always ONE Remotion timeline)
-                ▼
-        frame-by-frame QA              Claude renders PNGs at phone scale and READS them
-                │
-                ▼
-        gen_voice.py                   ElevenLabs TTS per line → REAL per-word timestamps
-                │                      → captions highlight on the exact spoken word
-                ▼
-        sfx-plan.json + mix_sfx.py     library-first sound design, audition mix, your ear
-                │                      is the final gate (optional music bed: mix_music.py)
-                ▼
-        <track>/<project>/output/*-sfx.mp4
-```
-
-Five Claude Code **skills** encode the craft:
-
-- **`/make-short`** — the TSX pipeline: hook grammar, no-CTA outros, caption safe areas,
-  Sequence-local frame math, loop-into-intro endings.
-- **`/make-ai-short`** — the generative pipeline and its three iron rules: never regenerate a
-  locked character from text, state the cost before spending it, loop by end-frame constraint.
-- **`/make-vox`** — scene dissection into layers, cheapest-source layer production
-  (gen_image + rembg cutouts, HTML→PNG, SVG-in-TSX), CollageBoard camera choreography.
-- **`/vidtsx-2d-generator`** — the TSX authoring rules that keep Remotion renders from crashing.
-- **`/suggest-sfx`** — taste-encoded sound design: function-first cues, layered hero moments,
-  measured audibility (RMS-diff, not hope), a library that compounds across videos.
-
-`brand.md` is the style contract (palette, type, motion, SFX taste) — swap it for your own
-brand and every future short follows it.
-
-## Quickstart
-
-Requirements: [Claude Code](https://claude.com/claude-code) · Node 18+ · Python 3.10+ ·
-`ffmpeg` on PATH · an [ElevenLabs](https://elevenlabs.io) key (voice/SFX/music). For the
-generative track add a [fal.ai](https://fal.ai) key; for collage layer production:
-`pip install pillow rembg playwright && playwright install chromium` (the only pip installs
-in the repo — everything else is stdlib).
-
-```bash
-git clone https://github.com/hassancs91/claude-faceless-shorts-creator
-cd claude-faceless-shorts-creator
-cp .env.example .env          # add your keys
-cd remotion && npm install && npm run gen && cd ..
-
-claude                        # open the repo in Claude Code, then:
-```
-
-> **make a short about &lt;your topic&gt;** · **make an AI video short about &lt;idea&gt;** ·
-> **make a vox-style short about &lt;story&gt;**
-
-…or rebuild an example: *"re-render short-5 and regenerate its voice"*.
-
-To just explore the compositions visually: `cd remotion && npm run studio`.
-
-## Repo layout
-
-```
-.claude/skills/   the five skills (this is where the "editor" lives)
-tools/            Python: gen_voice, gen_sfx, gen_music, mix_sfx, mix_music, gen_image,
-                  gen_clip, bakeoff_clip, cutout, capture_web, gen_chords
-remotion/         the Remotion project — shared kits in src/lib/ (incl. collage.tsx),
-                  one folder per video in src/shots/
-media/library/    reusable assets: SFX clips + music beds (catalogued, loudness-normalized)
-media/projects/   media for one specific video — incl. committed AI clips & collage layers
-shorts/           the 12 TSX example productions
-ai-shorts/        the generative track: blue-man/ (locked character) + IDEAS.md (cost tables)
-vox-shorts/       the collage track: vox-1-coffee/ + DESIGN.md (the visual language)
-brand.md          the style contract — make it yours
-IDEAS.md          the TSX-shorts niche/idea bank
-```
-
-## License
-
-MIT — see [LICENSE](LICENSE). Bundled SFX/music clips and example AI media were generated by
-the repo author (ElevenLabs / fal / Gemini) and are redistributed here; per-clip provenance is
-recorded in `media/library/*/catalog.json` and the per-shot `.json` sidecars.
-
-<!-- lwh-footer -->
+> **An open-source, fully autonomous AI video production engine driven by Google Antigravity AI agents.**  
+> Create production-ready vertical YouTube Shorts (1080×1920) and long-form tech explainers (1920×1080) with zero stock footage, local neural voice synthesis, physics-based motion graphics, and automated loudness mastering.
 
 ---
 
-## 📘 The free book
+## 👨‍💻 Main Contributor
+- **Kenil Ribadiya**
+- **Portfolio:** [kenilribadiya.in](https://kenilribadiya.in)
+- **Channel:** [TechXKenil](https://youtube.com) (AI, Tech & Code)
 
-This repo is one thing I built with AI. The book is the system underneath it.
+---
 
-**[Vibe Engineering Blocks](https://learnwithhasan.com/blocks/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=footer)** is my free 74-page book.
-47 building blocks for shipping real apps with AI. One block per page, each with the exact
-prompt to hand your AI.
+## ✨ Features
 
-Built by **[Hasan Aboul Hasan](https://learnwithhasan.com/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=footer)**. I build real products with AI and
-write down exactly how.
-[Guides](https://learnwithhasan.com/guides/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=footer) &nbsp;·&nbsp;
-[YouTube](https://www.youtube.com/@HasanAboulHasan) &nbsp;·&nbsp;
-[Community](https://learnwithhasan.com/community/?utm_source=github&utm_medium=readme&utm_campaign=claude-faceless-shorts-creator&utm_content=footer)
+- 🤖 **Agent-First Workflow:** Pre-configured for **Google Antigravity** agents to write scripts, generate narration, animate frames, mix audio, and run QA gates autonomously.
+- 🎙️ **100% Free Local Neural Voice (Kokoro ONNX):** Studio-grade TTS running locally via `kokoro-onnx` (`am_michael` at 1.1× speed). No API keys or subscriptions required.
+- 🖥️ **Real UI Screen Capture Engine (`capture_ui.py`):** Never draws synthetic fake mockups. Uses headless Chromium (Playwright) to capture live websites (GitHub, Hugging Face, ChatGPT) and renders authentic system terminals with genuine monospace typography.
+- 🎨 **Physics-Based Motion Graphics (`motion.py`):**
+  - **Spring Physics (`spring`):** Natural dampening with ~4% overshoot.
+  - **2× Sub-Pixel Supersampling (`SS`):** Anti-aliased vector rendering via Lanczos downsampling—zero pixel snapping or jagged edges.
+  - **Kinetic Typography (`word_pop`):** Word-by-word slide-up and fade reveals.
+  - **Smooth Numerical Counters (`count_up`):** Quartic ease-out ticker animations.
+  - **Temporal Motion Blur (`blur_layer`):** Sub-frame accumulation on high-speed movements.
+- 🔤 **Viral Shorts Typography:** Clean Bebas Neue captions with calibrated black stroke boundaries (`stroke_fill=(0, 0, 0)`) and real-time word-level karaoke highlighting.
+- 🔊 **Automated Sound Design & Loudness Gate:**
+  - Dynamic SFX mixing (`whoosh`, `pop`, `tick`, `chime`) ducked beneath spoken dialogue.
+  - Automated two-pass `loudnorm` mastering to YouTube reference levels (**-14.0 LUFS**, -1.5 dBTP, 48 kHz AAC).
+- 🛡️ **Automated QA Validation Gate (`qa.py`):** Every video is mathematically checked for zero decode errors, loudness compliance, and absence of static visual holds.
+
+---
+
+## ⚡ Quickstart: The One Command
+
+Clone the repository and run the setup script. It configures the entire virtual environment, dependencies, neural models, and typography in one go:
+
+```bash
+git clone https://github.com/<your-username>/techxkenil-video-engine.git
+cd techxkenil-video-engine
+bash setup.sh
+```
+
+### 🤖 Running with Antigravity
+Open this repository inside **Antigravity**. You can simply prompt the agent:
+
+```text
+Make a 30s Short explaining "How AI Answers in Milliseconds" using the motion editing engine.
+```
+
+Or for long-form content:
+
+```text
+Create an 8-minute deep dive video on "Is Coding Still Worth It in the AI Era?" with chapters and full graphics.
+```
+
+The Antigravity agent will automatically:
+1. Break down the script into timestamped beats.
+2. Synthesize audio with Kokoro ONNX and calculate word boundaries.
+3. Design and animate the scene layouts with spring motion and supersampling.
+4. Master loudness and verify zero decode errors via `qa.py`.
+5. Deliver the MP4 alongside high-CTR YouTube metadata and thumbnail prompts.
+
+---
+
+## 📐 Video Formats & Standards
+
+| Parameter | YouTube Short | Long Explainer Video |
+|---|---|---|
+| **Resolution** | 1080 × 1920 (Vertical 9:16) | 1920 × 1080 (Horizontal 16:9) |
+| **Frame Rate** | 30 FPS | 24 FPS |
+| **Duration** | **30 seconds** (28–32s safe) | **8–10 minutes** |
+| **Video Codec** | H.264 High Profile, yuv420p, BT.709 color-tagged | Same |
+| **Audio Standard** | -14.0 LUFS (±1 LUFS), -1.5 dBFS True Peak, 48 kHz AAC | Same |
+| **Captions** | Bebas Neue, Size 82, 3.5px black outline, centered at y=1560 | Inter Bold, Size 40, centered at bottom |
+
+---
+
+## 📁 Repository Architecture
+
+```text
+techxkenil-video-engine/
+├── setup.sh                  # One-command automated installer
+├── requirements.txt          # Python core dependencies
+├── LICENSE                   # MIT License (Kenil Ribadiya)
+├── README.md                 # Project documentation
+├── .env.example              # Optional cloud provider keys
+│
+├── python/                   # Self-contained video project suites
+│   ├── ai_answers_milliseconds/  # 30s Short: How AI Answers in Milliseconds
+│   │   ├── render_short_ms.py    # Motion graphics renderer
+│   │   ├── tts_short_ms.py       # Kokoro narration & SFX mixer
+│   │   ├── audio_short_ms.wav    # Mastered audio (-14 LUFS)
+│   │   ├── meta_short_ms.json    # Exact scene & beat timeline
+│   │   └── youtube_metadata_short.md # Copy-paste publishing package
+│   ├── chatbot_vs_agent/     # 30s Short: Chatbot vs AI Agent
+│   ├── higgsfield_ai/        # Tutorial Suite: Open Higgsfield AI
+│   ├── how_chatgpt_works/    # 8-min Long Video: How ChatGPT Works
+│   ├── is_coding_still_worth_it/ # 8-min Long Video: Coding in AI Era
+│   └── tools/                # Shared production libraries
+│       ├── motion.py         # Springs, supersampling, blur, keyframes
+│       ├── humanize.py       # Easing, karaoke, SFX synthesizer, master()
+│       └── qa.py             # Automated video & audio QA gate
+│
+├── agents/                   # Agent configurations & knowledge base
+│   ├── skills/               # Custom Antigravity skills
+│   │   ├── techxkenil-motion-editing/ # Core motion graphics skill
+│   │   ├── techxkenil-humanized-video/ # Humanized pacing & variation
+│   │   ├── generate-thumbnail/         # High-CTR thumbnail generator
+│   │   └── youtube-metadata/           # Algorithm SEO & chapter generator
+│   └── md_files/             # Project guidelines & brand memory
+│       ├── GEMINI.md         # Master channel production rules
+│       └── brand.md          # Visual design system & color palettes
+│
+├── VideoFiles/               # Centralized symlinks to all finished MP4 outputs
+├── fonts/                    # High-legibility typography (Inter, Bebas Neue)
+└── media/                    # Raw assets, permanent SFX & music library
+```
+
+---
+
+## 🛠️ Manual CLI Usage
+
+If you prefer running production manually without an agent:
+
+```bash
+# 1. Activate environment
+source .venv/bin/activate
+
+# 2. Generate voice and mix sound design
+python python/ai_answers_milliseconds/tts_short_ms.py
+
+# 3. Render 1080x1920 video at 30 FPS
+python python/ai_answers_milliseconds/render_short_ms.py
+
+# 4. Run automated QA verification gate
+python python/tools/qa.py python/ai_answers_milliseconds/ai_answers_milliseconds_30s.mp4 short
+```
+
+---
+
+## 🎨 Visual Design System
+
+- **Background:** Vertical gradient `(8, 12, 28)` → `(30, 16, 70)` with subtle 90px grid lines in `(22, 28, 58)`.
+- **Palette:**
+  - ⚪ **White:** `(255, 255, 255)` — Primary headlines
+  - 🔵 **Cyan:** `(70, 220, 255)` — Accent metrics & tech highlights
+  - 🟡 **Yellow:** `(255, 205, 70)` — Active karaoke words & counter values
+  - 🟢 **Green:** `(90, 235, 150)` — Speed advantages & verified metrics
+  - 🔴 **Red:** `(255, 70, 90)` — Bottlenecks & warnings
+  - 🟣 **Purple:** `(150, 110, 255)` — Microchip dies & brand accents
+- **Typography:**
+  - Content & Badges: **Inter Display Bold**
+  - High-Retention Captions: **Bebas Neue**
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+Developed with ❤️ by **[Kenil Ribadiya](https://kenilribadiya.in)**.
+

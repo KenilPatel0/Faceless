@@ -1,0 +1,30 @@
+{
+  "scenes": [
+    {
+      "id": "github_hook",
+      "title": "REAL GITHUB REPO",
+      "text": "Found a repo on GitHub? Don't install it manually.",
+      "start": 0.0,
+      "dur": 3.508,
+      "end": 3.508
+    },
+    {
+      "id": "antigravity_setup",
+      "title": "ANTIGRAVITY SETUP",
+      "text": "Just paste the link into Antigravity. Its AI agent clones it, configures the environment, and runs it.",
+      "start": 3.508,
+      "dur": 6.836,
+      "end": 10.344000000000001
+    },
+    {
+      "id": "outro",
+      "title": "TECHXKENIL OUTRO",
+      "text": "Zero setup needed. Subscribe to TechXKenil for more AI and tech.",
+      "start": 10.344000000000001,
+      "dur": 5.065333333333333,
+      "end": 15.409333333333334
+    }
+  ],
+  "total_duration": 15.409333333333334,
+  "sample_rate": 48000
+}

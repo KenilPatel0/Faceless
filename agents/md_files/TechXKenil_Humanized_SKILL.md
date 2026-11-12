@@ -1,0 +1,1 @@
+../skills/techxkenil-humanized-video/SKILL.md
