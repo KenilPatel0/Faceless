@@ -154,7 +154,7 @@ flowchart LR
 Clone the repository and run the automated setup script. It provisions the virtual environment, system binaries, neural models, and typography in a single execution:
 
 ```bash
-git clone https://github.com/KenilPatel0/Faceless.git
+git clone https://github.com/techXkenil/Faceless.git
 cd Faceless
 bash setup.sh
 ```
