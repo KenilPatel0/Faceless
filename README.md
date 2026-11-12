@@ -41,28 +41,33 @@
 
 ## 🎥 Live Production Demos
 
-Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both videos play directly below:
+Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both demo videos play directly inline below:
+
+### 📱 1. 15s Vertical YouTube Short (1080×1920 @ 30 FPS)
+> **Topic:** *What is a Black Hole? (Gravity Trap & Singularity)*  
+> **Key Features:** Bebas Neue Karaoke typography, 4-word chunking at `y=1560`, dynamic rotating accretion disk, and animated TechXKenil subscribe outro.
 
 <div align="center">
-  <table>
-    <tr>
-      <th width="35%" align="center">📱 15s Vertical Short (1080×1920 @ 30 FPS)</th>
-      <th width="65%" align="center">🖥️ 40s Horizontal Explainer (1920×1080 @ 30 FPS)</th>
-    </tr>
-    <tr>
-      <td align="center" valign="top">
-        <img src="media/demo_vertical.gif" width="340" alt="TechXKenil 15s Vertical Short Demo" /><br><br>
-        <b>Topic:</b> What is a Black Hole? (Gravity Trap & Singularity)<br>
-        <code>python python/black_hole/render_vertical.py</code>
-      </td>
-      <td align="center" valign="top">
-        <img src="media/demo_horizontal.gif" width="580" alt="TechXKenil 40s Horizontal Explainer Demo" /><br><br>
-        <b>Topic:</b> How Black Holes Work (Stellar Collapse & Event Horizon)<br>
-        <code>python python/black_hole/render_horizontal.py</code>
-      </td>
-    </tr>
-  </table>
+  <img src="media/demo_vertical.gif" width="380" alt="TechXKenil 15s Vertical Short Demo" />
 </div>
+
+<p align="center">
+  <code>python python/black_hole/render_vertical.py</code>
+</p>
+
+<br>
+
+### 🖥️ 2. 40s Horizontal Explainer Video (1920×1080 @ 30 FPS)
+> **Topic:** *How Black Holes Work (Cosmic Extremes to Stellar Collapse)*  
+> **Key Features:** 4-part structured explainer, relativistic Doppler beaming, Inter Display Bold calm subtitles, and widescreen TXK brand lock.
+
+<div align="center">
+  <img src="media/demo_horizontal.gif" width="820" alt="TechXKenil 40s Horizontal Explainer Demo" />
+</div>
+
+<p align="center">
+  <code>python python/black_hole/render_horizontal.py</code>
+</p>
 
 ### 🔬 Technical Implementation Highlights
 - **Accretion Disk & Relativistic Beaming:** Real-time multi-layered Doppler gradients (amber to deep violet), photon sphere boundary, and sub-pixel gravitational singularity.
