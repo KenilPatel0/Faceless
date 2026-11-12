@@ -130,6 +130,15 @@ def build_metadata(
     output.append("## 4. Pinned Comment")
     output.append("```markdown")
     output.append(pinned_question)
+    output.append("```\n")
+
+    output.append("## 5. ChatGPT Thumbnail Prompt (Non-AI Look & High Curiosity)")
+    output.append("```text")
+    output.append(f"A documentary-style macro photograph of a real industrial server motherboard resting on an engineer's wooden workbench, shallow depth of field. In sharp focus is an authentic matte-black silicon {topic} processor with exposed copper heatpipes and micro-printed circuit numbers. Resting right beside the chip is an authentic vintage analog mechanical stopwatch, its red needle frozen at a critical moment. Directional tungsten desk lamp lighting, natural soft shadows, subtle film grain. Clean empty space on the left third for text overlay. Absolutely no cheesy sci-fi holograms, no glowing neon particles, no glossy 3D plastic render, no text.")
+    output.append("```\n")
+    output.append("**Recommended Text Overlay for Thumbnail (Place on left side):**")
+    output.append("```text")
+    output.append("HOW SO FAST?")
     output.append("```")
 
     return "\n".join(output)
@@ -152,3 +161,4 @@ if __name__ == "__main__":
     with open(args.out, "w", encoding="utf-8") as f:
         f.write(res)
     print(f"Metadata generated: {args.out}")
+

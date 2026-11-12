@@ -67,7 +67,7 @@ Heading top-left (size 78, accent color, short underline) -> bullets appear one 
 ## 9. Publishing copy (always give in copyable code blocks)
 **Short:** title under 60 chars with one emoji | description: 1 hook line, 1-2 lines explaining the idea, then "Follow TechXKenil for daily AI and tech explained simply. 🚀", then hashtags | hashtags: `#Shorts #AI #TechXKenil` first, then topic-specific + broad (#ArtificialIntelligence #ChatGPT #LLM #TechFacts #LearnAI #AIExplained #Tech #Programming) | pinned comment: a question that invites replies.
 
-**Long video:** title (1 main + 2 alternates) | description: hook paragraph, "you'll learn" bullets, **timestamped chapters computed from the final cut**, a comment prompt, a next-video/subscribe line "Subscribe to TechXKenil...", then 8-10 hashtags (#AI #TechXKenil early) | **Tags:** one comma-separated line, under 500 characters, NO hashtags in the tags box | pinned comment.
+**Long video:** title (1 main + 2 alternates) | description: hook paragraph, "you'll learn" bullets, **timestamped chapters computed from the final cut**, a comment prompt, a next-video/subscribe line "Subscribe to TechXKenil...", then 8-10 hashtags (#AI #TechXKenil early) | **Tags:** one comma-separated line, under 500 characters, NO hashtags in the tags box | pinned comment | **Thumbnail prompt for ChatGPT/DALL-E:** authentic editorial/documentary photography prompt crafted to induce intense curiosity without looking like generic AI art (35mm lens, macro textures, natural lighting, negative space, no cheesy neon/sci-fi glow). Always deliver these 5 items together after every video.
 
 ## 10. Videos made so far
 - Short 1 "The Strawberry Problem" (why AI can't count the R's: tokens) - title "Why AI Can't Count the R's in Strawberry 🍓".

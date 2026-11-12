@@ -128,3 +128,4 @@ for sc, bd in zip(SCENES, tl):
 "
 ```
 This guarantees that timestamps in your publishing copy match the final MP4 cut down to the exact second.
+
