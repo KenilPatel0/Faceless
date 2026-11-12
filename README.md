@@ -43,16 +43,16 @@
 
 Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both demo videos play directly inline below:
 
-### 📱 1. 15s Vertical YouTube Short (1080×1920 @ 30 FPS)
-> **Topic:** *What is a Black Hole? (Gravity Trap & Singularity)*  
-> **Key Features:** Bebas Neue Karaoke typography, 4-word chunking at `y=1560`, dynamic rotating accretion disk, and animated TechXKenil subscribe outro.
+### 📱 1. Short 6: What Happens When You Press Enter? (1080×1920 @ 30 FPS)
+> **Topic:** *The 5-Step Journey of a Web Request (DNS, HTTPS Padlock, HTTP Payload, DOM Paint)*  
+> **Key Features:** Genuine browser Omnibox, 3D animated Enter key with ripple, TLS padlock lock, streaming HTML/CSS/JS assets, and Bebas Neue Karaoke captions.
 
 <div align="center">
-  <img src="media/demo_vertical.gif" width="380" alt="TechXKenil 15s Vertical Short Demo" />
+  <img src="media/demo_short6_press_enter.gif" width="380" alt="Short 6: What Happens When You Press Enter" />
 </div>
 
 <p align="center">
-  <code>python python/black_hole/render_vertical.py</code>
+  <code>python python/press_enter_website/render_press_enter.py</code>
 </p>
 
 <br>
@@ -134,6 +134,12 @@ techxkenil-video-engine/
 ├── .env.example              # Optional cloud provider keys
 │
 ├── python/                   # Self-contained video project suites
+│   ├── press_enter_website/  # Short 6: What Happens When You Press Enter
+│   │   ├── tts_press_enter.py    # Kokoro narration & SFX mixer
+│   │   ├── render_press_enter.py # 1080x1920 motion graphics renderer
+│   │   ├── audio_press_enter.wav # Mastered audio (-14 LUFS)
+│   │   ├── meta_press_enter.json # Exact scene & beat timeline
+│   │   └── press_enter_website_short.mp4 # Mastered vertical video output
 │   ├── black_hole/           # Demo Suite: Black Hole Explainer (Vertical + Horizontal)
 │   │   ├── tts_black_hole.py     # Kokoro narration & SFX mixer
 │   │   ├── render_vertical.py    # 15s 1080x1920 vertical short renderer
