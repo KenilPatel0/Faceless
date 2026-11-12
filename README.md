@@ -15,7 +15,7 @@
 ## 👨‍💻 Main Contributor
 - **Kenil Ribadiya**
 - **Portfolio:** [kenilribadiya.in](https://kenilribadiya.in)
-- **Channel:** [TechXKenil](https://youtube.com) (AI, Tech & Code)
+- **Channel:** [TechXKenil](https://www.youtube.com/@techxkenil) (AI, Tech & Code)
 - **Support:** [buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)
 
 ---
@@ -41,16 +41,28 @@
 
 ## 🎥 Live Production Demos
 
-Experience full end-to-end autonomous video production generated entirely via local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics.
+Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both videos play directly below:
 
-![Live Production Demos](media/demo_showcase.jpg)
-
-### 📊 Delivered Demo Video Specifications
-
-| Format | Duration | Resolution | Topic | Output Video | Quick Reproduce |
-|---|---|---|---|---|---|
-| **Vertical Short** | **15.4s** | 1080×1920 (9:16) @ 30 FPS | What is a Black Hole? (Gravity Trap & Singularity) | [`VideoFiles/black_hole_vertical_15s.mp4`](VideoFiles/black_hole_vertical_15s.mp4) | `python python/black_hole/render_vertical.py` |
-| **Horizontal Explainer** | **43.4s** | 1920×1080 (16:9) @ 30 FPS | How Black Holes Work (Cosmic Extremes to Stellar Collapse) | [`VideoFiles/black_hole_horizontal_40s.mp4`](VideoFiles/black_hole_horizontal_40s.mp4) | `python python/black_hole/render_horizontal.py` |
+<div align="center">
+  <table>
+    <tr>
+      <th width="35%" align="center">📱 15s Vertical Short (1080×1920 @ 30 FPS)</th>
+      <th width="65%" align="center">🖥️ 40s Horizontal Explainer (1920×1080 @ 30 FPS)</th>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <img src="media/demo_vertical.gif" width="340" alt="TechXKenil 15s Vertical Short Demo" /><br><br>
+        <b>Topic:</b> What is a Black Hole? (Gravity Trap & Singularity)<br>
+        <code>python python/black_hole/render_vertical.py</code>
+      </td>
+      <td align="center" valign="top">
+        <img src="media/demo_horizontal.gif" width="580" alt="TechXKenil 40s Horizontal Explainer Demo" /><br><br>
+        <b>Topic:</b> How Black Holes Work (Stellar Collapse & Event Horizon)<br>
+        <code>python python/black_hole/render_horizontal.py</code>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ### 🔬 Technical Implementation Highlights
 - **Accretion Disk & Relativistic Beaming:** Real-time multi-layered Doppler gradients (amber to deep violet), photon sphere boundary, and sub-pixel gravitational singularity.
