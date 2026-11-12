@@ -15,3 +15,4 @@ A real prompt streams tokens at 80 tokens/sec while an operations meter tracks t
 | HARDWARE | 14–26s | CPU vs GPU race. CPU crawls at 30 seconds per word. GPU HBM3e transfers 3.3 terabytes per second. | "A normal computer takes thirty seconds per word. But AI chips use High Bandwidth Memory moving over three terabytes of data every single second." |
 | KV-CACHE | 26–36s | Green memory blocks lock in place: KV Cache active. Compute time drops to a flat line. | "Add the KV Cache, which saves past words so the model never recalculates them, and you get instant streaming." |
 | LOOP | 36–42s | Payoff card: "NOT STORED. CALCULATED." Dissolves back to frame 0 stopwatch. | "That is why AI feels like reading your mind. It is pure math at the speed of light." |
+

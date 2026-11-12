@@ -1,8 +1,14 @@
 node_modules/
 remotion/node_modules/
+.venv/
 .env
+*.onnx
+*.bin
+*.wav
 *.aiff
 *.mp4
+meta*.json
 remotion/out-test.png
 remotion/out-short-test.png
 .DS_Store
+
