@@ -1,0 +1,33 @@
+{
+  "format": "short",
+  "topic": "ai-speed",
+  "fps": 30,
+  "durationSeconds": 42,
+  "vo": [
+    {
+      "text": "AI answers before your eye can physically blink. Here is how.",
+      "start": 0.4,
+      "end": 3.9
+    },
+    {
+      "text": "Every word requires passing your prompt through eighty transformer layers and seventy billion parameters.",
+      "start": 4.1,
+      "end": 13.8
+    },
+    {
+      "text": "A normal computer takes thirty seconds per word. But AI chips use High Bandwidth Memory moving over three terabytes of data every single second.",
+      "start": 14.1,
+      "end": 25.8
+    },
+    {
+      "text": "Add the KV Cache, which saves past words so the model never recalculates them, and you get instant streaming.",
+      "start": 26.1,
+      "end": 35.8
+    },
+    {
+      "text": "That is why AI feels like reading your mind. It is pure math at the speed of light.",
+      "start": 36.1,
+      "end": 41.5
+    }
+  ]
+}

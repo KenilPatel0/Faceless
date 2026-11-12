@@ -1,0 +1,8 @@
+node_modules/
+remotion/node_modules/
+.env
+*.aiff
+*.mp4
+remotion/out-test.png
+remotion/out-short-test.png
+.DS_Store
