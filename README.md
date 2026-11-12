@@ -1,47 +1,43 @@
-# 🎬 TechXKenil — Autonomous AI Faceless Video Production Suite
+<div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
-[![Antigravity: Ready](https://img.shields.io/badge/Antigravity-AI_Agent_Ready-purple.svg)](https://deepmind.google)
-[![TTS: Kokoro ONNX](https://img.shields.io/badge/TTS-Kokoro_v1.0_ONNX-orange.svg)](https://github.com/thewh1teagle/kokoro-onnx)
-[![Encoding: ffmpeg BT.709](https://img.shields.io/badge/Encoding-ffmpeg_BT.709-red.svg)](https://ffmpeg.org)
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/kenilribadiya)
+# 🎬 TechXKenil Video Engine
+### ⚡ Autonomous AI Faceless Video Production Suite
 
-> **An open-source, fully autonomous AI video production engine driven by Google Antigravity AI agents.**  
-> Create production-ready vertical YouTube Shorts (1080×1920) and long-form tech explainers (1920×1080) with zero stock footage, local neural voice synthesis, physics-based motion graphics, and automated loudness mastering.
+**Generate high-retention tech explainers and viral Shorts with local neural speech, sub-pixel physics, and automated QA gates—zero stock footage required.**
+
+<br />
+
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Antigravity Ready](https://img.shields.io/badge/Antigravity-AI_Agent_Native-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google)
+[![Kokoro ONNX](https://img.shields.io/badge/TTS-Kokoro_v1.0_ONNX-FF6F00?style=for-the-badge&logo=onnx&logoColor=white)](https://github.com/thewh1teagle/kokoro-onnx)
+[![ffmpeg BT.709](https://img.shields.io/badge/Mastering-ffmpeg_BT.709-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)](https://ffmpeg.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-9900EF?style=for-the-badge)](LICENSE)
+[![Buy Me a Coffee](https://img.shields.io/badge/Support-Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/kenilribadiya)
+
+<br />
+
+[✨ Key Capabilities](#-key-capabilities) • [🎥 Live Demos](#-live-production-demos) • [🔄 Architecture Pipeline](#-autonomous-production-pipeline) • [⚡ 60s Quickstart](#-quickstart-in-60-seconds) • [📐 Video Standards](#-video-formats--standards) • [🎨 Design System](#-visual-design-system) • [☕ Support](#-support-the-creator)
+
+</div>
 
 ---
 
-## 👨‍💻 Main Contributor
-- **Kenil Ribadiya**
-- **Portfolio:** [kenilribadiya.in](https://kenilribadiya.in)
-- **Channel:** [TechXKenil](https://www.youtube.com/@techxkenil) (AI, Tech & Code)
-- **Support:** [buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)
+<div align="center">
 
----
+### 👨‍💻 Creator & Maintainer
+| 👤 Lead Developer | 🌐 Portfolio | 📺 YouTube Channel | ☕ Buy Me a Coffee |
+| :---: | :---: | :---: | :---: |
+| **Kenil Ribadiya** | [kenilribadiya.in](https://kenilribadiya.in) | [@TechXKenil](https://www.youtube.com/@techxkenil) | [buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya) |
 
-## ✨ Features
-
-- 🤖 **Agent-First Workflow:** Pre-configured for **Google Antigravity** agents to write scripts, generate narration, animate frames, mix audio, and run QA gates autonomously.
-- 🎙️ **100% Free Local Neural Voice (Kokoro ONNX):** Studio-grade TTS running locally via `kokoro-onnx` (`am_michael` at 1.1× speed). No API keys or subscriptions required.
-- 🖥️ **Real UI Screen Capture Engine (`capture_ui.py`):** Never draws synthetic fake mockups. Uses headless Chromium (Playwright) to capture live websites (GitHub, Hugging Face, ChatGPT) and renders authentic system terminals with genuine monospace typography.
-- 🎨 **Physics-Based Motion Graphics (`motion.py`):**
-  - **Spring Physics (`spring`):** Natural dampening with ~4% overshoot.
-  - **2× Sub-Pixel Supersampling (`SS`):** Anti-aliased vector rendering via Lanczos downsampling—zero pixel snapping or jagged edges.
-  - **Kinetic Typography (`word_pop`):** Word-by-word slide-up and fade reveals.
-  - **Smooth Numerical Counters (`count_up`):** Quartic ease-out ticker animations.
-  - **Temporal Motion Blur (`blur_layer`):** Sub-frame accumulation on high-speed movements.
-- 🔤 **Viral Shorts Typography:** Clean Bebas Neue captions with calibrated black stroke boundaries (`stroke_fill=(0, 0, 0)`) and real-time word-level karaoke highlighting.
-- 🔊 **Automated Sound Design & Loudness Gate:**
-  - Dynamic SFX mixing (`whoosh`, `pop`, `tick`, `chime`) ducked beneath spoken dialogue.
-  - Automated two-pass `loudnorm` mastering to YouTube reference levels (**-14.0 LUFS**, -1.5 dBTP, 48 kHz AAC).
-- 🛡️ **Automated QA Validation Gate (`qa.py`):** Every video is mathematically checked for zero decode errors, loudness compliance, and absence of static visual holds.
+</div>
 
 ---
 
 ## 🎥 Live Production Demos
 
 Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both demo videos play directly inline below:
+
+<br />
 
 ### 📱 1. 15s Vertical YouTube Short (1080×1920 @ 30 FPS)
 > **Topic:** *What is a Black Hole? (Gravity Trap & Singularity)*  
@@ -55,7 +51,7 @@ Experience autonomous AI video production generated with local neural voice synt
   <code>python python/black_hole/render_vertical.py</code>
 </p>
 
-<br>
+<br />
 
 ### 🖥️ 2. 40s Horizontal Explainer Video (1920×1080 @ 30 FPS)
 > **Topic:** *How Black Holes Work (Cosmic Extremes to Stellar Collapse)*  
@@ -69,6 +65,8 @@ Experience autonomous AI video production generated with local neural voice synt
   <code>python python/black_hole/render_horizontal.py</code>
 </p>
 
+<br />
+
 ### 🔬 Technical Implementation Highlights
 - **Accretion Disk & Relativistic Beaming:** Real-time multi-layered Doppler gradients (amber to deep violet), photon sphere boundary, and sub-pixel gravitational singularity.
 - **Viral Shorts Typography:** High-retention Bebas Neue Bold (size 78) chunked strictly into 3–4 words per chunk at `y=1560`, with active word karaoke highlighting in yellow and zero margin overflows.
@@ -78,48 +76,146 @@ Experience autonomous AI video production generated with local neural voice synt
 
 ---
 
-## ⚡ Quickstart: The One Command
+## 🔄 Autonomous Production Pipeline
 
-Clone the repository and run the setup script. It configures the entire virtual environment, dependencies, neural models, and typography in one go:
+The entire video production lifecycle runs autonomously via **Google Antigravity** agents without human manual editing or third-party video editors:
+
+```mermaid
+flowchart LR
+    A["💡 Script & Topic"] --> B["🤖 Antigravity Agent\n(Scene & Beat Breakdown)"]
+    B --> C["🎙️ Kokoro ONNX TTS\n(100% Free Local Speech)"]
+    B --> D["🎨 Vector Motion Engine\n(Springs, Supersampling)"]
+    C --> E["🔊 Dynamic SFX Mixer\n(Pops, Whooshes, Ducking)"]
+    D --> F["🎬 ffmpeg Compositor\n(RGB Stream to H.264)"]
+    E --> F
+    F --> G["🛡️ Automated QA Gate\n(0 Errors, -14 LUFS Target)"]
+    G --> H["🚀 Mastered MP4\n(YouTube Ready Output)"]
+
+    style A fill:#0d1117,stroke:#58a6ff,stroke-width:2px,color:#fff
+    style B fill:#161b22,stroke:#bc8cff,stroke-width:2px,color:#fff
+    style C fill:#161b22,stroke:#f0883e,stroke-width:2px,color:#fff
+    style D fill:#161b22,stroke:#7ee787,stroke-width:2px,color:#fff
+    style E fill:#161b22,stroke:#ffa657,stroke-width:2px,color:#fff
+    style F fill:#161b22,stroke:#79c0ff,stroke-width:2px,color:#fff
+    style G fill:#161b22,stroke:#ff7b72,stroke-width:2px,color:#fff
+    style H fill:#1f6feb,stroke:#58a6ff,stroke-width:2px,color:#fff
+```
+
+---
+
+## ✨ Key Capabilities
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🤖 Agent-First Architecture</h3>
+      <p>Native configuration for <b>Google Antigravity</b> agents. Autonomous agents parse scripts, time scenes, synthesize audio, render frames, and validate quality gates without human intervention.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🎙️ 100% Free Local Neural Voice</h3>
+      <p>Zero API costs and complete offline privacy powered by <b>Kokoro v1.0 ONNX</b> (<code>am_michael</code> at 1.1× speed). Generates natural, studio-quality narration in seconds.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🎨 Physics-Based Motion Graphics</h3>
+      <p>Custom <code>motion.py</code> engine with <b>spring dampening</b> (~4% natural overshoot), <b>2× sub-pixel supersampling (SS)</b> via Lanczos downsampling, and temporal motion blur for buttery-smooth animations.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🖥️ Real UI Screen Capture</h3>
+      <p>Never renders synthetic mockups. Headless Chromium (<b>Playwright</b>) captures genuine website interfaces (GitHub, ChatGPT, Hugging Face) and renders authentic system terminals.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🔤 Kinetic Viral Typography</h3>
+      <p>High-contrast <b>Bebas Neue</b> captions with calibrated black stroke boundaries (<code>stroke_fill=(0, 0, 0)</code>) and word-by-word active karaoke highlighting calibrated to narration timing.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🛡️ Mathematical QA Gate</h3>
+      <p>Integrated <code>qa.py</code> automated gate verifies <b>zero decode errors</b> (<code>ffmpeg -v error -f null -</code>), enforces YouTube reference loudness (<b>-14.0 LUFS</b>), and flags static holds.</p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## ⚡ Quickstart in 60 Seconds
+
+### 1️⃣ One-Command Installation
+Clone the repository and run the automated setup script. It provisions the virtual environment, system binaries, neural models, and typography in a single execution:
 
 ```bash
-git clone https://github.com/<your-username>/techxkenil-video-engine.git
-cd techxkenil-video-engine
+git clone https://github.com/KenilPatel0/Faceless.git
+cd Faceless
 bash setup.sh
 ```
 
-### 🤖 Running with Antigravity
-Open this repository inside **Antigravity**. You can simply prompt the agent:
+### 2️⃣ Autonomous Production with Antigravity
+Open this workspace in **Antigravity** and issue a plain-English prompt:
 
 ```text
 Make a 30s Short explaining "How AI Answers in Milliseconds" using the motion editing engine.
 ```
 
-Or for long-form content:
+Or generate an in-depth long-form explainer:
 
 ```text
-Create an 8-minute deep dive video on "Is Coding Still Worth It in the AI Era?" with chapters and full graphics.
+Create an 8-minute deep dive video on "Is Coding Still Worth It in the AI Era?" with full graphics and chapters.
 ```
 
-The Antigravity agent will automatically:
-1. Break down the script into timestamped beats.
-2. Synthesize audio with Kokoro ONNX and calculate word boundaries.
-3. Design and animate the scene layouts with spring motion and supersampling.
-4. Master loudness and verify zero decode errors via `qa.py`.
-5. Deliver the MP4 alongside high-CTR YouTube metadata and thumbnail prompts.
+### 3️⃣ Manual CLI Workflow
+If you prefer running production manually:
+
+```bash
+# 1. Activate environment
+source .venv/bin/activate
+
+# 2. Synthesize neural narration & audio timeline
+python python/black_hole/tts_black_hole.py
+
+# 3. Render 15s Vertical Short (1080×1920 @ 30 FPS)
+python python/black_hole/render_vertical.py
+
+# 4. Render 40s Horizontal Explainer (1920×1080 @ 30 FPS)
+python python/black_hole/render_horizontal.py
+
+# 5. Run automated QA verification gates
+python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_vertical_15s.mp4 short
+python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_horizontal_40s.mp4 long
+```
 
 ---
 
 ## 📐 Video Formats & Standards
 
-| Parameter | YouTube Short | Long Explainer Video |
-|---|---|---|
-| **Resolution** | 1080 × 1920 (Vertical 9:16) | 1920 × 1080 (Horizontal 16:9) |
-| **Frame Rate** | 30 FPS | 24 FPS |
-| **Duration** | **30 seconds** (28–32s safe) | **8–10 minutes** |
-| **Video Codec** | H.264 High Profile, yuv420p, BT.709 color-tagged | Same |
-| **Audio Standard** | -14.0 LUFS (±1 LUFS), -1.5 dBFS True Peak, 48 kHz AAC | Same |
-| **Captions** | Bebas Neue, Size 82, 3.5px black outline, centered at y=1560 | Inter Bold, Size 40, centered at bottom |
+| Parameter | 📱 YouTube Short (9:16) | 🖥️ Long Explainer Video (16:9) |
+| :--- | :--- | :--- |
+| **Canvas Dimensions** | `1080 × 1920` (Vertical) | `1920 × 1080` (Horizontal) |
+| **Frame Rate** | `30 FPS` | `24 FPS` (or `30 FPS`) |
+| **Target Duration** | **30 seconds** (28–32s safe zone) | **8–10 minutes** (full structured deep-dive) |
+| **Video Codec** | H.264 High Profile, `yuv420p`, BT.709 color-tagged | Same (`-movflags +faststart`) |
+| **Audio Loudness** | **-14.0 LUFS** (±1 LUFS), -1.5 dBTP | **-14.0 LUFS** (±1 LUFS), -1.5 dBTP |
+| **Audio Sample Rate** | 48 kHz AAC stereo/mono | 48 kHz AAC stereo/mono |
+| **Burned-In Captions** | Bebas Neue (size 78–82), 3–4 words/chunk @ `y=1560` | Inter Display Bold (size 38–40), bottom center |
+
+---
+
+## 🎨 Visual Design System
+
+The visual design system is engineered for maximum retention, instant clarity, and brand consistency:
+
+| Color Role | Preview | Hex | RGB Value | Purpose |
+| :--- | :---: | :---: | :---: | :--- |
+| **Deep Space** | `⬛` | `#080C1C` | `(8, 12, 28)` | Canvas background gradient start |
+| **Cosmic Purple** | `🟪` | `#1E1046` | `(30, 16, 70)` | Canvas background gradient end |
+| **Grid Lines** | `🟦` | `#161C3A` | `(22, 28, 58)` | Subtle 90px technical graph grid |
+| **White Core** | `⬜` | `#FFFFFF` | `(255, 255, 255)` | Primary headlines & card borders |
+| **Cyan Accent** | `🔷` | `#46DCFF` | `(70, 220, 255)` | Metrics, highlights, tagline badges |
+| **Karaoke Yellow**| `🟨` | `#FFCD46` | `(255, 205, 70)` | Active spoken word karaoke highlight |
+| **Speed Green** | `🟩` | `#5AEB96` | `(90, 235, 150)` | Success states, performance advantages |
+| **Warning Red** | `🟥` | `#FF465A` | `(255, 70, 90)` | Bottlenecks, errors, subscribe button |
+| **Brand Purple** | `🟪` | `#966EFF` | `(150, 110, 255)` | Microchips, icon badges, TXK logo ring |
 
 ---
 
@@ -130,7 +226,7 @@ techxkenil-video-engine/
 ├── setup.sh                  # One-command automated installer
 ├── requirements.txt          # Python core dependencies
 ├── LICENSE                   # MIT License (Kenil Ribadiya)
-├── README.md                 # Project documentation
+├── README.md                 # Project documentation & showcases
 ├── .env.example              # Optional cloud provider keys
 │
 ├── python/                   # Self-contained video project suites
@@ -141,10 +237,6 @@ techxkenil-video-engine/
 │   │   ├── black_hole_vertical_15s.mp4   # Mastered vertical video output
 │   │   └── black_hole_horizontal_40s.mp4 # Mastered horizontal video output
 │   ├── ai_answers_milliseconds/  # 30s Short: How AI Answers in Milliseconds
-│   │   ├── render_short_ms.py    # Motion graphics renderer
-│   │   ├── tts_short_ms.py       # Kokoro narration & SFX mixer
-│   │   ├── audio_short_ms.wav    # Mastered audio (-14 LUFS)
-│   │   └── meta_short_ms.json    # Exact scene & beat timeline
 │   ├── chatbot_vs_agent/     # 30s Short: Chatbot vs AI Agent
 │   ├── higgsfield_ai/        # Tutorial Suite: Open Higgsfield AI
 │   ├── how_chatgpt_works/    # 8-min Long Video: How ChatGPT Works
@@ -164,66 +256,37 @@ techxkenil-video-engine/
 │       ├── GEMINI.md         # Master channel production rules
 │       └── brand.md          # Visual design system & color palettes
 │
-├── VideoFiles/               # Centralized symlinks to all finished MP4 outputs
+├── VideoFiles/               # Centralized local video suites (git-ignored)
 ├── fonts/                    # High-legibility typography (Inter, Bebas Neue)
-└── media/                    # Raw assets, permanent SFX & music library
+└── media/                    # Showcase demos & permanent SFX library
 ```
 
 ---
 
-## 🛠️ Manual CLI Usage
+## ☕ Support the Creator
 
-If you prefer running production manually without an agent:
+If this autonomous AI video production suite helps your workflows or projects, consider supporting **Kenil Ribadiya** with a coffee:
 
-```bash
-# 1. Activate environment
-source .venv/bin/activate
+<div align="center">
 
-# 2. Synthesize neural narration & sound design
-python python/black_hole/tts_black_hole.py
+<a href="https://buymeacoffee.com/kenilribadiya" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="54" width="230" />
+</a>
 
-# 3. Render 15s Vertical Short (1080x1920 @ 30 FPS)
-python python/black_hole/render_vertical.py
+<br /><br />
 
-# 4. Render 40s Horizontal Explainer (1920x1080 @ 30 FPS)
-python python/black_hole/render_horizontal.py
+🔗 **[buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)**
 
-# 5. Run automated QA verification gates
-python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_vertical_15s.mp4 short
-python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_horizontal_40s.mp4 long
-```
-
----
-
-## 🎨 Visual Design System
-
-- **Background:** Vertical gradient `(8, 12, 28)` → `(30, 16, 70)` with subtle 90px grid lines in `(22, 28, 58)`.
-- **Palette:**
-  - ⚪ **White:** `(255, 255, 255)` — Primary headlines
-  - 🔵 **Cyan:** `(70, 220, 255)` — Accent metrics & tech highlights
-  - 🟡 **Yellow:** `(255, 205, 70)` — Active karaoke words & counter values
-  - 🟢 **Green:** `(90, 235, 150)` — Speed advantages & verified metrics
-  - 🔴 **Red:** `(255, 70, 90)` — Bottlenecks & warnings
-  - 🟣 **Purple:** `(150, 110, 255)` — Microchip dies & brand accents
-- **Typography:**
-  - Content & Badges: **Inter Display Bold**
-  - High-Retention Captions: **Bebas Neue**
-
----
-
-## ☕ Support the Project
-
-If you find this autonomous video production engine useful, consider supporting Kenil with a coffee:
-
-<a href="https://buymeacoffee.com/kenilribadiya" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 210px !important;" ></a>
-
-Direct link: **[buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)**
+</div>
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete details.
 
-Developed with ❤️ by **[Kenil Ribadiya](https://kenilribadiya.in)**.
+<div align="center">
 
+Crafted with ❤️ by **[Kenil Ribadiya](https://kenilribadiya.in)** • Founder of **[TechXKenil](https://www.youtube.com/@techxkenil)**
+
+</div>
