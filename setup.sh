@@ -98,10 +98,9 @@ echo "  ✓ Typography assets ready in fonts/."
 
 # 6. Directory Structure & Symlinks
 echo "▶ Configuring workspace links..."
-mkdir -p VideoFiles python/tools agents/skills agents/md_files
+mkdir -p VideoFiles tools agents/skills agents/md_files
 
-# Symlinks for tools and skills
-[ ! -L "tools" ] && [ ! -d "tools" ] && ln -sf python/tools tools || true
+# Symlinks for skills
 [ ! -L ".agents" ] && [ ! -d ".agents" ] && ln -sf agents .agents || true
 
 echo "======================================================================"
@@ -115,5 +114,5 @@ echo "   - 'Make an 8-minute video about [Topic]'"
 echo ""
 echo "💻 Manual Command Line Rendering:"
 echo "   source .venv/bin/activate"
-echo "   python python/ai_answers_milliseconds/render_short_ms.py"
+echo "   python VideoFiles/black_hole/render_vertical.py"
 echo "======================================================================"

@@ -48,7 +48,7 @@ Experience autonomous AI video production generated with local neural voice synt
 </div>
 
 <p align="center">
-  <code>python python/black_hole/render_vertical.py</code>
+  <code>python VideoFiles/black_hole/render_vertical.py</code>
 </p>
 
 <br />
@@ -62,7 +62,7 @@ Experience autonomous AI video production generated with local neural voice synt
 </div>
 
 <p align="center">
-  <code>python python/black_hole/render_horizontal.py</code>
+  <code>python VideoFiles/black_hole/render_horizontal.py</code>
 </p>
 
 <br />
@@ -180,17 +180,17 @@ If you prefer running production manually:
 source .venv/bin/activate
 
 # 2. Synthesize neural narration & audio timeline
-python python/black_hole/tts_black_hole.py
+python VideoFiles/black_hole/tts_black_hole.py
 
 # 3. Render 15s Vertical Short (1080×1920 @ 30 FPS)
-python python/black_hole/render_vertical.py
+python VideoFiles/black_hole/render_vertical.py
 
 # 4. Render 40s Horizontal Explainer (1920×1080 @ 30 FPS)
-python python/black_hole/render_horizontal.py
+python VideoFiles/black_hole/render_horizontal.py
 
 # 5. Run automated QA verification gates
-python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_vertical_15s.mp4 short
-python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_horizontal_40s.mp4 long
+python tools/qa.py VideoFiles/black_hole/black_hole_vertical_15s.mp4 short
+python tools/qa.py VideoFiles/black_hole/black_hole_horizontal_40s.mp4 long
 ```
 
 ---
@@ -237,22 +237,13 @@ techxkenil-video-engine/
 ├── README.md                 # Project documentation & showcases
 ├── .env.example              # Optional cloud provider keys
 │
-├── python/                   # Self-contained video project suites
-│   ├── black_hole/           # Demo Suite: Black Hole Explainer (Vertical + Horizontal)
-│   │   ├── tts_black_hole.py     # Kokoro narration & SFX mixer
-│   │   ├── render_vertical.py    # 15s 1080x1920 vertical short renderer
-│   │   ├── render_horizontal.py  # 40s 1920x1080 horizontal explainer renderer
-│   │   ├── black_hole_vertical_15s.mp4   # Mastered vertical video output
-│   │   └── black_hole_horizontal_40s.mp4 # Mastered horizontal video output
-│   ├── ai_answers_milliseconds/  # 30s Short: How AI Answers in Milliseconds
-│   ├── chatbot_vs_agent/     # 30s Short: Chatbot vs AI Agent
-│   ├── higgsfield_ai/        # Tutorial Suite: Open Higgsfield AI
-│   ├── how_chatgpt_works/    # 8-min Long Video: How ChatGPT Works
-│   ├── is_coding_still_worth_it/ # 8-min Long Video: Coding in AI Era
-│   └── tools/                # Shared production libraries
-│       ├── motion.py         # Springs, supersampling, blur, keyframes
-│       ├── humanize.py       # Easing, karaoke, SFX synthesizer, master()
-│       └── qa.py             # Automated video & audio QA gate
+├── tools/                    # Shared production libraries
+│   ├── motion.py             # Springs, supersampling, blur, keyframes
+│   ├── humanize.py           # Easing, karaoke, SFX synthesizer, master()
+│   ├── qa.py                 # Automated video & audio QA gate
+│   └── capture_ui.py         # Headless Chromium screen capture & terminal generator
+│
+├── VideoFiles/               # Centralized local video suites (git-ignored, local only)
 │
 ├── agents/                   # Agent configurations & knowledge base
 │   ├── skills/               # Custom Antigravity skills
