@@ -5,6 +5,7 @@
 # License: MIT
 # ==============================================================================
 set -e
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:$PATH"
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$REPO_DIR"
@@ -26,18 +27,25 @@ else
     echo "  ✓ ffmpeg detected: $(ffmpeg -version | head -n 1 | cut -d ' ' -f 1-3)"
 fi
 
-if ! command -v python3 >/dev/null 2>&1; then
+if command -v python3.12 >/dev/null 2>&1; then
+    PY_BIN="python3.12"
+elif command -v python3.11 >/dev/null 2>&1; then
+    PY_BIN="python3.11"
+elif command -v python3.10 >/dev/null 2>&1; then
+    PY_BIN="python3.10"
+elif command -v python3 >/dev/null 2>&1; then
+    PY_BIN="python3"
+else
     echo "❌ ERROR: python3 is not installed."
     exit 1
-else
-    echo "  ✓ python3 detected: $(python3 --version)"
 fi
+echo "  ✓ Python detected: $($PY_BIN --version) ($PY_BIN)"
 
 # 2. Virtual Environment Setup
 echo "▶ Configuring Python virtual environment (.venv)..."
 if [ ! -d ".venv" ]; then
-    echo "  Creating virtual environment in .venv..."
-    python3 -m venv .venv
+    echo "  Creating virtual environment in .venv with $PY_BIN..."
+    $PY_BIN -m venv .venv
 fi
 
 source .venv/bin/activate
