@@ -18,6 +18,10 @@ ENV/
 *.aiff
 *.mp4
 
+# Private Channel Metadata & Publishing Copies (local only)
+*youtube_metadata*.md
+*youtube_metadata*
+
 # Python Cache & Build Artifacts
 __pycache__/
 *.py[cod]

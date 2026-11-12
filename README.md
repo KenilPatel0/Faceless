@@ -5,6 +5,7 @@
 [![Antigravity: Ready](https://img.shields.io/badge/Antigravity-AI_Agent_Ready-purple.svg)](https://deepmind.google)
 [![TTS: Kokoro ONNX](https://img.shields.io/badge/TTS-Kokoro_v1.0_ONNX-orange.svg)](https://github.com/thewh1teagle/kokoro-onnx)
 [![Encoding: ffmpeg BT.709](https://img.shields.io/badge/Encoding-ffmpeg_BT.709-red.svg)](https://ffmpeg.org)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/kenilribadiya)
 
 > **An open-source, fully autonomous AI video production engine driven by Google Antigravity AI agents.**  
 > Create production-ready vertical YouTube Shorts (1080×1920) and long-form tech explainers (1920×1080) with zero stock footage, local neural voice synthesis, physics-based motion graphics, and automated loudness mastering.
@@ -15,6 +16,7 @@
 - **Kenil Ribadiya**
 - **Portfolio:** [kenilribadiya.in](https://kenilribadiya.in)
 - **Channel:** [TechXKenil](https://youtube.com) (AI, Tech & Code)
+- **Support:** [buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)
 
 ---
 
@@ -120,14 +122,12 @@ techxkenil-video-engine/
 │   │   ├── render_vertical.py    # 15s 1080x1920 vertical short renderer
 │   │   ├── render_horizontal.py  # 40s 1920x1080 horizontal explainer renderer
 │   │   ├── black_hole_vertical_15s.mp4   # Mastered vertical video output
-│   │   ├── black_hole_horizontal_40s.mp4 # Mastered horizontal video output
-│   │   └── youtube_metadata.md   # Copy-paste publishing package
+│   │   └── black_hole_horizontal_40s.mp4 # Mastered horizontal video output
 │   ├── ai_answers_milliseconds/  # 30s Short: How AI Answers in Milliseconds
 │   │   ├── render_short_ms.py    # Motion graphics renderer
 │   │   ├── tts_short_ms.py       # Kokoro narration & SFX mixer
 │   │   ├── audio_short_ms.wav    # Mastered audio (-14 LUFS)
-│   │   ├── meta_short_ms.json    # Exact scene & beat timeline
-│   │   └── youtube_metadata_short.md # Copy-paste publishing package
+│   │   └── meta_short_ms.json    # Exact scene & beat timeline
 │   ├── chatbot_vs_agent/     # 30s Short: Chatbot vs AI Agent
 │   ├── higgsfield_ai/        # Tutorial Suite: Open Higgsfield AI
 │   ├── how_chatgpt_works/    # 8-min Long Video: How ChatGPT Works
@@ -191,6 +191,16 @@ python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/b
 - **Typography:**
   - Content & Badges: **Inter Display Bold**
   - High-Retention Captions: **Bebas Neue**
+
+---
+
+## ☕ Support the Project
+
+If you find this autonomous video production engine useful, consider supporting Kenil with a coffee:
+
+<a href="https://buymeacoffee.com/kenilribadiya" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 210px !important;" ></a>
+
+Direct link: **[buymeacoffee.com/kenilribadiya](https://buymeacoffee.com/kenilribadiya)**
 
 ---
 
