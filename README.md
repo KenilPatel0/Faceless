@@ -37,6 +37,28 @@
 
 ---
 
+## 🎥 Live Production Demos
+
+Experience full end-to-end autonomous video production generated entirely via local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics.
+
+![Live Production Demos](media/demo_showcase.jpg)
+
+### 📊 Delivered Demo Video Specifications
+
+| Format | Duration | Resolution | Topic | Output Video | Quick Reproduce |
+|---|---|---|---|---|---|
+| **Vertical Short** | **15.4s** | 1080×1920 (9:16) @ 30 FPS | What is a Black Hole? (Gravity Trap & Singularity) | [`VideoFiles/black_hole_vertical_15s.mp4`](VideoFiles/black_hole_vertical_15s.mp4) | `python python/black_hole/render_vertical.py` |
+| **Horizontal Explainer** | **43.4s** | 1920×1080 (16:9) @ 30 FPS | How Black Holes Work (Cosmic Extremes to Stellar Collapse) | [`VideoFiles/black_hole_horizontal_40s.mp4`](VideoFiles/black_hole_horizontal_40s.mp4) | `python python/black_hole/render_horizontal.py` |
+
+### 🔬 Technical Implementation Highlights
+- **Accretion Disk & Relativistic Beaming:** Real-time multi-layered Doppler gradients (amber to deep violet), photon sphere boundary, and sub-pixel gravitational singularity.
+- **Viral Shorts Typography:** High-retention Bebas Neue Bold (size 78) chunked strictly into 3–4 words per chunk at `y=1560`, with active word karaoke highlighting in yellow and zero margin overflows.
+- **Calm Widescreen Subtitles:** Inter Display Bold (size 38) chunked into 6–7 words at `y=1000` with 540px+ breathing room on each side.
+- **Official Brand Lock Outro:** Purple TXK ring circle, smooth quadratic Bezier cursor glide (`arc_point`), click ripple, and button transforming from red `SUBSCRIBE` into green `✓ SUBSCRIBED!`.
+- **Automated QA Gate Passed:** 0 decode errors (`ffmpeg -v error -f null -`), -15.2 LUFS loudness mastering, and 0 static holds.
+
+---
+
 ## ⚡ Quickstart: The One Command
 
 Clone the repository and run the setup script. It configures the entire virtual environment, dependencies, neural models, and typography in one go:
@@ -93,6 +115,13 @@ techxkenil-video-engine/
 ├── .env.example              # Optional cloud provider keys
 │
 ├── python/                   # Self-contained video project suites
+│   ├── black_hole/           # Demo Suite: Black Hole Explainer (Vertical + Horizontal)
+│   │   ├── tts_black_hole.py     # Kokoro narration & SFX mixer
+│   │   ├── render_vertical.py    # 15s 1080x1920 vertical short renderer
+│   │   ├── render_horizontal.py  # 40s 1920x1080 horizontal explainer renderer
+│   │   ├── black_hole_vertical_15s.mp4   # Mastered vertical video output
+│   │   ├── black_hole_horizontal_40s.mp4 # Mastered horizontal video output
+│   │   └── youtube_metadata.md   # Copy-paste publishing package
 │   ├── ai_answers_milliseconds/  # 30s Short: How AI Answers in Milliseconds
 │   │   ├── render_short_ms.py    # Motion graphics renderer
 │   │   ├── tts_short_ms.py       # Kokoro narration & SFX mixer
@@ -133,14 +162,18 @@ If you prefer running production manually without an agent:
 # 1. Activate environment
 source .venv/bin/activate
 
-# 2. Generate voice and mix sound design
-python python/ai_answers_milliseconds/tts_short_ms.py
+# 2. Synthesize neural narration & sound design
+python python/black_hole/tts_black_hole.py
 
-# 3. Render 1080x1920 video at 30 FPS
-python python/ai_answers_milliseconds/render_short_ms.py
+# 3. Render 15s Vertical Short (1080x1920 @ 30 FPS)
+python python/black_hole/render_vertical.py
 
-# 4. Run automated QA verification gate
-python python/tools/qa.py python/ai_answers_milliseconds/ai_answers_milliseconds_30s.mp4 short
+# 4. Render 40s Horizontal Explainer (1920x1080 @ 30 FPS)
+python python/black_hole/render_horizontal.py
+
+# 5. Run automated QA verification gates
+python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_vertical_15s.mp4 short
+python agents/skills/techxkenil-motion-editing/scripts/qa.py python/black_hole/black_hole_horizontal_40s.mp4 long
 ```
 
 ---
