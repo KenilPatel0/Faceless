@@ -52,6 +52,7 @@ from tools.procedural_scenes import (
     render_speculative_race,
     render_verdict_recap
 )
+from tools.avatar_engine import AvatarEngine
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
     """Dynamically imports SCENES from data.py or data.json."""
@@ -268,13 +269,15 @@ def composite_video(
     project_dir: str,
     channel_cfg: Dict[str, Any],
     profile_key: str = "1080p30",
-    output_mp4: Optional[str] = None
+    output_mp4: Optional[str] = None,
+    enable_avatar: bool = False
 ) -> str:
     """Stage 5: Declarative Hardware-Accelerated Video Compositing."""
     print("\n" + "=" * 70)
-    print(f"🎬 STAGE 5: Declarative Video Compositing (Profile: {profile_key})")
+    print(f"🎬 STAGE 5: Declarative Video Compositing (Profile: {profile_key}, Avatar: {enable_avatar})")
     print("=" * 70)
 
+    avatar_engine = AvatarEngine()
     profile = PROFILES.get(profile_key, PROFILES["1080p30"])
     tl_path = os.path.join(project_dir, "tl.json")
     with open(tl_path, "r", encoding="utf-8") as f:
@@ -372,6 +375,11 @@ def composite_video(
                 canvas.draw_text((cx, cy - 50), cur_scene.get("title", "").upper(), size=32, fill=(70, 220, 255), anchor="mm")
                 canvas.draw_text((cx, cy + 30), cur_scene.get("section", "").upper(), size=20, fill=(185, 192, 225), anchor="mm")
 
+            # 2.5. Render Stickman Avatar Host (if enabled)
+            av_cfg = cur_scene.get("avatar")
+            if av_cfg is not None or enable_avatar:
+                avatar_engine.render(canvas, t, timeline, av_cfg)
+
             # 3. Slice overscan frame with camera drift
             frame = canvas.slice_frame(p_scene, drift_amp=6.0)
             dr_frame = ImageDraw.Draw(frame)
@@ -414,6 +422,7 @@ def main():
     parser.add_argument("--project", required=True, help="Path to project directory")
     parser.add_argument("--channel", help="Channel name (e.g. TechXKenil, Aiwolfie)")
     parser.add_argument("--format", default="1080p30", choices=["1080p30", "4k60", "1080p30_vert", "4k60_vert"], help="Render resolution profile")
+    parser.add_argument("--avatar", action="store_true", help="Enable animated stickman avatar narrator")
     args = parser.parse_args()
 
     project_dir = os.path.abspath(args.project)
@@ -459,7 +468,7 @@ def main():
     prepare_real_ui_assets(scenes, project_dir, is_4k=is_4k)
 
     # Stage 5: Video Composition
-    out_mp4 = composite_video(project_dir, channel_cfg, profile_key=args.format)
+    out_mp4 = composite_video(project_dir, channel_cfg, profile_key=args.format, enable_avatar=args.avatar)
 
     # Stage 6: QA Verification
     is_short = "vert" in args.format
