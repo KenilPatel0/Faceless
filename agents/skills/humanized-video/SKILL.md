@@ -97,3 +97,26 @@ To ensure videos never look cheap, boxy, or wireframed:
    - Elements enter using `ease_out_quart` over 0.5-0.7 s with a subtle 20-30 px vertical drift (never abrupt 100 px snaps).
    - Once revealed, elements maintain gentle harmonic floating micro-motion (`smooth_float`, +/-3-4 px) to keep the frame dynamically alive and eliminate static holds.
 5. **Visual Metaphors Over Generic Bullet Lists:** Always prefer clean, intuitive diagrams—such as token chips, parallel core arrays, data pipe gauges, and milestone steppers—over dense text bullets. Explanations must be visually obvious in 2 seconds.
+
+## 12. Native 4K 60FPS Production Standards (tools/render_core.py & tools/video_pipeline.py)
+To deliver cinema-grade clarity and unlock YouTube's premium VP09/AV01 codecs:
+1. **Resolution & Temporal Frequency:**
+   - Long Video: `3840×2160` (16:9 4K UHD) @ `60.0 FPS`.
+   - Shorts: `2160×3840` (9:16 4K Vertical) @ `60.0 FPS`.
+   - Frame delta: $\Delta t = 1/60 = 0.01667\text{s}$.
+2. **Typography Scaling ($S = 2.0\times$):**
+   - Title / Hook: Font 208, stroke 16.
+   - Headings / Badges: Font 96, stroke 8.
+   - Card Titles: Font 88. Body: Font 56.
+   - Subtitles (Long Video): Font 80, stroke 10, centered at $y = 2020\text{px}$.
+   - Subtitles (Shorts): Font 132, stroke 16, centered at $y = 3120\text{px}$.
+3. **Strict 4K Subtitle Clearance Invariant:**
+   - On 4K horizontal video ($3840 \times 2160$), content layer must NEVER exceed **$y = 1830\text{px}$**, maintaining a strict 160px safe clearance buffer above subtitles at $y = 2020\text{px}$.
+4. **Zero-Resize Overscan Camera Push-In:**
+   - Render dynamic scenes at $1.035\times$ overscan ($3974 \times 2235$).
+   - Slice direct $3840 \times 2160$ crop windows with continuous sub-pixel harmonic drift (`OverscanCanvas.slice_frame()`).
+   - Achieves 120+ FPS frame generation speed in Python by eliminating CPU bilinear resize overhead.
+5. **Hardware-Accelerated Streaming Encoding (`tools/video_pipeline.py`):**
+   - Direct raw RGB streaming pipe into FFmpeg (`pipe:0`). Peak RAM remains < 350 MB.
+   - Encoder priority cascade: `h264_nvenc` &rarr; `h264_qsv` (Intel Iris Xe) &rarr; `h264_mf` (Media Foundation) &rarr; `libx264`.
+

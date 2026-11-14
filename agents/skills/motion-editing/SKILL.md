@@ -12,7 +12,7 @@ Layer order: **channel brand profile** -> **humanized layer** (`humanized-video`
 2. **Sub-pixel, anti-aliased drawing** - positions are floats; draw through `SS` (2x supersampled canvas, LANCZOS down) so edges and text glide instead of snapping to whole pixels. Integer positions + aliased edges = the "jittery generated" look.
 3. **Motion blur on moving elements** - temporal sub-frame accumulation (`blur_layer`): average several sub-frames inside a 180-degree shutter (half a frame, centred on the frame time). Use `auto_samples(px_per_frame)` so sub-samples are <= ~1.5 px apart (too few samples = visible echo ghosts). Put only moving shapes in the blur layer; keep static text/UI out so it stays sharp. Skip blur when speed < 1.5 px/frame.
 4. **Staggering and overlap** - group items enter 60-120 ms apart with small deterministic jitter (`stagger`); next entrance starts before the previous one finishes. Never everything at once.
-5. **Frame rate and encode** - 30 fps for everything with moving text/graphics (24 fps judders on fast text; 60 only for heavy UI motion). YouTube wants the frame rate the video was made in (24-60 accepted).
+5. **Frame rate and encode** - 60.0 fps for native 4K UHD and ultra-smooth UI/cursor tracking; 30 fps for 1080p standard web graphics. At 60 fps, easing resolution is $\Delta t = 16.67\text{ms}$, producing buttery-smooth motion with zero micro-stutter. YouTube allocates premium VP09/AV01 codecs to 4K 60FPS uploads.
 
 ## 2. Timing table
 | Use | Duration |

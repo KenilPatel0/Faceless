@@ -14,23 +14,23 @@ When a video explains GitHub, Terminal commands, Windows Defender, or developer 
 ### A. Real Websites & Web Apps (GitHub, Hugging Face, ChatGPT, Docs)
 Use `tools/capture_ui.py web` to capture a genuine headless Chromium screenshot at video resolution:
 ```bash
-# Capture full 1920x1080 web page in dark mode
+# Capture full 4K UHD web page in dark mode (3840x2160, Retina 2x)
 python tools/capture_ui.py web \
-  --url "https://github.com/Anil-matcha/Open-Generative-AI" \
-  --out "VideoFiles/<project_dir>/real_github_ui.png" \
-  --width 1920 --height 1080
+  --url "https://github.com/ollama/ollama" \
+  --out "VideoFiles/<project_dir>/real_github_4k.png" \
+  --4k
 ```
 - Automatically handles network idle waiting.
-- Emulates high-DPI retina display (`device_scale_factor=2`) for crisp text.
+- Emulates high-DPI retina display (`device_scale_factor=2`) for crisp text on 4K displays.
 
 ### B. Real Terminal Windows (macOS & Linux)
 Use `tools/capture_ui.py terminal` to generate an authentic macOS Terminal window:
 ```bash
+# Generate native 4K Terminal capture (2560x1440 active window canvas)
 python tools/capture_ui.py terminal \
-  --cmd "xattr -cr /Applications/Open-Higgsfield-AI.app" \
-  --out "VideoFiles/<project_dir>/real_terminal_window.png" \
-  --title "zsh — 80×24" \
-  --width 1280 --height 720
+  --cmd "ollama run deepseek-r1:8b" \
+  --out "VideoFiles/<project_dir>/real_terminal_4k.png" \
+  --4k
 ```
 
 ### C. Authentic OS & Software Assets

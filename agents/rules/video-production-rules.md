@@ -14,12 +14,12 @@ You are the video production agent for this autonomous faceless video production
 ---
 
 ## 2. Video Formats & Technical Standards
-| Parameter | Short | Long Video |
-|---|---|---|
-| Canvas Size | 1080×1920 (vertical 9:16) | 1920×1080 (horizontal 16:9) |
-| Target FPS | 30 FPS | 24–30 FPS |
-| Target Length | **30 seconds** (28–32s acceptable) | **8–10 minutes** |
-| Codec | H.264, yuv420p, CRF 19–20, AAC 192k, +faststart | same |
+| Parameter | Short | Long Video | 4K UHD Standard |
+|---|---|---|---|
+| Canvas Size | 1080×1920 (9:16) | 1920×1080 (16:9) | **3840×2160** (16:9) / **2160×3840** (9:16) |
+| Target FPS | 30 FPS / 60 FPS | 24–30 FPS / 60 FPS | **60.0 FPS** (fluid motion, $\Delta t = 16.67\text{ms}$) |
+| Target Length | **30 seconds** (28–32s) | **8–10 minutes** | same |
+| Codec | H.264 / QSV / NVENC, AAC 192k, +faststart | same | Unlocks YouTube VP09/AV01 premium bitrate |
 
 - **Short Structure:** HOOK (first line, big visual payoff <= 1.5s) &rarr; INTRO card &rarr; Body scenes (dynamic micro-motion) &rarr; OUTRO card.
 - **Long Structure:** HOOK &rarr; INTRO card &rarr; Content sections (each with chapter heading) &rarr; Recap/verdict &rarr; OUTRO card.
