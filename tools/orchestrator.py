@@ -43,6 +43,15 @@ from tools.render_core import (
 from tools.animation_registry import REGISTRY
 from tools.animation_director import AnimationDirector, CreativeBrief
 from tools.animation_timeline import TimelineResolver
+from tools.procedural_scenes import (
+    render_hook_stopwatch,
+    render_token_fracture,
+    render_prefill_matrix,
+    render_kv_cache_split,
+    render_silicon_memory_stream,
+    render_speculative_race,
+    render_verdict_recap
+)
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
     """Dynamically imports SCENES from data.py or data.json."""
@@ -72,6 +81,15 @@ def synthesize_speech(
     print("\n" + "=" * 70)
     print("🎙️ STAGE 2: Phonetic Neural Speech Synthesis (Kokoro v1.0 ONNX)")
     print("=" * 70)
+
+    raw_wav_path = os.path.join(project_dir, "audio_master_raw.wav")
+    tl_path = os.path.join(project_dir, "tl.json")
+    if os.path.exists(raw_wav_path) and os.path.exists(tl_path):
+        with open(tl_path, "r", encoding="utf-8") as f:
+            timeline = json.load(f)
+        current_time = timeline[-1]["end_time"] + timeline[-1]["silence_dur"]
+        print(f"✓ Using existing synthesized timeline: {tl_path} ({current_time:.2f}s speech)")
+        return raw_wav_path, tl_path, current_time
 
     model_path = os.path.join(REPO_ROOT, "kokoro_models", "kokoro-v1.0.onnx")
     voices_path = os.path.join(REPO_ROOT, "kokoro_models", "voices-v1.0.bin")
@@ -157,7 +175,33 @@ def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str, targ
             events.append((st, "whoosh"))
             last_sec = sec
         vtype = s.get("visual_type")
-        if vtype in ["code", "terminal"]:
+        if vtype == "hook_stopwatch":
+            events.append((st + 1.6, "pop"))     # Enter press
+            events.append((st + 2.4, "tick"))    # Stopwatch rollout
+            events.append((st + 5.0, "chime"))   # 140 Trillion FLOPs stamp
+        elif vtype == "token_fracture":
+            events.append((st + 0.6, "pop"))     # Token fracture
+            events.append((st + 3.5, "chime"))   # Vector lock
+        elif vtype == "prefill_matrix":
+            events.append((st + 0.5, "whoosh"))  # Matrix slide
+            events.append((st + 3.5, "chime"))   # Compute lock
+        elif vtype == "kv_cache_split":
+            events.append((st + 0.4, "tick"))    # Red warning
+            events.append((st + 1.5, "pop"))     # KV cache lock
+            events.append((st + 5.0, "chime"))   # Speedup chime
+        elif vtype == "silicon_memory_stream":
+            events.append((st + 0.5, "whoosh"))  # Particle stream
+            events.append((st + 4.0, "tick"))    # Saturation alert
+        elif vtype == "speculative_race":
+            events.append((st + 0.4, "tick"))    # Draft tokens
+            events.append((st + 2.2, "whoosh"))  # Parallel verification laser
+            events.append((st + 2.8, "chime"))   # Verification checkmarks
+            events.append((st + 3.8, "pop"))     # 2.8x multiplier
+        elif vtype == "outro_conversion":
+            events.append((st + 0.3, "whoosh"))  # Recap
+            events.append((st + 4.9, "tick"))    # Mouse click
+            events.append((st + 5.2, "chime"))   # Subscribed success
+        elif vtype in ["code", "terminal"]:
             events.append((st + 0.5, "chime"))
         elif vtype in ["diagram", "split"]:
             events.append((st + 0.3, "pop"))
@@ -300,7 +344,21 @@ def composite_video(
             canvas.reset()
 
             # 2. Render Scene Visuals
-            if vtype == "brand":
+            if vtype == "hook_stopwatch":
+                render_hook_stopwatch(canvas, rel_t, dur, cur_scene)
+            elif vtype == "token_fracture":
+                render_token_fracture(canvas, rel_t, dur, cur_scene)
+            elif vtype == "prefill_matrix":
+                render_prefill_matrix(canvas, rel_t, dur, cur_scene)
+            elif vtype == "kv_cache_split":
+                render_kv_cache_split(canvas, rel_t, dur, cur_scene)
+            elif vtype == "silicon_memory_stream":
+                render_silicon_memory_stream(canvas, rel_t, dur, cur_scene)
+            elif vtype == "speculative_race":
+                render_speculative_race(canvas, rel_t, dur, cur_scene)
+            elif vtype == "outro_conversion":
+                render_verdict_recap(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
+            elif vtype == "brand":
                 render_brand_card(canvas, channel_name, tagline, badge, rel_t, logo_img=logo_img)
             elif sid == timeline[-1]["id"] and rel_t > 2.0:
                 render_outro_card(canvas, channel_name, tagline, rel_t, logo_img=logo_img)
@@ -393,7 +451,7 @@ def main():
 
     # Stage 3: Sound Design & Mastering
     is_short = "vert" in args.format or dur <= 60.0
-    target_lufs = -14.0 if is_short else -14.5
+    target_lufs = -14.0 if is_short else -13.5
     master_wav, mastered_dur = prepare_sound_design(raw_wav, tl_path, project_dir, target_lufs=target_lufs)
 
     # Stage 4: Real UI Capture

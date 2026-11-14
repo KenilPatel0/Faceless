@@ -60,7 +60,16 @@
     "QSV": "Q S V",
     "LUFS": "Luffs",
     "dBFS": "D B F S",
-    "dB": "decibels"
+    "dB": "decibels",
+    "FLOPs": "flops",
+    "TFLOPS": "tera-flops",
+    "GEMM": "jem",
+    "HBM3": "H B M 3",
+    "HBM": "H B M",
+    "KV": "K V",
+    "FP16": "F P 16",
+    "FP8": "F P 8",
+    "SRAM": "S-ram"
   },
   "file_extensions": {
     "spec.md": "spec dot M D",
