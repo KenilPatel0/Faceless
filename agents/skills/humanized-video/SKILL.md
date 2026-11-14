@@ -120,3 +120,18 @@ To deliver cinema-grade clarity and unlock YouTube's premium VP09/AV01 codecs:
    - Direct raw RGB streaming pipe into FFmpeg (`pipe:0`). Peak RAM remains < 350 MB.
    - Encoder priority cascade: `h264_nvenc` &rarr; `h264_qsv` (Intel Iris Xe) &rarr; `h264_mf` (Media Foundation) &rarr; `libx264`.
 
+## 13. Human-Crafted Visual Standards & High-Retention Shorts
+To prevent videos from looking like automated AI templates:
+1. **Zero-Synthetic Real-World Asset Rule:**
+   - When referencing software, OS, benchmarks, games, or real hardware, NEVER draw synthetic mockups using Pillow rectangles.
+   - Use authentic high-DPI screenshots via `tools/capture_ui.py --4k` (terminal / browser) or transparent hardware cutouts via `tools/cutout.py`.
+2. **Cinematic Obsidian Background:**
+   - Replaces flat 2-color linear gradients with a multi-stop depth composite: deep obsidian `(10, 13, 20)`, dual radial ambient spotlights (Sapphire top-left + Amethyst bottom-right), 2.5% Gaussian film grain (eliminates YouTube gradient banding), and subtle 12% dotted matrix.
+3. **High-Retention Shorts Pacing (1.5s–2.5s Rule):**
+   - First 1.5 seconds must feature an immediate visual payoff and high-contrast hero badge.
+   - Shift the visual focal point every 1.5 to 2.5 seconds using step reveals, hero dimming/highlighting, or camera punch-ins.
+4. **Dynamic Karaoke Captions (Word-by-Word Highlight):**
+   - Limit subtitles on Shorts to 3–4 words per chunk.
+   - Active spoken word illuminates in Electric Yellow `(255, 205, 70)` or Electric Cyan `(70, 220, 255)` with a subtle $1.06\times$ scale bounce, centered at safe coordinates ($y = 3120$ in 4K / $y = 1560$ in 1080p).
+
+

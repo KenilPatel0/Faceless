@@ -40,7 +40,7 @@ This engine supports white-label and multi-creator channel workflows:
 ---
 
 ## 4. Visual Design System
-- **Background:** Vertical dark gradient `(8,12,28) -> (30,16,70)` with a subtle 90px grid in `(22,28,58)`.
+- **Background:** Cinematic Obsidian Atmospheric composite: deep obsidian `(10, 13, 20)`, dual radial ambient spotlights (Sapphire top-left + Amethyst bottom-right), 2.5% Gaussian film grain (eliminates digital color banding on YouTube), and subtle 12% dotted matrix in `(45, 58, 85)`.
 - **Typography:** **Inter Display Bold** for all titles, badges, and captions.
 - **Color Palette (RGB):**
   - White `(255,255,255)` | Dim text `(185,192,225)`
@@ -48,14 +48,14 @@ This engine supports white-label and multi-creator channel workflows:
   - Green `(90,235,150)` | Red `(255,70,90)` | Subscribe Red `(255,30,50)`
 - **Card Fills:** Dark surfaces `(16,20,36)` with delicate 1px border outlines `(255,255,255,30)` or subtle tinted accents.
 - **Real UI Rule:** NEVER draw synthetic mockups of existing websites, apps, or operating systems (GitHub, Terminal, Windows Defender, VS Code, ChatGPT) using raw Pillow rectangles. Always use genuine UI screen captures via `tools/capture_ui.py` or authentic assets.
-- **Brand Watermark:** Displayed per active channel configuration (top-center on Shorts `y=150`, top-left on Long `70,55`).
+- **Brand Watermark:** Displayed per active channel configuration (top-center on Shorts `y=260`, top-left on Long `70,55`).
 
 ---
 
-## 5. Burned-In Captions
+## 5. Captions & Karaoke
 - ALL CAPS, crisp white, black outline, centered.
-- **Shorts:** Font size 66, stroke 8, centered at `y=1560`, ~4 words per chunk.
-- **Long Videos:** Font size 40, stroke 5, centered at `y=1010` (bottom center), one line max (width <= 1400px), at most 9 words per chunk.
+- **Shorts:** Font size 132 (4K) / 66 (1080p), stroke 16/8, centered at `y=3120` (4K) / `y=1560` (1080p), strictly 3–4 words per chunk. Dynamic karaoke active word illuminates in Electric Yellow `(255, 205, 70)` with a subtle $1.06\times$ scale bounce.
+- **Long Videos:** Font size 80 (4K) / 40 (1080p), stroke 10/5, centered at `y=2020` (4K) / `y=1010` (1080p) (bottom center), one line max (width <= 2800px / 1400px), at most 9 words per chunk.
 
 ---
 

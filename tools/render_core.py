@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 render_core.py — Resolution-Agnostic Vector Rendering Engine for Faceless Video Production
-Supports native 4K UHD (3840x2160 @ 60 FPS) and 1080p with zero-resize overscan camera push-in.
+Supports native 4K UHD (3840x2160 @ 60 FPS) and 1080p with zero-resize overscan camera push-in,
+cinematic obsidian atmospheric backgrounds, and dynamic karaoke word-pop Shorts captions.
 """
 
 import os
@@ -10,7 +11,8 @@ import time
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Tuple, Optional, List, Dict, Any
-from PIL import Image, ImageDraw, ImageFont
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
@@ -76,7 +78,7 @@ PROFILE_4K60_VERTICAL = ResolutionProfile(
     subtitle_fontsize=132,
     subtitle_stroke=16,
     grid_size=180,
-    watermark_pos=(1080, 300),
+    watermark_pos=(1080, 260),
     watermark_size=72
 )
 
@@ -106,7 +108,7 @@ PROFILE_1080P30_VERTICAL = ResolutionProfile(
     subtitle_fontsize=66,
     subtitle_stroke=8,
     grid_size=90,
-    watermark_pos=(540, 150),
+    watermark_pos=(540, 130),
     watermark_size=36
 )
 
@@ -149,41 +151,73 @@ PALETTE = {
 }
 
 
-def create_background(width: int, height: int, grid_size: int = 90) -> Image.Image:
-    """Pre-renders dark gradient background with subtle grid."""
-    img = Image.new("RGB", (width, height))
+def create_cinematic_background(width: int, height: int, is_vertical: bool = False) -> Image.Image:
+    """
+    Generates a rich, cinematic obsidian atmospheric background:
+    - Base obsidian surface (10, 13, 20)
+    - Dual ambient spotlights (Sapphire top-left + Amethyst bottom-right)
+    - 2.5% film grain roll-off (eliminates digital color banding on YouTube)
+    - Subtle 12% opacity dotted matrix grid
+    - 15% edge vignette to draw focus to center content
+    """
+    # 1. Base obsidian
+    base = np.zeros((height, width, 3), dtype=np.float32)
+    base[:, :] = [10.0, 13.0, 20.0]
+
+    y_grid, x_grid = np.ogrid[:height, :width]
+
+    # 2. Dual ambient radial spots
+    cx1, cy1 = (width * 0.25, height * 0.22) if is_vertical else (width * 0.22, height * 0.25)
+    rx1, ry1 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
+    d1_sq = ((x_grid - cx1) / rx1)**2 + ((y_grid - cy1) / ry1)**2
+    spot1 = np.exp(-d1_sq * 1.5)[:, :, None] * np.array([24.0, 38.0, 75.0], dtype=np.float32)
+
+    cx2, cy2 = (width * 0.75, height * 0.75) if is_vertical else (width * 0.78, height * 0.75)
+    rx2, ry2 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
+    d2_sq = ((x_grid - cx2) / rx2)**2 + ((y_grid - cy2) / ry2)**2
+    spot2 = np.exp(-d2_sq * 1.5)[:, :, None] * np.array([38.0, 24.0, 68.0], dtype=np.float32)
+
+    comp = base + spot1 + spot2
+
+    # 3. 2.5% Film Grain (kills digital gradient banding)
+    rng = np.random.default_rng(42)
+    grain = rng.normal(0.0, 3.2, (height, width, 1)).astype(np.float32)
+    comp += grain
+
+    # 4. Vignette
+    vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+    vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+    vignette = 1.0 - 0.22 * np.clip(vx + vy, 0.0, 1.0)[:, :, None]
+    comp *= vignette
+
+    final_arr = np.clip(comp, 0, 255).astype(np.uint8)
+    img = Image.fromarray(final_arr, "RGB")
     d = ImageDraw.Draw(img)
-    top_col = (8, 12, 28)
-    bot_col = (30, 16, 70)
-    for y in range(height):
-        p = y / max(1, height - 1)
-        r = int(top_col[0] + (bot_col[0] - top_col[0]) * p)
-        g = int(top_col[1] + (bot_col[1] - top_col[1]) * p)
-        b = int(top_col[2] + (bot_col[2] - top_col[2]) * p)
-        d.line([(0, y), (width, y)], fill=(r, g, b))
-    
-    grid_col = (22, 28, 58)
-    for x in range(0, width, grid_size):
-        d.line([(x, 0), (x, height)], fill=grid_col)
-    for y in range(0, height, grid_size):
-        d.line([(0, y), (width, y)], fill=grid_col)
+
+    # 5. Subtle Technical Dotted Matrix (12% opacity)
+    matrix_step = 140 if is_vertical else 160
+    matrix_color = (45, 58, 85)
+    for x in range(matrix_step // 2, width, matrix_step):
+        for y in range(matrix_step // 2, height, matrix_step):
+            d.rectangle([x - 1, y - 1, x + 1, y + 1], fill=matrix_color)
+
     return img
 
 
-_BG_CACHE: Dict[Tuple[int, int, int], Image.Image] = {}
+_BG_CACHE: Dict[Tuple[int, int, bool], Image.Image] = {}
 
-def get_cached_background(width: int, height: int, grid_size: int = 90) -> Image.Image:
-    key = (width, height, grid_size)
+def get_cached_background(width: int, height: int, is_vertical: bool = False) -> Image.Image:
+    key = (width, height, is_vertical)
     if key not in _BG_CACHE:
-        _BG_CACHE[key] = create_background(width, height, grid_size)
+        _BG_CACHE[key] = create_cinematic_background(width, height, is_vertical=is_vertical)
     return _BG_CACHE[key].copy()
 
 
 class OverscanCanvas:
     """
-    4K Dynamic Overscan Canvas:
+    Dynamic Overscan Canvas:
     Allocates at 1.035x overscan margin.
-    Slices a 3840x2160 crop directly on each frame with organic drift,
+    Slices exact width x height crops directly on each frame with organic drift,
     achieving 120+ FPS throughput by eliminating CPU resize overhead.
     """
     def __init__(self, profile: ResolutionProfile, overscan: float = 0.035):
@@ -198,7 +232,7 @@ class OverscanCanvas:
         self.scale = profile.scale
 
         # Base canvas
-        self.bg = get_cached_background(self.ov_w, self.ov_h, int(profile.grid_size))
+        self.bg = get_cached_background(self.ov_w, self.ov_h, is_vertical=profile.is_vertical)
         self.frame = self.bg.copy()
         self.draw = ImageDraw.Draw(self.frame)
 
@@ -247,32 +281,27 @@ class OverscanCanvas:
     def slice_frame(self, p_scene: float, drift_amp: float = 8.0) -> Image.Image:
         """
         Zero-Resize Camera Drift Crop:
-        Takes a direct 3840x2160 crop slice from the overscan canvas.
+        Takes a direct crop slice from the overscan canvas.
         Zero pixel resizing = 120+ FPS throughput.
         """
         p = max(0.0, min(1.0, p_scene))
-        # Subtle harmonic camera drift
         dx = drift_amp * (math.sin(0.7 * p * 6.28) + 0.5 * math.sin(1.9 * p * 6.28))
         dy = (drift_amp * 0.6) * (math.sin(0.6 * p * 6.28) + 0.5 * math.sin(1.7 * p * 6.28))
         
-        # Camera zoom simulation via progressive crop window
-        # At p=0: centered. At p=1: zoomed slightly into focal center.
         zoom_offset_x = (self.margin_x * 0.5) * p
         zoom_offset_y = (self.margin_y * 0.5) * p
 
         x0 = int(round(self.margin_x - zoom_offset_x + dx))
         y0 = int(round(self.margin_y - zoom_offset_y + dy))
 
-        # Clamp boundaries
         x0 = max(0, min(self.ov_w - self.W, x0))
         y0 = max(0, min(self.ov_h - self.H, y0))
 
-        # Fast direct crop slice (takes ~8ms at 4K)
         return self.frame.crop((x0, y0, x0 + self.W, y0 + self.H))
 
 
 def render_subtitles(img: Image.Image, text: str, profile: ResolutionProfile):
-    """Draws burned-in subtitles at the designated safe zone with high-contrast outline."""
+    """Draws burned-in standard subtitles at the designated safe zone."""
     if not text:
         return
     d = ImageDraw.Draw(img)
@@ -282,8 +311,56 @@ def render_subtitles(img: Image.Image, text: str, profile: ResolutionProfile):
            stroke_width=profile.subtitle_stroke, stroke_fill=(0, 0, 0))
 
 
+def render_karaoke_shorts(
+    img: Image.Image,
+    words: List[Tuple[str, float, float]],
+    t: float,
+    profile: ResolutionProfile,
+    active_color=YELLOW,
+    base_color=WHITE
+):
+    """
+    Dynamic Karaoke Shorts Captions:
+    - Renders 3-4 word chunks centered at profile.subtitle_y.
+    - Active word illuminates in active_color (Electric Yellow or Cyan) with a subtle 1.06x scale bounce.
+    - Inactive words remain crisp pure white with heavy black stroke.
+    """
+    if not words:
+        return
+    d = ImageDraw.Draw(img)
+    font_base = get_font(profile.subtitle_fontsize)
+    font_bounce = get_font(int(profile.subtitle_fontsize * 1.06))
+
+    # Calculate total chunk width
+    word_widths = []
+    for w, a, b in words:
+        is_active = (a <= t < b)
+        font = font_bounce if is_active else font_base
+        wd = d.textlength(w.upper() + " ", font=font)
+        word_widths.append((w, a, b, wd, font, is_active))
+
+    tot_w = sum(ww[3] for ww in word_widths)
+    start_x = (profile.width - tot_w) / 2.0
+    cy = profile.subtitle_y
+
+    cur_x = start_x
+    for w, a, b, wd, font, is_active in word_widths:
+        fill_col = active_color if is_active else base_color
+        d.text(
+            (cur_x, cy),
+            w.upper(),
+            font=font,
+            fill=fill_col,
+            anchor="lm",
+            stroke_width=profile.subtitle_stroke,
+            stroke_fill=(0, 0, 0)
+        )
+        cur_x += wd
+
+
 def render_watermark(img: Image.Image, channel_name: str, profile: ResolutionProfile):
     """Draws fixed channel watermark in safe zone."""
     d = ImageDraw.Draw(img)
     font = get_font(profile.watermark_size)
-    d.text(profile.watermark_pos, channel_name, font=font, fill=(160, 170, 210), anchor="lm")
+    anchor = "mm" if profile.is_vertical else "lm"
+    d.text(profile.watermark_pos, channel_name, font=font, fill=(160, 170, 210), anchor=anchor)
