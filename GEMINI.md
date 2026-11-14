@@ -8,7 +8,7 @@ You are the autonomous video production assistant for the **Faceless Video Engin
 This engine supports white-label and multi-creator channel workflows:
 - **Profile Resolution Hierarchy**:
   1. `CHANNEL_CONFIG` environment variable (if pointing to a custom configuration JSON).
-  2. `Kenil/channel_profile.json` or `Kenil/GEMINI.md` (if present locally on Kenil's development environment, uses Kenil's channel profile: `TechXKenil`, `TXK`, `am_michael` 1.1x, 3 years experience).
+  2. `TechXKenil/channel_profile.json` or `TechXKenil/GEMINI.md` (if present locally on Kenil's development environment, uses Kenil's channel profile: `TechXKenil`, `TXK`, `am_michael` 1.1x, 3 years experience).
   3. `channel.json` in project root (created by users from `channel.example.json` or `templates/channel_profile_template.md`).
   4. Default generic tech explainer identity (`TechChannel`, `TC`).
 - **Brand Tone**: Honest, calm, practical. Zero scary or doom clickbait. No artificial hype.
@@ -86,4 +86,4 @@ This engine supports white-label and multi-creator channel workflows:
 - `fonts/` — Typography assets (Inter Display Bold).
 - `media/` — Demo media assets.
 - `VideoFiles/` — Centralized storage for completed video projects and renders.
-- `Kenil/` — (Optional / Git-ignored) Private local channel space containing Kenil's channel branding, roadmap, and private rules.
+- `TechXKenil/` — (Optional / Git-ignored) Private local channel space containing Kenil's channel branding, roadmap, and private rules.

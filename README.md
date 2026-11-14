@@ -172,14 +172,23 @@ Or generate an in-depth long-form explainer:
 Create an 8-minute deep dive video on "Is Coding Still Worth It in the AI Era?" with full graphics and chapters.
 ```
 
-### 3️⃣ Configure Your Channel Identity (White-Label Setup)
-Customize your channel name, watermark, intro/outro cards, and voice in seconds:
+### 3️⃣ Configure Your Channel Identity & Private Workspace (White-Label Setup)
+This engine is built to support any creator or channel while keeping personal branding and private video assets completely secure.
+
+**Option A: Quick Setup via `channel.json`**
 ```bash
 cp channel.example.json channel.json
 ```
 Edit `channel.json` with your channel name, logo badge, and voice settings. The engine automatically reads your profile across all video rendering, metadata generation, and thumbnail creation.
 
-> **🔒 Privacy Guarantee:** Custom channel profiles (like `channel.json` or private creator spaces like `Kenil/`) are listed in `.gitignore`, keeping personal channel names, voice choices, and private video roadmaps completely safe from accidental public commits.
+**Option B: Dedicated Private Channel Folder (Recommended for Creators)**
+Creators can organize all their personal assets inside their own dedicated channel folder (for example, the maintainer's personal channel workspace is `TechXKenil/`):
+- **Custom Skills**: Tailored voice/motion skills specific to your channel persona.
+- **Personal Markdown Files & Guidelines**: Custom `GEMINI.md`, `CLAUDE.md`, or brand rules.
+- **Channel Configuration**: `channel_profile.json` (channel name, badge, intro/outro narration, colors).
+- **Private Video Backlogs & Ideas**: Internal roadmaps (`IDEAS.md`), draft scripts, and research.
+
+> **🔒 Privacy Guarantee:** Personal folders (such as `TechXKenil/`) and `channel.json` are strictly excluded in `.gitignore`. Your personal channel identity, private skills, internal video roadmaps, and voice settings remain local to your machine and are **never** pushed to public GitHub.
 
 ### 4️⃣ Manual CLI Workflow
 If you prefer running production manually:
@@ -270,7 +279,7 @@ techxkenil-video-engine/
 │       └── youtube-metadata/ # Algorithm SEO & chapter generator
 │
 ├── VideoFiles/               # Centralized local video suites (git-ignored, local only)
-├── Kenil/                    # Private local channel space (git-ignored, local only)
+├── TechXKenil/               # Private local channel space (git-ignored, local only; creator's custom folder)
 ├── fonts/                    # High-legibility typography (Inter, Bebas Neue)
 └── media/                    # Showcase demos & permanent SFX library
 ```

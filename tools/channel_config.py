@@ -68,14 +68,15 @@ def get_channel_config(root_dir: str = None) -> Dict[str, Any]:
         except Exception:
             pass
 
-    # 2. Local Kenil private space (if present on local machine)
-    kenil_profile_path = os.path.join(root_dir, "Kenil", "channel_profile.json")
-    if os.path.exists(kenil_profile_path):
-        try:
-            with open(kenil_profile_path, "r", encoding="utf-8") as f:
-                return {**DEFAULT_CHANNEL_CONFIG, **json.load(f)}
-        except Exception:
-            pass
+    # 2. Local personal channel private space (e.g. TechXKenil/ or Kenil/ if present locally)
+    for folder in ["TechXKenil", "Kenil"]:
+        profile_path = os.path.join(root_dir, folder, "channel_profile.json")
+        if os.path.exists(profile_path):
+            try:
+                with open(profile_path, "r", encoding="utf-8") as f:
+                    return {**DEFAULT_CHANNEL_CONFIG, **json.load(f)}
+            except Exception:
+                pass
 
     # 3. Project root user channel.json
     root_channel_path = os.path.join(root_dir, "channel.json")

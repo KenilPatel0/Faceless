@@ -18,7 +18,9 @@ ENV/
 *.aiff
 *.mp4
 
-# Private Channel Space & Custom Channel Profiles (local only, do not push to GitHub)
+# Private Channel Spaces & Custom Channel Profiles (local only, do not push to GitHub)
+TechXKenil/
+techxkenil/
 Kenil/
 kenil/
 channel.json
