@@ -152,64 +152,200 @@ PALETTE = {
 
 
 def create_cinematic_background(width: int, height: int, is_vertical: bool = False) -> Image.Image:
-    """
-    Generates a rich, cinematic obsidian atmospheric background:
-    - Base obsidian surface (10, 13, 20)
-    - Dual ambient spotlights (Sapphire top-left + Amethyst bottom-right)
-    - 2.5% film grain roll-off (eliminates digital color banding on YouTube)
-    - Subtle 12% opacity dotted matrix grid
-    - 15% edge vignette to draw focus to center content
-    """
-    # 1. Base obsidian
-    base = np.zeros((height, width, 3), dtype=np.float32)
-    base[:, :] = [10.0, 13.0, 20.0]
+    """Wrapper for obsidian atmospheric background for backward compatibility."""
+    return create_thematic_background(width, height, theme="obsidian", is_vertical=is_vertical)
 
+
+def create_thematic_background(
+    width: int,
+    height: int,
+    theme: str = "obsidian",
+    is_vertical: bool = False,
+    accent: Optional[Tuple[int, int, int]] = None
+) -> Image.Image:
+    """
+    Generates rich, bespoke thematic backgrounds tailored to the video topic:
+    - 'obsidian': Cinematic obsidian atmospheric with ambient spotlights and film grain
+    - 'blueprint': Technical architectural grid with gradient and intersection crosshairs
+    - 'silicon': Silicon interposer / PCB micro-grid traces for hardware, GPU, and VRAM topics
+    - 'terminal': CRT scanline / phosphor matrix console atmosphere for dev tools & security
+    - 'studio': Smooth diffuse radial midnight gradient for modern SaaS & engineering overviews
+    - 'minimal': Ultra-clean graphite matte canvas with subtle geometric framing
+    """
+    t_lower = theme.lower().strip()
     y_grid, x_grid = np.ogrid[:height, :width]
-
-    # 2. Dual ambient radial spots
-    cx1, cy1 = (width * 0.25, height * 0.22) if is_vertical else (width * 0.22, height * 0.25)
-    rx1, ry1 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
-    d1_sq = ((x_grid - cx1) / rx1)**2 + ((y_grid - cy1) / ry1)**2
-    spot1 = np.exp(-d1_sq * 1.5)[:, :, None] * np.array([24.0, 38.0, 75.0], dtype=np.float32)
-
-    cx2, cy2 = (width * 0.75, height * 0.75) if is_vertical else (width * 0.78, height * 0.75)
-    rx2, ry2 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
-    d2_sq = ((x_grid - cx2) / rx2)**2 + ((y_grid - cy2) / ry2)**2
-    spot2 = np.exp(-d2_sq * 1.5)[:, :, None] * np.array([38.0, 24.0, 68.0], dtype=np.float32)
-
-    comp = base + spot1 + spot2
-
-    # 3. 2.5% Film Grain (kills digital gradient banding)
     rng = np.random.default_rng(42)
-    grain = rng.normal(0.0, 3.2, (height, width, 1)).astype(np.float32)
-    comp += grain
 
-    # 4. Vignette
-    vx = ((x_grid - width * 0.5) / (width * 0.5))**2
-    vy = ((y_grid - height * 0.5) / (height * 0.5))**2
-    vignette = 1.0 - 0.22 * np.clip(vx + vy, 0.0, 1.0)[:, :, None]
-    comp *= vignette
+    if t_lower == "blueprint":
+        # 1. Blueprint Architecture Gradient
+        top_c = np.array([8.0, 12.0, 28.0], dtype=np.float32)
+        bot_c = np.array([24.0, 16.0, 52.0], dtype=np.float32)
+        grad_factor = (y_grid / max(height - 1, 1)).astype(np.float32)
+        comp = np.zeros((height, width, 3), dtype=np.float32)
+        comp[:, :] = top_c * (1.0 - grad_factor[:, :, None]) + bot_c * grad_factor[:, :, None]
 
-    final_arr = np.clip(comp, 0, 255).astype(np.uint8)
-    img = Image.fromarray(final_arr, "RGB")
-    d = ImageDraw.Draw(img)
+        # Ambient soft center spotlight
+        cx, cy = width * 0.5, height * 0.45
+        d_sq = ((x_grid - cx) / (width * 0.45))**2 + ((y_grid - cy) / (height * 0.45))**2
+        comp += np.exp(-d_sq * 1.8)[:, :, None] * np.array([18.0, 28.0, 55.0], dtype=np.float32)
 
-    # 5. Subtle Technical Dotted Matrix (12% opacity)
-    matrix_step = 140 if is_vertical else 160
-    matrix_color = (45, 58, 85)
-    for x in range(matrix_step // 2, width, matrix_step):
-        for y in range(matrix_step // 2, height, matrix_step):
-            d.rectangle([x - 1, y - 1, x + 1, y + 1], fill=matrix_color)
+        # Film Grain & Vignette
+        comp += rng.normal(0.0, 2.8, (height, width, 1)).astype(np.float32)
+        vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+        vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+        comp *= (1.0 - 0.20 * np.clip(vx + vy, 0.0, 1.0)[:, :, None])
 
-    return img
+        img = Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8), "RGB")
+        d = ImageDraw.Draw(img)
+
+        # Blueprint Technical Grid
+        grid_step = 90 if not is_vertical else 100
+        grid_col = (26, 38, 70)
+        for x in range(0, width, grid_step):
+            d.line([(x, 0), (x, height)], fill=grid_col, width=1)
+        for y in range(0, height, grid_step):
+            d.line([(0, y), (width, y)], fill=grid_col, width=1)
+
+        # Crosshairs at intersections
+        for x in range(grid_step * 2, width, grid_step * 3):
+            for y in range(grid_step * 2, height, grid_step * 3):
+                d.line([(x - 4, y), (x + 4, y)], fill=(45, 65, 110), width=1)
+                d.line([(x, y - 4), (x, y + 4)], fill=(45, 65, 110), width=1)
+
+        return img
+
+    elif t_lower == "silicon":
+        # Silicon Interposer / Chip Hardware Theme
+        base_c = np.array([11.0, 13.0, 20.0], dtype=np.float32)
+        comp = np.zeros((height, width, 3), dtype=np.float32) + base_c
+
+        # Sapphire & Copper ambient pools
+        cx1, cy1 = width * 0.3, height * 0.3
+        d1 = ((x_grid - cx1) / (width * 0.4))**2 + ((y_grid - cy1) / (height * 0.4))**2
+        comp += np.exp(-d1 * 1.5)[:, :, None] * np.array([20.0, 35.0, 65.0], dtype=np.float32)
+
+        cx2, cy2 = width * 0.7, height * 0.7
+        d2 = ((x_grid - cx2) / (width * 0.4))**2 + ((y_grid - cy2) / (height * 0.4))**2
+        comp += np.exp(-d2 * 1.5)[:, :, None] * np.array([45.0, 25.0, 20.0], dtype=np.float32)
+
+        comp += rng.normal(0.0, 2.5, (height, width, 1)).astype(np.float32)
+        vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+        vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+        comp *= (1.0 - 0.22 * np.clip(vx + vy, 0.0, 1.0)[:, :, None])
+
+        img = Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8), "RGB")
+        d = ImageDraw.Draw(img)
+
+        # PCB / Bus lane trace lines
+        trace_step = 120
+        for x in range(trace_step // 2, width, trace_step):
+            d.line([(x, 0), (x, height)], fill=(22, 28, 42), width=1)
+        for y in range(trace_step // 2, height, trace_step):
+            d.line([(0, y), (width, y)], fill=(22, 28, 42), width=1)
+
+        # Pin pads
+        for x in range(trace_step // 2, width, trace_step * 2):
+            for y in range(trace_step // 2, height, trace_step * 2):
+                d.rectangle([x - 2, y - 2, x + 2, y + 2], fill=(50, 60, 85))
+
+        return img
+
+    elif t_lower == "terminal":
+        # CRT Terminal / Dark Phosphor Theme
+        base_c = np.array([8.0, 14.0, 12.0], dtype=np.float32)
+        comp = np.zeros((height, width, 3), dtype=np.float32) + base_c
+
+        # Soft emerald ambient center
+        cx, cy = width * 0.5, height * 0.4
+        d_sq = ((x_grid - cx) / (width * 0.5))**2 + ((y_grid - cy) / (height * 0.5))**2
+        comp += np.exp(-d_sq * 1.6)[:, :, None] * np.array([12.0, 32.0, 20.0], dtype=np.float32)
+
+        comp += rng.normal(0.0, 3.0, (height, width, 1)).astype(np.float32)
+        vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+        vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+        comp *= (1.0 - 0.25 * np.clip(vx + vy, 0.0, 1.0)[:, :, None])
+
+        img = Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8), "RGB")
+        d = ImageDraw.Draw(img)
+
+        # Scanlines
+        scan_step = 6
+        for y in range(0, height, scan_step):
+            d.line([(0, y), (width, y)], fill=(12, 18, 15), width=1)
+
+        return img
+
+    elif t_lower == "studio":
+        # Clean Studio Radial Gradient
+        base_c = np.array([10.0, 14.0, 24.0], dtype=np.float32)
+        comp = np.zeros((height, width, 3), dtype=np.float32) + base_c
+
+        cx, cy = width * 0.5, height * 0.42
+        d_sq = ((x_grid - cx) / (width * 0.55))**2 + ((y_grid - cy) / (height * 0.55))**2
+        comp += np.exp(-d_sq * 1.4)[:, :, None] * np.array([28.0, 36.0, 64.0], dtype=np.float32)
+
+        comp += rng.normal(0.0, 2.2, (height, width, 1)).astype(np.float32)
+        vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+        vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+        comp *= (1.0 - 0.18 * np.clip(vx + vy, 0.0, 1.0)[:, :, None])
+
+        return Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8), "RGB")
+
+    elif t_lower == "minimal":
+        # Minimalist Deep Graphite
+        base_c = np.array([15.0, 16.0, 20.0], dtype=np.float32)
+        comp = np.zeros((height, width, 3), dtype=np.float32) + base_c
+        comp += rng.normal(0.0, 2.0, (height, width, 1)).astype(np.float32)
+
+        img = Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8), "RGB")
+        d = ImageDraw.Draw(img)
+        # Subtle perimeter frame guide
+        pad = 60
+        d.rectangle([pad, pad, width - pad, height - pad], outline=(28, 30, 38), width=1)
+        return img
+
+    else:
+        # Default: Cinematic Obsidian Atmospheric
+        base = np.zeros((height, width, 3), dtype=np.float32)
+        base[:, :] = [10.0, 13.0, 20.0]
+
+        cx1, cy1 = (width * 0.25, height * 0.22) if is_vertical else (width * 0.22, height * 0.25)
+        rx1, ry1 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
+        d1_sq = ((x_grid - cx1) / rx1)**2 + ((y_grid - cy1) / ry1)**2
+        spot1 = np.exp(-d1_sq * 1.5)[:, :, None] * np.array([24.0, 38.0, 75.0], dtype=np.float32)
+
+        cx2, cy2 = (width * 0.75, height * 0.75) if is_vertical else (width * 0.78, height * 0.75)
+        rx2, ry2 = (width * 0.45, height * 0.35) if is_vertical else (width * 0.40, height * 0.45)
+        d2_sq = ((x_grid - cx2) / rx2)**2 + ((y_grid - cy2) / ry2)**2
+        spot2 = np.exp(-d2_sq * 1.5)[:, :, None] * np.array([38.0, 24.0, 68.0], dtype=np.float32)
+
+        comp = base + spot1 + spot2
+        comp += rng.normal(0.0, 3.2, (height, width, 1)).astype(np.float32)
+
+        vx = ((x_grid - width * 0.5) / (width * 0.5))**2
+        vy = ((y_grid - height * 0.5) / (height * 0.5))**2
+        vignette = 1.0 - 0.22 * np.clip(vx + vy, 0.0, 1.0)[:, :, None]
+        comp *= vignette
+
+        final_arr = np.clip(comp, 0, 255).astype(np.uint8)
+        img = Image.fromarray(final_arr, "RGB")
+        d = ImageDraw.Draw(img)
+
+        matrix_step = 140 if is_vertical else 160
+        matrix_color = (45, 58, 85)
+        for x in range(matrix_step // 2, width, matrix_step):
+            for y in range(matrix_step // 2, height, matrix_step):
+                d.rectangle([x - 1, y - 1, x + 1, y + 1], fill=matrix_color)
+
+        return img
 
 
-_BG_CACHE: Dict[Tuple[int, int, bool], Image.Image] = {}
+_BG_CACHE: Dict[Tuple[int, int, bool, str], Image.Image] = {}
 
-def get_cached_background(width: int, height: int, is_vertical: bool = False) -> Image.Image:
-    key = (width, height, is_vertical)
+def get_cached_background(width: int, height: int, is_vertical: bool = False, theme: str = "obsidian") -> Image.Image:
+    key = (width, height, is_vertical, theme.lower())
     if key not in _BG_CACHE:
-        _BG_CACHE[key] = create_cinematic_background(width, height, is_vertical=is_vertical)
+        _BG_CACHE[key] = create_thematic_background(width, height, theme=theme, is_vertical=is_vertical)
     return _BG_CACHE[key].copy()
 
 
@@ -220,9 +356,10 @@ class OverscanCanvas:
     Slices exact width x height crops directly on each frame with organic drift,
     achieving 120+ FPS throughput by eliminating CPU resize overhead.
     """
-    def __init__(self, profile: ResolutionProfile, overscan: float = 0.035):
+    def __init__(self, profile: ResolutionProfile, overscan: float = 0.035, theme: str = "obsidian", custom_bg: Optional[Image.Image] = None):
         self.profile = profile
         self.overscan = overscan
+        self.theme = theme
         self.W = profile.width
         self.H = profile.height
         self.ov_w = int(round(self.W * (1.0 + overscan)))
@@ -232,7 +369,10 @@ class OverscanCanvas:
         self.scale = profile.scale
 
         # Base canvas
-        self.bg = get_cached_background(self.ov_w, self.ov_h, is_vertical=profile.is_vertical)
+        if custom_bg is not None:
+            self.bg = custom_bg.copy()
+        else:
+            self.bg = get_cached_background(self.ov_w, self.ov_h, is_vertical=profile.is_vertical, theme=theme)
         self.frame = self.bg.copy()
         self.draw = ImageDraw.Draw(self.frame)
 

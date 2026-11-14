@@ -191,10 +191,12 @@ class ScenePlanLinter:
         if not (min_allowed <= total_time <= max_allowed):
             warnings.append(f"Total duration {total_time:.1f}s deviates from target {target_duration:.1f}s by >{tolerance*100:.0f}%.")
 
-        # 5. Brand Layer Immutability
+        # 5. Visual Theme & Style Pack Check
         style_pack = brief.get("style_pack", "S1")
-        if style_pack not in ["S1", "S2", "S3"]:
-            errors.append(f"Invalid style_pack '{style_pack}'. Must be S1, S2, or S3.")
+        bg_theme = brief.get("background_theme", "obsidian")
+        valid_themes = ["S1", "S2", "S3", "blueprint", "silicon", "terminal", "studio", "minimal", "obsidian", "topic_custom"]
+        if style_pack not in valid_themes and bg_theme not in valid_themes:
+            errors.append(f"Invalid style_pack '{style_pack}' / background_theme '{bg_theme}'. Must be in: {valid_themes}")
 
         # 6. Variety vs History Check
         variety_valid, var_err = self.check_variety(plan)
@@ -237,12 +239,14 @@ class ScenePlanLinter:
         primary_visuals = [b.get("primary", "") for b in beats]
         transitions = [b.get("transition_out", "") for b in beats if b.get("transition_out")]
         accent = plan.get("brief", {}).get("color_accent", "accent_cyan")
+        theme = plan.get("brief", {}).get("background_theme") or plan.get("brief", {}).get("style_pack", "S1")
         topic_type = plan.get("brief", {}).get("topic_type", "")
         return {
             "hook_primary": hook_type,
             "primary_visuals": primary_visuals,
             "transitions": transitions,
             "accent": accent,
+            "theme": theme,
             "topic_type": topic_type
         }
 
@@ -251,6 +255,8 @@ class ScenePlanLinter:
         if f1["hook_primary"] != f2["hook_primary"]:
             diffs += 1
         if f1["accent"] != f2["accent"]:
+            diffs += 1
+        if f1["theme"] != f2.get("theme", ""):
             diffs += 1
         if f1["topic_type"] != f2["topic_type"]:
             diffs += 1

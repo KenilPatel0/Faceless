@@ -39,14 +39,20 @@ This engine supports white-label and multi-creator channel workflows:
 
 ---
 
-## 4. Visual Design System
-- **Background:** Cinematic Obsidian Atmospheric composite: deep obsidian `(10, 13, 20)`, dual radial ambient spotlights (Sapphire top-left + Amethyst bottom-right), 2.5% Gaussian film grain (eliminates digital color banding on YouTube), and subtle 12% dotted matrix in `(45, 58, 85)`.
-- **Typography:** **Inter Display Bold** for all titles, badges, and captions.
-- **Color Palette (RGB):**
-  - White `(255,255,255)` | Dim text `(185,192,225)`
-  - Accent Cyan `(70,220,255)` | Accent Purple `(150,110,255)` | Yellow `(255,205,70)`
-  - Green `(90,235,150)` | Red `(255,70,90)` | Subscribe Red `(255,30,50)`
-- **Card Fills:** Dark surfaces `(16,20,36)` with delicate 1px border outlines `(255,255,255,30)` or subtle tinted accents.
+## 4. Visual Design System: Consistent Anchor & Topic-Specific Visual Worlds
+- **Brand Consistency Rule (The Anchor):** ONLY the channel **Intro Card** and **Outro Card** are fixed and standardized across all videos for instant channel recognition and conversion.
+- **Story-Driven Visual World Flexibility:** Apart from the intro and outro, the entire body of each video (background environment, color palette, card styling, and layout geometry) MUST be dynamically tailored to the specific topic. Never force every video into the exact same background or color theme.
+- **Thematic Background Library (Topic-Specific):**
+  - `blueprint_grid`: Technical architectural grid on deep indigo/slate gradient (for systems design, agent loops, backend architectures).
+  - `silicon_interposer`: Integrated circuit/PCB traces, microgrid, bus lanes (for GPU hardware, VRAM, silicon, inference speed).
+  - `cyber_terminal`: CRT scanline / phosphor matrix console atmosphere (for cybersecurity, Linux, terminal tooling).
+  - `studio_gradient`: High-end smooth midnight-to-charcoal radial gradient (for modern developer tools, SaaS overviews).
+  - `minimal_dark`: Ultra-clean graphite matte canvas with subtle perimeter guidelines (for clean code, algorithm tutorials).
+  - `obsidian_atmospheric`: Deep obsidian with dual ambient spotlights and film grain (for cinematic technical documentaries).
+  - `topic_custom`: Bespoke procedural visual atmosphere tailored directly to the video's script and story.
+- **Typography:** **Inter Display Bold** for all titles, badges, and captions to preserve crisp readability.
+- **Dynamic Color Palettes:** Base accent color chosen per video theme (e.g. Electric Cyan, Matrix Emerald, Amber Orange, Neon Purple, Crimson Red, Royal Sapphire).
+- **Card Fills & Surfaces:** Tailored to the theme (frosted glass `S3`, solid dark cards, blueprint bordered panels, or terminal frames).
 - **Real UI Rule:** NEVER draw synthetic mockups of existing websites, apps, or operating systems (GitHub, Terminal, Windows Defender, VS Code, ChatGPT) using raw Pillow rectangles. Always use genuine UI screen captures via `tools/capture_ui.py` or authentic assets.
 - **Brand Watermark:** Displayed per active channel configuration (top-center on Shorts `y=260`, top-left on Long `70,55`).
 

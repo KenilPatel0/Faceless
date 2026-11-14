@@ -68,19 +68,31 @@
       "synthetic_ui_forbidden": true
     },
     "variety_vs_consistency": {
-      "brand_layer_fixed": {
-        "style_pack": "S1",
+      "brand_anchor_fixed": {
+        "intro_outro_template": "master_consistent",
         "typography": "Inter Display Bold",
-        "voice": "Kokoro am_michael 1.1x",
-        "intro_outro_template": "master_consistent"
+        "voice": "Kokoro am_michael 1.1x"
       },
-      "scene_layer_variable": {
+      "topic_visual_world_dynamic": {
+        "background_freedom": true,
+        "available_themes": [
+          "blueprint",
+          "silicon",
+          "terminal",
+          "studio",
+          "minimal",
+          "obsidian",
+          "topic_custom"
+        ],
+        "design_consistency_rule": "Apart from Intro and Outro, the whole video's background, card styling, color palette, and visual metaphors must adapt dynamically to the topic to prevent repetition and visual fatigue.",
         "min_differences_vs_last_3_plans": 3,
         "variable_elements": [
+          "background_theme",
+          "color_accent",
           "hook_type",
           "primary_visual_per_beat",
           "transition_set",
-          "color_accent",
+          "card_style",
           "scene_order"
         ]
       },

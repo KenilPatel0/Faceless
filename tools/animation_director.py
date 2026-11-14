@@ -108,6 +108,55 @@ class AnimationDirector:
 
         return primary, secondaries, avoid
 
+    def recommend_visual_theme(self, topic: str) -> Dict[str, Any]:
+        """
+        Recommends a bespoke visual world (background theme, color accent, card style)
+        tailored specifically to the topic to avoid cookie-cutter visual monotony.
+        """
+        t_low = topic.lower()
+        if any(w in t_low for w in ["gpu", "vram", "hardware", "chip", "nvidia", "h100", "silicon", "semiconductor", "memory", "ddr"]):
+            return {
+                "theme": "silicon",
+                "color_accent": "accent_amber",
+                "card_style": "blueprint",
+                "rationale": "Hardware/silicon aesthetics with circuit traces and memory bus accents."
+            }
+        elif any(w in t_low for w in ["linux", "terminal", "bash", "cli", "security", "docker", "sysadmin", "reverse", "shell"]):
+            return {
+                "theme": "terminal",
+                "color_accent": "accent_emerald",
+                "card_style": "minimal",
+                "rationale": "CRT phosphor dark theme with scanlines for command line and infrastructure deep dives."
+            }
+        elif any(w in t_low for w in ["agent", "architecture", "loop", "system", "database", "pipeline", "backend", "react"]):
+            return {
+                "theme": "blueprint",
+                "color_accent": "accent_cyan",
+                "card_style": "blueprint",
+                "rationale": "Technical architectural grid emphasizing structural nodes and engineering design."
+            }
+        elif any(w in t_low for w in ["saas", "web", "app", "ui", "product", "tool", "showcase"]):
+            return {
+                "theme": "studio",
+                "color_accent": "accent_purple",
+                "card_style": "glass",
+                "rationale": "High-end diffuse studio lighting for modern software product breakdowns."
+            }
+        elif any(w in t_low for w in ["algorithm", "data structure", "math", "clean code", "refactor"]):
+            return {
+                "theme": "minimal",
+                "color_accent": "accent_cyan",
+                "card_style": "minimal",
+                "rationale": "Clean graphite matte backdrop focusing entirely on code logic and clarity."
+            }
+        else:
+            return {
+                "theme": "obsidian",
+                "color_accent": "accent_cyan",
+                "card_style": "solid",
+                "rationale": "Cinematic obsidian atmospheric with ambient spotlights for general technical explainers."
+            }
+
     def parse_brief_from_prompt(self, prompt: str, default_aspect: str = "16:9") -> CreativeBrief:
         """Extracts a structured CreativeBrief from a user prompt with transparent defaults."""
         p_lower = prompt.lower()

@@ -10,11 +10,13 @@ Operational guide for autonomous agents producing TechXKenil Shorts and Long-For
 ---
 
 ## 1. Core Principles (2026 Industry Baseline)
-1. **Text is the Main Character:** Kinetic typography carries muted comprehension (Shorts = T1 karaoke word-highlight; Long = T2 two-line sentence captions).
-2. **Authenticity over Polish:** Atmospheric obsidian dark `(8, 12, 28)` + 90px blueprint grid + genuine window captures (`capture_code.py`, `capture_ui.py`). Zero synthetic rectangles or fake mockups.
-3. **Retention Anchors Every 2–3s (Shorts) / 6s (Long):** Purposeful visual event on spoken beats (bold keyword, punch-in, diagram build step, card slide).
-4. **Zero-Static-Hold Mandate:** Continuous C1 slow push-in (`push_in(img, p, 0.035)`) covers all scenes so no pixel stays completely stationary.
-5. **Honesty Gate:** No synthetic statistics or unverified benchmark numbers. Any numeric stat (T6/E5) requires an on-screen source annotation or must be rewritten qualitatively using T3.
+1. **Consistent Anchor (Strictly Fixed):** Channel recognition is anchored exclusively by the official **Intro Card** (TXK ring badge) and **Outro Card** (Red subscribe pill converting to green via Bezier click), plus Kokoro `am_michael` 1.1x voice and high-contrast captions.
+2. **Topic-Specific Visual World Flexibility:** Apart from the intro and outro, the entire body of each video (background environment, color palette, card styling, and layout geometry) MUST be dynamically tailored to the specific topic. Never force every video into the exact same background or color theme.
+3. **Text is the Main Character:** Kinetic typography carries muted comprehension (Shorts = T1 karaoke word-highlight; Long = T2 two-line sentence captions).
+4. **Authenticity over Polish:** Genuine window captures (`capture_code.py`, `capture_ui.py`) and procedural vector compositing. Zero synthetic rectangles or fake mockups.
+5. **Retention Anchors Every 2–3s (Shorts) / 6s (Long):** Purposeful visual event on spoken beats (bold keyword, punch-in, diagram build step, card slide).
+6. **Zero-Static-Hold Mandate:** Continuous C1 slow push-in covers all scenes so no pixel stays completely stationary.
+7. **Honesty Gate:** No synthetic statistics or unverified benchmark numbers. Any numeric stat (T6/E5) requires an on-screen source annotation or must be rewritten qualitatively using T3.
 
 ---
 
@@ -53,10 +55,16 @@ Operational guide for autonomous agents producing TechXKenil Shorts and Long-For
 - **C7 Stacked Split-Screen:** Multi-pane vertical layout for prompt vs response.
 - **C8 J-Cut / L-Cut:** Audio leads visual cut by 0.15–0.30s for natural rhythm.
 
-### 2.4 S: Style Layers
-- **S1 Brand Dark (Default):** Deep Obsidian `(8, 12, 28)` + 90px grid + Sapphire/Amethyst ambient radial spotlights.
-- **S2 Light Film Grain:** 2.5% Gaussian film grain eliminating digital color banding.
-- **S3 Liquid Glass Cards:** Translucent dark surfaces `(16, 20, 36)` with 1px border outlines `(255, 255, 255, 30)`.
+### 2.4 S: Style Layers & Thematic Background Library
+- **`blueprint`:** Technical architectural grid on dark slate/navy gradient with intersection crosshairs (for systems design, agent loops, backend architectures).
+- **`silicon`:** Silicon interposer / PCB micro-grid traces with copper/amber bus lanes (for GPU hardware, VRAM, chips, inference speed).
+- **`terminal`:** CRT scanline / phosphor matrix console atmosphere (for cybersecurity, Linux, CLI tools, low-level systems).
+- **`studio`:** High-end smooth midnight-to-charcoal radial gradient (for modern developer tools, SaaS overviews).
+- **`minimal`:** Ultra-clean graphite matte canvas with subtle perimeter guidelines (for clean code, algorithm tutorials).
+- **`obsidian`:** Deep obsidian with dual ambient spotlights and film grain (for cinematic technical documentaries).
+- **`topic_custom`:** Bespoke procedural visual atmosphere tailored directly to the video's script and story.
+- *S2 Light Film Grain (2.5%)* applied across all styles to kill YouTube digital color banding.
+- *S3 Liquid Glass Cards* available for modern translucent surfaces with delicate 1px border.
 - *S4 Cutout / S5 Y2K:* Skipped (incompatible with calm developer explainer tone).
 
 ---

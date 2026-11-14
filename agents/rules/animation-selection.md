@@ -6,3 +6,4 @@
 4. **Data Fidelity:** When visualizing metrics, select `data.counter` or `data.bar_grow` only if exact numbers/units are verified in scene data. Never animate unverified or made-up numbers.
 5. **Conservative Transitions:** Use `transition.cut` by default. Only use `transition.directional_wipe` or `transition.dissolve` at explicit chapter boundaries.
 6. **Fallback Requirement:** Every selected animation must declare a valid `fallback_animation_id` supported by the renderer.
+7. **Topic-Specific Visual World:** Apart from the official channel Intro and Outro cards (which are strictly fixed for brand recognition), the entire visual world (background environment, color palette, card styling, and visual metaphors) must adapt dynamically to the subject matter. Choose from `blueprint`, `silicon`, `terminal`, `studio`, `minimal`, `obsidian`, or custom procedural themes. Never reuse the exact same background for every video.

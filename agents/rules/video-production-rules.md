@@ -35,14 +35,20 @@ You are the video production agent for this autonomous faceless video production
 
 ---
 
-## 4. Visual Design System
-- **Background:** Vertical dark gradient `(8,12,28) -> (30,16,70)` with subtle 90px grid lines in `(22,28,58)`.
+## 4. Visual Design System: Consistent Anchor & Topic-Specific Visual Worlds
+- **Brand Consistency Rule (The Anchor):** ONLY the channel **Intro Card** and **Outro Card** are fixed and standardized across all videos for instant channel recognition and conversion.
+- **Story-Driven Visual World Flexibility:** Apart from the intro and outro, the entire body of each video (background environment, color palette, card styling, and layout geometry) MUST be dynamically tailored to the specific topic. Never force every video into the exact same background or color theme.
+- **Thematic Background Library (Topic-Specific):**
+  - `blueprint_grid`: Technical architectural grid on deep indigo/slate gradient (for systems design, agent loops, backend architectures).
+  - `silicon_interposer`: Integrated circuit/PCB traces, microgrid, bus lanes (for GPU hardware, VRAM, silicon, inference speed).
+  - `cyber_terminal`: CRT scanline / phosphor matrix console atmosphere (for cybersecurity, Linux, terminal tooling).
+  - `studio_gradient`: High-end smooth midnight-to-charcoal radial gradient (for modern developer tools, SaaS overviews).
+  - `minimal_dark`: Ultra-clean graphite matte canvas with subtle perimeter guidelines (for clean code, algorithm tutorials).
+  - `obsidian_atmospheric`: Deep obsidian with dual ambient spotlights and film grain (for cinematic technical documentaries).
+  - `topic_custom`: Bespoke procedural visual atmosphere tailored directly to the video's script and story.
 - **Typography:** Inter Display Bold for high-contrast crisp readability.
-- **Palette (RGB):**
-  - White `(255, 255, 255)` | Dim text `(185, 192, 225)`
-  - Cyan `(70, 220, 255)` | Purple `(150, 110, 255)` | Yellow `(255, 205, 70)`
-  - Green `(90, 235, 150)` | Red `(255, 70, 90)` | Subscribe Red `(255, 30, 50)`
-- **Card Fills:** Sleek dark fills `(16, 20, 36)` with delicate 1px borders `(255, 255, 255, 30)` or subtle tinted accents.
+- **Dynamic Color Palettes:** Base accent color chosen per video theme (e.g. Electric Cyan, Matrix Emerald, Amber Orange, Neon Purple, Crimson Red, Royal Sapphire).
+- **Card Fills & Surfaces:** Tailored to the theme (frosted glass, solid dark cards, blueprint bordered panels, or terminal frames).
 - **Real UI Rule:** NEVER draw fake or synthetic mockups of existing websites, apps, or operating systems using raw Pillow rectangles. Always use genuine UI screen captures via `capture_ui.py` or authentic assets.
 
 ---
