@@ -52,25 +52,6 @@ from tools.procedural_scenes import (
     render_speculative_race,
     render_verdict_recap
 )
-from tools.stickman_director_scenes import (
-    render_director_scene_01,
-    render_director_scene_02,
-    render_director_scene_03,
-    render_director_scene_04,
-    render_director_scene_05,
-    render_director_scene_06,
-    render_director_scene_07
-)
-from tools.storytelling_scenes import (
-    render_story_library_sprint,
-    render_story_token_slice,
-    render_story_forklift_prefill,
-    render_story_sticky_cache,
-    render_story_memory_mountain,
-    render_story_intern_draft,
-    render_story_relay_outro
-)
-from tools.avatar_engine import AvatarEngine
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
     """Dynamically imports SCENES from data.py or data.json."""
@@ -216,41 +197,10 @@ def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str, targ
             events.append((st + 2.2, "whoosh"))  # Parallel verification laser
             events.append((st + 2.8, "chime"))   # Verification checkmarks
             events.append((st + 3.8, "pop"))     # 2.8x multiplier
-        elif vtype == "outro_conversion":
+        elif vtype in ["outro_conversion", "verdict_recap"]:
             events.append((st + 0.3, "whoosh"))  # Recap
             events.append((st + 4.9, "tick"))    # Mouse click
             events.append((st + 5.2, "chime"))   # Subscribed success
-        elif vtype == "story_library_sprint":
-            events.append((st + 0.8, "tick"))    # writing
-            events.append((st + 2.0, "whoosh"))  # sprint takeoff
-            events.append((st + 3.0, "pop"))     # screeching halt
-            events.append((st + 3.2, "chime"))   # 28ms milestone
-        elif vtype == "story_token_slice":
-            events.append((st + 0.8, "pop"))     # knife chop
-            events.append((st + 1.8, "tick"))    # token puzzle locks
-            events.append((st + 3.5, "chime"))   # 4096-dim vector map
-        elif vtype == "story_forklift_prefill":
-            events.append((st + 0.6, "whoosh"))  # lever pull
-            events.append((st + 1.2, "pop"))     # forklift arm lift
-            events.append((st + 2.5, "chime"))   # 0.2ms prefill lock
-        elif vtype == "story_sticky_cache":
-            events.append((st + 0.5, "tick"))    # panic alarm
-            events.append((st + 1.5, "pop"))     # sticky note snap
-            events.append((st + 4.5, "chime"))   # 85 tok/s savior chime
-        elif vtype == "story_memory_mountain":
-            events.append((st + 0.5, "whoosh"))  # silicon highway
-            events.append((st + 2.0, "tick"))    # boulder groan
-            events.append((st + 4.0, "pop"))     # traffic jam warning
-        elif vtype == "story_intern_draft":
-            events.append((st + 0.5, "whoosh"))  # intern sprint
-            events.append((st + 2.0, "tick"))    # professor stamp
-            events.append((st + 2.5, "chime"))   # approved chime
-            events.append((st + 3.2, "pop"))     # 3x speedup
-        elif vtype == "story_relay_outro":
-            events.append((st + 0.5, "whoosh"))  # relay race
-            events.append((st + 4.5, "tick"))    # dropkick leap
-            events.append((st + 4.7, "pop"))     # subscribe hit
-            events.append((st + 5.0, "chime"))   # confetti chime
         elif vtype in ["code", "terminal"]:
             events.append((st + 0.5, "chime"))
         elif vtype in ["diagram", "split"]:
@@ -318,15 +268,13 @@ def composite_video(
     project_dir: str,
     channel_cfg: Dict[str, Any],
     profile_key: str = "1080p30",
-    output_mp4: Optional[str] = None,
-    enable_avatar: bool = False
+    output_mp4: Optional[str] = None
 ) -> str:
     """Stage 5: Declarative Hardware-Accelerated Video Compositing."""
     print("\n" + "=" * 70)
-    print(f"🎬 STAGE 5: Declarative Video Compositing (Profile: {profile_key}, Avatar: {enable_avatar})")
+    print(f"🎬 STAGE 5: Declarative Video Compositing (Profile: {profile_key})")
     print("=" * 70)
 
-    avatar_engine = AvatarEngine()
     profile = PROFILES.get(profile_key, PROFILES["1080p30"])
     tl_path = os.path.join(project_dir, "tl.json")
     with open(tl_path, "r", encoding="utf-8") as f:
@@ -397,33 +345,19 @@ def composite_video(
 
             # 2. Render Scene Visuals
             if vtype == "hook_stopwatch":
-                render_director_scene_01(canvas, rel_t, dur, cur_scene)
+                render_hook_stopwatch(canvas, rel_t, dur, cur_scene)
             elif vtype == "token_fracture":
-                render_director_scene_02(canvas, rel_t, dur, cur_scene)
+                render_token_fracture(canvas, rel_t, dur, cur_scene)
             elif vtype == "prefill_matrix":
-                render_director_scene_03(canvas, rel_t, dur, cur_scene)
+                render_prefill_matrix(canvas, rel_t, dur, cur_scene)
             elif vtype == "kv_cache_split":
-                render_director_scene_04(canvas, rel_t, dur, cur_scene)
+                render_kv_cache_split(canvas, rel_t, dur, cur_scene)
             elif vtype == "silicon_memory_stream":
-                render_director_scene_05(canvas, rel_t, dur, cur_scene)
+                render_silicon_memory_stream(canvas, rel_t, dur, cur_scene)
             elif vtype == "speculative_race":
-                render_director_scene_06(canvas, rel_t, dur, cur_scene)
-            elif vtype == "outro_conversion":
-                render_director_scene_07(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
-            elif vtype == "story_library_sprint":
-                render_story_library_sprint(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_token_slice":
-                render_story_token_slice(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_forklift_prefill":
-                render_story_forklift_prefill(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_sticky_cache":
-                render_story_sticky_cache(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_memory_mountain":
-                render_story_memory_mountain(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_intern_draft":
-                render_story_intern_draft(canvas, rel_t, dur, cur_scene)
-            elif vtype == "story_relay_outro":
-                render_story_relay_outro(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
+                render_speculative_race(canvas, rel_t, dur, cur_scene)
+            elif vtype in ["outro_conversion", "verdict_recap"]:
+                render_verdict_recap(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
             elif vtype == "brand":
                 render_brand_card(canvas, channel_name, tagline, badge, rel_t, logo_img=logo_img)
             elif sid == timeline[-1]["id"] and rel_t > 2.0:
@@ -437,11 +371,6 @@ def composite_video(
                 canvas.draw_card((cx - 500, cy - 250, cx + 500, cy + 250), radius=20, fill=(16, 22, 38), outline=(70, 220, 255, 120), width=1)
                 canvas.draw_text((cx, cy - 50), cur_scene.get("title", "").upper(), size=32, fill=(70, 220, 255), anchor="mm")
                 canvas.draw_text((cx, cy + 30), cur_scene.get("section", "").upper(), size=20, fill=(185, 192, 225), anchor="mm")
-
-            # 2.5. Render Stickman Avatar Host (if enabled)
-            av_cfg = cur_scene.get("avatar")
-            if av_cfg is not None or enable_avatar:
-                avatar_engine.render(canvas, t, timeline, av_cfg)
 
             # 3. Slice overscan frame with camera drift
             frame = canvas.slice_frame(p_scene, drift_amp=6.0)
@@ -485,7 +414,6 @@ def main():
     parser.add_argument("--project", required=True, help="Path to project directory")
     parser.add_argument("--channel", help="Channel name (e.g. TechXKenil, Aiwolfie)")
     parser.add_argument("--format", default="1080p30", choices=["1080p30", "4k60", "1080p30_vert", "4k60_vert"], help="Render resolution profile")
-    parser.add_argument("--avatar", action="store_true", help="Enable animated stickman avatar narrator")
     args = parser.parse_args()
 
     project_dir = os.path.abspath(args.project)
@@ -531,7 +459,7 @@ def main():
     prepare_real_ui_assets(scenes, project_dir, is_4k=is_4k)
 
     # Stage 5: Video Composition
-    out_mp4 = composite_video(project_dir, channel_cfg, profile_key=args.format, enable_avatar=args.avatar)
+    out_mp4 = composite_video(project_dir, channel_cfg, profile_key=args.format)
 
     # Stage 6: QA Verification
     is_short = "vert" in args.format
