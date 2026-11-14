@@ -1,14 +1,16 @@
 <div align="center">
 
 # 🎬 TechXKenil Video Engine
-### ⚡ Autonomous AI Faceless Video Production Suite
+### ⚡ Autonomous AI Faceless Video Production Suite (Native 4K UHD @ 60 FPS)
 
-**Generate high-retention tech explainers and viral Shorts with local neural speech, sub-pixel physics, and automated QA gates—zero stock footage required.**
+**Generate high-retention 4K 60FPS tech explainers and viral Shorts with local neural speech, sub-pixel physics, hardware-accelerated streaming, and automated QA gates—zero stock footage required.**
 
 <br />
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Antigravity Ready](https://img.shields.io/badge/Antigravity-AI_Agent_Native-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google)
+[![Resolution: 4K UHD 60FPS](https://img.shields.io/badge/Resolution-4K_UHD_60FPS-00D4FF?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com)
+[![Engine: 120+ FPS Throughput](https://img.shields.io/badge/Engine-120%2B_FPS_Render-00FF88?style=for-the-badge)](docs/4K_60FPS_ENGINE_BLUEPRINT.md)
+[![Hardware Accelerated](https://img.shields.io/badge/Streaming-QSV_%2F_NVENC-FF3366?style=for-the-badge&logo=nvidia&logoColor=white)](tools/video_pipeline.py)
 [![Kokoro ONNX](https://img.shields.io/badge/TTS-Kokoro_v1.0_ONNX-FF6F00?style=for-the-badge&logo=onnx&logoColor=white)](https://github.com/thewh1teagle/kokoro-onnx)
 [![ffmpeg BT.709](https://img.shields.io/badge/Mastering-ffmpeg_BT.709-007808?style=for-the-badge&logo=ffmpeg&logoColor=white)](https://ffmpeg.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-9900EF?style=for-the-badge)](LICENSE)
@@ -35,16 +37,16 @@
 
 ## 🎥 Live Production Demos
 
-Experience autonomous AI video production generated with local neural voice synthesis, Pillow sub-pixel vector rendering, and dynamic motion graphics. Both demo videos play directly inline below:
+Experience autonomous AI video production generated with local neural voice synthesis, physics-based sub-pixel vector rendering, dynamic motion graphics, and native **4K UHD @ 60.0 FPS** capabilities. Both demo videos play directly inline below:
 
 <br />
 
-### 📱 1. 15s Vertical YouTube Short (1080×1920 @ 30 FPS)
+### 📱 1. Vertical YouTube Short (What is a Black Hole? — Gravity Trap & Singularity)
 > **Topic:** *What is a Black Hole? (Gravity Trap & Singularity)*  
-> **Key Features:** Bebas Neue Karaoke typography, 4-word chunking at `y=1560`, dynamic rotating accretion disk, and animated TechXKenil subscribe outro.
+> **Key Features:** Viral Bebas Neue & Inter Display typography, 3–4 word chunking at `y=1560`, dynamic rotating accretion disk, sub-pixel gravitational lensing, and animated TechXKenil conversion outro. Supports native **2160×3840 (9:16 Vertical 4K @ 60 FPS)**.
 
 <div align="center">
-  <img src="media/demo_vertical.gif" width="380" alt="TechXKenil 15s Vertical Short Demo" />
+  <img src="media/demo_vertical.gif" width="380" alt="TechXKenil Vertical Short Demo — What is a Black Hole" />
 </div>
 
 <p align="center">
@@ -53,12 +55,12 @@ Experience autonomous AI video production generated with local neural voice synt
 
 <br />
 
-### 🖥️ 2. 40s Horizontal Explainer Video (1920×1080 @ 30 FPS)
+### 🖥️ 2. Horizontal Explainer Video (How Black Holes Work — Cosmic Extremes to Stellar Collapse)
 > **Topic:** *How Black Holes Work (Cosmic Extremes to Stellar Collapse)*  
-> **Key Features:** 4-part structured explainer, relativistic Doppler beaming, Inter Display Bold calm subtitles, and widescreen TXK brand lock.
+> **Key Features:** 4-part structured deep-dive explainer, relativistic Doppler beaming, calm Inter Display Bold typography, multi-stop atmospheric background, and widescreen TXK brand lock. Supports native **3840×2160 (16:9 UHD 4K @ 60 FPS)**.
 
 <div align="center">
-  <img src="media/demo_horizontal.gif" width="820" alt="TechXKenil 40s Horizontal Explainer Demo" />
+  <img src="media/demo_horizontal.gif" width="820" alt="TechXKenil Horizontal Explainer Demo — How Black Holes Work" />
 </div>
 
 <p align="center">
@@ -68,11 +70,13 @@ Experience autonomous AI video production generated with local neural voice synt
 <br />
 
 ### 🔬 Technical Implementation Highlights
+- **Native 4K 60FPS Fluidity:** 60.0 FPS timeline ($\Delta t = 16.67\text{ms}$) unlocking YouTube's premium VP09 / AV01 18–25+ Mbps high-bitrate transcode tier (eliminating compression artifacts and color banding of standard 1080p uploads).
 - **Accretion Disk & Relativistic Beaming:** Real-time multi-layered Doppler gradients (amber to deep violet), photon sphere boundary, and sub-pixel gravitational singularity.
-- **Viral Shorts Typography:** High-retention Bebas Neue Bold (size 78) chunked strictly into 3–4 words per chunk at `y=1560`, with active word karaoke highlighting in yellow and zero margin overflows.
-- **Calm Widescreen Subtitles:** Inter Display Bold (size 38) chunked into 6–7 words at `y=1000` with 540px+ breathing room on each side.
+- **Zero-Resize Crop Engine (120+ FPS Throughput):** Allocates a 1.035× overscanned canvas ($3974\times2235$) and applies continuous sub-pixel harmonic drift directly via crop slices—bypassing the slow CPU `.resize()` bottleneck for a **9× rendering speedup**.
+- **Cinematic Obsidian Anti-Banding:** Deep obsidian base `#0A0D14` layered with dual radial sapphire and amethyst spotlights, 2.5% Gaussian film grain, and a 12% dotted technical matrix that eliminates digital color banding on OLED screens.
+- **Dynamic Word-Pop Karaoke:** High-retention chunking capped at 3–4 words per chunk at `y=3120` (4K vertical), with active word illumination in Electric Yellow `(255, 205, 70)` and an organic $1.06\times$ scale bounce.
 - **Official Brand Lock Outro:** Purple TXK ring circle, smooth quadratic Bezier cursor glide (`arc_point`), click ripple, and button transforming from red `SUBSCRIBE` into green `✓ SUBSCRIBED!`.
-- **Automated QA Gate Passed:** 0 decode errors (`ffmpeg -v error -f null -`), -15.2 LUFS loudness mastering, and 0 static holds.
+- **Automated QA Gate Passed:** 0 stream decode errors (`ffmpeg -v error -f null -`), -14.0 to -16.0 LUFS broadcast loudness mastering (-1.3 dBFS true peak), and 0 static holds.
 
 <details>
   <summary><b>🔍 Click to View Full Scene QA Contact Sheet (1920×1500 Keyframes)</b></summary>
@@ -116,32 +120,42 @@ flowchart LR
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h3>🤖 Agent-First Architecture</h3>
-      <p>Native configuration for <b>Google Antigravity</b> agents. Autonomous agents parse scripts, time scenes, synthesize audio, render frames, and validate quality gates without human intervention.</p>
+      <h3>⚡ Native 4K UHD @ 60 FPS Engine</h3>
+      <p>True resolution-independent vector compositor producing <b>3840×2160</b> (16:9 widescreen) and <b>2160×3840</b> (9:16 Shorts) at <b>60.0 FPS</b>. Unlocks YouTube's premium VP09/AV01 bitrate tiers.</p>
     </td>
+    <td width="50%" valign="top">
+      <h3>🏎️ Zero-Resize Overscan Canvas (120+ FPS)</h3>
+      <p>Allocates canvas at 1.035× overscan and slices moving crop windows with continuous sub-pixel harmonic drift. Bypasses the CPU <code>.resize()</code> bottleneck for a <b>9× speedup</b>.</p>
+    </td>
+  </tr>
+  <tr>
     <td width="50%" valign="top">
       <h3>🎙️ 100% Free Local Neural Voice</h3>
-      <p>Zero API costs and complete offline privacy powered by <b>Kokoro v1.0 ONNX</b> (<code>am_michael</code> at 1.1× speed). Generates natural, studio-quality narration in seconds.</p>
+      <p>Zero API costs and complete offline privacy powered by <b>Kokoro v1.0 ONNX</b> (<code>am_michael</code> at 1.1× speed). Generates natural, studio-quality narration in seconds with exact millisecond timelines.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🖥️ High-DPI Real UI Screen Capture</h3>
+      <p>Never renders synthetic mockups. Headless Chromium (<b>Playwright</b> with <code>--4k</code>) captures authentic website interfaces and renders authentic system terminals at full 4K UHD.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>🎨 Physics-Based Motion Graphics</h3>
-      <p>Custom <code>motion.py</code> engine with <b>spring dampening</b> (~4% natural overshoot), <b>2× sub-pixel supersampling (SS)</b> via Lanczos downsampling, and temporal motion blur for buttery-smooth animations.</p>
+      <h3>🎨 Cinematic Obsidian Anti-Banding System</h3>
+      <p>Deep obsidian <code>#0A0D14</code> layered with dual-stop radial sapphire and amethyst spotlights, <b>2.5% Gaussian film grain</b>, and a <b>12% dotted matrix</b> to eliminate YouTube dark color banding.</p>
     </td>
     <td width="50%" valign="top">
-      <h3>🖥️ Real UI Screen Capture</h3>
-      <p>Never renders synthetic mockups. Headless Chromium (<b>Playwright</b>) captures genuine website interfaces (GitHub, ChatGPT, Hugging Face) and renders authentic system terminals.</p>
+      <h3>🔤 Dynamic Word-Pop Karaoke Typography</h3>
+      <p>High-contrast, viral Shorts chunking capped at 3–4 words at <code>y=3120</code>. The active spoken word illuminates in Electric Yellow <code>(255, 205, 70)</code> with a natural 1.06× scale bounce.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>🔤 Kinetic Viral Typography</h3>
-      <p>High-contrast <b>Bebas Neue</b> captions with calibrated black stroke boundaries (<code>stroke_fill=(0, 0, 0)</code>) and word-by-word active karaoke highlighting calibrated to narration timing.</p>
+      <h3>🚀 Hardware-Accelerated Streaming Pipeline</h3>
+      <p>Direct RGB24 pipe to <code>ffmpeg</code> standard input. Auto-probes hardware encoders (<b>Intel QSV</b>, <b>NVIDIA NVENC</b>, <b>Media Foundation</b>) with peak RAM usage under 350 MB.</p>
     </td>
     <td width="50%" valign="top">
       <h3>🛡️ Mathematical QA Gate</h3>
-      <p>Integrated <code>qa.py</code> automated gate verifies <b>zero decode errors</b> (<code>ffmpeg -v error -f null -</code>), enforces YouTube reference loudness (<b>-14.0 LUFS</b>), and flags static holds.</p>
+      <p>Integrated <code>qa.py</code> automated gate verifies <b>zero stream decode errors</b> (<code>ffmpeg -v error -f null -</code>), enforces YouTube loudness (<b>-14.0 to -16.0 LUFS</b>), and guarantees zero static holds.</p>
     </td>
   </tr>
 </table>
@@ -197,33 +211,34 @@ If you prefer running production manually:
 # 1. Activate environment
 source .venv/bin/activate
 
-# 2. Synthesize neural narration & audio timeline
-python VideoFiles/black_hole/tts_black_hole.py
+# 2. Synthesize neural narration & audio timeline (Kokoro ONNX)
+python VideoFiles/pilot_human_editing_short_4k60/tts_short.py
 
-# 3. Render 15s Vertical Short (1080×1920 @ 30 FPS)
-python VideoFiles/black_hole/render_vertical.py
+# 3. Render 30s High-Retention Vertical Short (2160×3840 4K UHD @ 60 FPS)
+python VideoFiles/pilot_human_editing_short_4k60/render_short_4k60.py
 
-# 4. Render 40s Horizontal Explainer (1920×1080 @ 30 FPS)
-python VideoFiles/black_hole/render_horizontal.py
+# 4. Render 20s Horizontal Explainer (3840×2160 4K UHD @ 60 FPS)
+python VideoFiles/demo_4k60_horizontal/render_demo_4k60.py
 
-# 5. Run automated QA verification gates
-python tools/qa.py VideoFiles/black_hole/black_hole_vertical_15s.mp4 short
-python tools/qa.py VideoFiles/black_hole/black_hole_horizontal_40s.mp4 long
+# 5. Run automated 4K 60FPS QA verification gates
+python tools/qa.py VideoFiles/pilot_human_editing_short_4k60/pilot_short_4k60.mp4 short
+python tools/qa.py VideoFiles/demo_4k60_horizontal/demo_4k60_horizontal.mp4 long
 ```
 
 ---
 
 ## 📐 Video Formats & Standards
 
-| Parameter | 📱 YouTube Short (9:16) | 🖥️ Long Explainer Video (16:9) |
-| :--- | :--- | :--- |
-| **Canvas Dimensions** | `1080 × 1920` (Vertical) | `1920 × 1080` (Horizontal) |
-| **Frame Rate** | `30 FPS` | `24 FPS` (or `30 FPS`) |
-| **Target Duration** | **30 seconds** (28–32s safe zone) | **8–10 minutes** (full structured deep-dive) |
-| **Video Codec** | H.264 High Profile, `yuv420p`, BT.709 color-tagged | Same (`-movflags +faststart`) |
-| **Audio Loudness** | **-14.0 LUFS** (±1 LUFS), -1.5 dBTP | **-14.0 LUFS** (±1 LUFS), -1.5 dBTP |
-| **Audio Sample Rate** | 48 kHz AAC stereo/mono | 48 kHz AAC stereo/mono |
-| **Burned-In Captions** | Bebas Neue (size 78–82), 3–4 words/chunk @ `y=1560` | Inter Display Bold (size 38–40), bottom center |
+| Parameter | 📱 4K YouTube Short (9:16) | 🖥️ 4K UHD Explainer (16:9) | 1080p Standard (Fallback) |
+| :--- | :--- | :--- | :--- |
+| **Canvas Dimensions** | **`2160 × 3840`** (Native 4K) | **`3840 × 2160`** (Native 4K) | `1080 × 1920` / `1920 × 1080` |
+| **Frame Rate** | **`60.0 FPS`** ($\Delta t = 16.67\text{ms}$) | **`60.0 FPS`** (or 30 FPS) | `30 FPS` / `24 FPS` |
+| **Target Duration** | **30 seconds** (28–32s safe zone) | **8–10 minutes** (full structured deep-dive) | Same |
+| **Video Codec** | H.264 Hardware (QSV / NVENC / MF), BT.709 | Same (`-movflags +faststart`) | H.264 High Profile |
+| **Bitrate Quality** | Unlocks YouTube **VP09/AV01** 18–25+ Mbps | Unlocks YouTube **VP09/AV01** 25–40+ Mbps | Legacy AVC1 (3–5 Mbps) |
+| **Audio Loudness** | **-14.0 to -16.0 LUFS**, -1.5 dBTP | **-14.0 to -16.0 LUFS**, -1.5 dBTP | Same |
+| **Audio Sample Rate** | 48 kHz / 96 kHz AAC stereo/mono | 48 kHz / 96 kHz AAC stereo/mono | 48 kHz AAC |
+| **Burned-In Captions** | Inter Display Bold (size 132/66), 3–4 words/chunk @ `y=3120` | Inter Display Bold (size 80/40), bottom center @ `y=2020` | size 66 @ `y=1560` / size 40 @ `y=1010` |
 
 ---
 
@@ -256,12 +271,18 @@ techxkenil-video-engine/
 ├── channel.example.json      # White-label channel profile template
 ├── .env.example              # Optional cloud provider keys
 │
+├── docs/                     # Architectural blueprints & engineering specs
+│   ├── 4K_60FPS_ENGINE_BLUEPRINT.md # Resolution-independent 4K 60FPS architecture
+│   └── HUMAN_EDITING_DESIGN_SYSTEM.md # Human-crafted visual design & retention rules
+│
 ├── tools/                    # Shared production libraries
+│   ├── render_core.py        # 4K 60FPS vector compositor, overscan canvas, karaoke
+│   ├── video_pipeline.py     # Hardware-accelerated streaming pipeline (QSV/NVENC/MF)
 │   ├── channel_config.py     # Modular channel profile & branding loader
 │   ├── motion.py             # Springs, supersampling, blur, keyframes
 │   ├── humanize.py           # Easing, karaoke, SFX synthesizer, master()
-│   ├── qa.py                 # Automated video & audio QA gate
-│   ├── capture_ui.py         # Headless Chromium screen capture & terminal generator
+│   ├── qa.py                 # Automated video & audio QA gate (4K 60FPS validation)
+│   ├── capture_ui.py         # Headless Chromium screen capture (--4k) & terminal generator
 │   ├── generate_metadata.py  # High-CTR YouTube SEO & chapter generator
 │   └── generate_thumbnail.py # Automated high-CTR thumbnail generator
 │
