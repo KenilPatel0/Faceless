@@ -20,6 +20,7 @@ DEFAULT_CHANNEL_CONFIG: Dict[str, Any] = {
     "niche": "AI and Tech",
     "tagline": "AI • TECH • CODE",
     "badge": "TC",
+    "logo_path": "media/txk_logo.png",
     "experience_years": 3,
     "voice": {
         "engine": "kokoro-onnx",
@@ -54,11 +55,59 @@ DEFAULT_CHANNEL_CONFIG: Dict[str, Any] = {
     ]
 }
 
-def get_channel_config(root_dir: str = None) -> Dict[str, Any]:
-    """Resolves and returns the active channel profile dictionary."""
+def get_channel_config(root_dir: str = None, channel_name_or_path: str = None) -> Dict[str, Any]:
+    """
+    Resolves and returns the active channel profile dictionary.
+    Supports explicit channel names ('TechXKenil', 'Aiwolfie') or JSON profile paths.
+    """
     if root_dir is None:
         root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
+    # 0. Explicit channel_name_or_path argument
+    if channel_name_or_path:
+        # Check if direct JSON path
+        if os.path.exists(channel_name_or_path):
+            try:
+                with open(channel_name_or_path, "r", encoding="utf-8") as f:
+                    return {**DEFAULT_CHANNEL_CONFIG, **json.load(f)}
+            except Exception:
+                pass
+        
+        # Check folders: e.g. TechXKenil, Aiwolfie
+        for sub in [channel_name_or_path, f"channels/{channel_name_or_path}"]:
+            cand = os.path.join(root_dir, sub, "channel_profile.json")
+            if os.path.exists(cand):
+                try:
+                    with open(cand, "r", encoding="utf-8") as f:
+                        return {**DEFAULT_CHANNEL_CONFIG, **json.load(f)}
+                except Exception:
+                    pass
+            cand_json = os.path.join(root_dir, f"{sub}.json")
+            if os.path.exists(cand_json):
+                try:
+                    with open(cand_json, "r", encoding="utf-8") as f:
+                        return {**DEFAULT_CHANNEL_CONFIG, **json.load(f)}
+                except Exception:
+                    pass
+
+        # If named known profile like Aiwolfie, construct dynamic profile
+        if channel_name_or_path.lower() in ["aiwolfie", "ai_wolfie"]:
+            return {
+                **DEFAULT_CHANNEL_CONFIG,
+                "channel_name": "AI Wolfie",
+                "creator_name": "Wolfie",
+                "channel_tag": "Aiwolfie",
+                "niche": "AI Reverse Engineering & Agent Systems",
+                "tagline": "REVERSE ENGINEERING • AI • AGENTS",
+                "badge": "AW",
+                "voice": {
+                    "engine": "kokoro-onnx",
+                    "voice_id": "am_michael",
+                    "speed": 1.1,
+                    "lang": "en-us"
+                }
+            }
+
     # 1. Environment variable override
     env_config_path = os.environ.get("CHANNEL_CONFIG")
     if env_config_path and os.path.exists(env_config_path):
@@ -91,6 +140,11 @@ def get_channel_config(root_dir: str = None) -> Dict[str, Any]:
     return DEFAULT_CHANNEL_CONFIG
 
 if __name__ == "__main__":
-    cfg = get_channel_config()
+    import argparse
+    parser = argparse.ArgumentParser(description="Channel Profile Resolver")
+    parser.add_argument("--channel", help="Channel name or path to profile JSON")
+    args = parser.parse_args()
+
+    cfg = get_channel_config(channel_name_or_path=args.channel)
     print(f"Loaded Channel: {cfg.get('channel_name')} (Badge: {cfg.get('badge')})")
     print(f"Voice: {cfg.get('voice', {}).get('voice_id')}")

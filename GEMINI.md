@@ -76,22 +76,45 @@ This engine supports white-label and multi-creator channel workflows:
 
 ---
 
-## 8. Production Workflow
-1. **Script Adaptation:** Receive topic &rarr; adapt length &rarr; generate beat data.
-2. **Neural TTS:** Generate per-beat audio + duration timeline JSON (`tl.json`).
-3. **Pillow Vector Renderer:** Draw frames with sub-pixel anti-aliasing, pipe raw RGB to `ffmpeg` with audio, render MP4.
-4. **Verification & QA Gate:**
-   - Run stream validation: `ffmpeg -v error -i out.mp4 -f null -` (must output zero errors).
-   - Check duration: Short ~30s, Long 8–10 min.
-   - Run QA script: `python tools/qa.py out.mp4 short|long` for loudness (-14 to -15 LUFS) and static hold checks (no hold > 4s on shorts, > 9s on long).
-5. **Publishing Pack:** Output high-CTR titles (under 60 chars), 4-zone search description with exact timestamps, tags (<500 chars), pinned comment, and authentic ChatGPT thumbnail prompt.
+## 8. Real-World Footage & Authenticity Standards
+- **Visual Decision Hierarchy:** (1) Creator's own capture or real app/website by script &rarr; (2) Custom diagram / vector animation &rarr; (3) Public domain or NASA footage &rarr; (4) Free stock (Pexels, Pixabay, Mixkit, Coverr) as metaphor/atmosphere only.
+- **YouTube 2026 Originality Cap:** Free stock footage must NEVER exceed **40% of video runtime**. Every video requires at least one original element (creator capture, real screen recording, or diagram).
+- **Mandatory Compliance Artifacts:**
+  - `license_log.json`: Log every clip's source, author, URL, license, access date, and saved license proof.
+  - `attribution.txt`: Formatted description attribution for all CC BY media.
+  - `shotlist.csv`: Pre-production scene breakdown (scene, narration, visual intent, source decision, search terms, file).
+- **Zero Piracy & Misleading Content:** Never rip from YouTube/TikTok/IG/TV/Google Images. Never present stock as proof of a claim (e.g. stock office as "our team"). Stock is strictly illustrative.
+- **Real UI Capture Rule:** Use Playwright (`recordVideo`) for web, `scrcpy` for Android, and `simctl` for iOS. Hold beats &ge; 3.0s, zoom 120–150%, and add cursor ripple on clicks.
 
 ---
 
-## 9. Workspace Directory Organization
-- `tools/` — Modular production utilities (`channel_config.py`, `sync_engine.py`, `generate_metadata.py`, `generate_thumbnail.py`, `capture_ui.py`, `humanize.py`, `motion.py`, `qa.py`).
+## 9. Production Workflow & Unified Studio
+1. **Script & Data Specification:** Define scene manifest in `data.py` with sections, narration, and visual types.
+2. **Phonetic Speech Normalization:** Text pre-processed via `tools/lexicon.py` before Kokoro ONNX synthesis (`am_michael` 1.1x) to ensure flawless technical acronym, camelCase, and channel name pronunciation.
+3. **Procedural Sound Design:** Automatically generate section transition whooshes, bullet ticks/pops, and success chimes mixed with ducked ambient synth pad mastered to `-15.0 LUFS` via `tools/sound_engine.py`.
+4. **Authentic Real UI Window Capture:** Code snippets and terminal sessions rendered into genuine dark-mode VS Code / Terminal windows via Playwright Chromium (`tools/capture_code.py`). Zero synthetic Pillow mockups.
+5. **Declarative Vector Compositing:** Compose overscan canvas with continuous camera drift, spring physics cards, and syllable-weighted synchronized subtitles (`tools/subtitle_engine.py`) piped directly to Intel QSV / NVENC hardware encoder.
+6. **Unified One-Command Build:** Execute entire pipeline via:
+   `python tools/orchestrator.py build --project <path> [--channel <name>] [--format 1080p30|4k60]`
+7. **Verification & QA Gate:** Automated stream decode check (0 errors), loudness (-15.0 LUFS), and static hold check (`python tools/qa.py out.mp4 short|long`).
+
+---
+
+## 10. Workspace Directory Organization
+- `tools/` — Modular production utilities:
+  - `orchestrator.py` — Unified end-to-end studio pipeline runner.
+  - `lexicon.py` / `lexicon.json` — Phonetic dictionary and pronunciation normalizer for Kokoro TTS.
+  - `subtitle_engine.py` — Syllable-weighted caption and karaoke timing engine.
+  - `capture_code.py` — Authentic VS Code and Terminal window renderer (Playwright Chromium).
+  - `sound_engine.py` — Procedural SFX generation and broadcast audio mastering (-15 LUFS).
+  - `video_pipeline.py` — Streaming hardware-accelerated video encoder (QSV/NVENC/CPU).
+  - `render_core.py` — Resolution-agnostic declarative compositor (4K/1080p, Overscan drift).
+  - `channel_config.py` — Dynamic multi-channel profile loader (`--channel`).
+  - `sync_engine.py` — Dual-space open-source and creator privacy synchronization.
+  - `real_footage.py` — Stock footage licensing, compliance verification, and tracking.
+  - `qa.py` — Automated broadcast loudness and freeze-detection QA gate.
 - `templates/` — Starter channel profile templates (`channel.example.json`, `channel_profile_template.md`).
-- `agents/skills/` — Autonomous agent skills (`humanized-video`, `motion-editing`, `real-ui`, `youtube-metadata`, `thumbnail-prompt`, etc.).
+- `agents/skills/` — Autonomous agent skills (`real-world-footage`, `humanized-video`, `motion-editing`, `real-ui`, `youtube-metadata`, `thumbnail-prompt`, etc.).
 - `fonts/` — Typography assets (Inter Display Bold).
 - `media/` — Demo media assets.
 - `VideoFiles/` — Centralized storage for completed video projects and renders.
@@ -99,7 +122,7 @@ This engine supports white-label and multi-creator channel workflows:
 
 ---
 
-## 10. Dual-Space Maintenance & Sync Mandate
+## 11. Dual-Space Maintenance & Sync Mandate
 Whenever any improvement is made to video animation, editing rules, audio mastering, or skills:
 1. Update both the **public framework** (`agents/skills/`, `agents/rules/`, `tools/`) and **Kenil's workspace** (`TechXKenil/`).
 2. Run `python tools/sync_engine.py sync` to propagate and adapt enhancements automatically.

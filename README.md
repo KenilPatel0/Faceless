@@ -90,27 +90,30 @@ Experience autonomous AI video production generated with local neural voice synt
 
 ## 🔄 Autonomous Production Pipeline
 
-The entire video production lifecycle runs autonomously via **Google Antigravity** agents without human manual editing or third-party video editors:
+The entire video production lifecycle runs autonomously via **Google Antigravity** agents and the unified orchestrator:
 
 ```mermaid
-flowchart LR
-    A["💡 Script & Topic"] --> B["🤖 Antigravity Agent\n(Scene & Beat Breakdown)"]
-    B --> C["🎙️ Kokoro ONNX TTS\n(100% Free Local Speech)"]
-    B --> D["🎨 Vector Motion Engine\n(Springs, Supersampling)"]
-    C --> E["🔊 Dynamic SFX Mixer\n(Pops, Whooshes, Ducking)"]
-    D --> F["🎬 ffmpeg Compositor\n(RGB Stream to H.264)"]
-    E --> F
-    F --> G["🛡️ Automated QA Gate\n(0 Errors, -14 LUFS Target)"]
-    G --> H["🚀 Mastered MP4\n(YouTube Ready Output)"]
+flowchart TD
+    A["💡 Script & Scene Manifest (data.py)"] --> B["🗣️ Phonetic Lexicon Normalizer\n(tools/lexicon.py)"]
+    A --> C["💻 Authentic Real UI Capture\n(tools/capture_code.py)"]
+    B --> D["🎙️ Kokoro ONNX Neural TTS\n(am_michael @ 1.1x)"]
+    D --> E["🔊 Procedural Sound Design & Mastering\n(tools/sound_engine.py -15 LUFS)"]
+    D --> F["🔤 Syllable-Weighted Subtitle Engine\n(tools/subtitle_engine.py)"]
+    C & F --> G["🎨 Declarative Vector Compositor\n(tools/render_core.py)"]
+    E & G --> H["⚡ Streaming Video Pipeline\n(QSV / NVENC / CPU)"]
+    H --> I["🛡️ Automated QA Verification Gate\n(0 Errors, -15 LUFS, Zero Static Holds)"]
+    I --> J["🚀 Verified Master MP4 (YouTube Ready)"]
 
     style A fill:#0d1117,stroke:#58a6ff,stroke-width:2px,color:#fff
     style B fill:#161b22,stroke:#bc8cff,stroke-width:2px,color:#fff
-    style C fill:#161b22,stroke:#f0883e,stroke-width:2px,color:#fff
-    style D fill:#161b22,stroke:#7ee787,stroke-width:2px,color:#fff
+    style C fill:#161b22,stroke:#7ee787,stroke-width:2px,color:#fff
+    style D fill:#161b22,stroke:#f0883e,stroke-width:2px,color:#fff
     style E fill:#161b22,stroke:#ffa657,stroke-width:2px,color:#fff
     style F fill:#161b22,stroke:#79c0ff,stroke-width:2px,color:#fff
-    style G fill:#161b22,stroke:#ff7b72,stroke-width:2px,color:#fff
-    style H fill:#1f6feb,stroke:#58a6ff,stroke-width:2px,color:#fff
+    style G fill:#161b22,stroke:#d2a8ff,stroke-width:2px,color:#fff
+    style H fill:#161b22,stroke:#ff7b72,stroke-width:2px,color:#fff
+    style I fill:#161b22,stroke:#56d364,stroke-width:2px,color:#fff
+    style J fill:#1f6feb,stroke:#58a6ff,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -130,32 +133,32 @@ flowchart LR
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>🎙️ 100% Free Local Neural Voice</h3>
-      <p>Zero API costs and complete offline privacy powered by <b>Kokoro v1.0 ONNX</b> (<code>am_michael</code> at 1.1× speed). Generates natural, studio-quality narration in seconds with exact millisecond timelines.</p>
+      <h3>🎙️ Phonetic Speech Lexicon & Kokoro ONNX</h3>
+      <p>Pre-processes technical acronyms, camelCase, and channel names via <code>tools/lexicon.py</code> before synthesis with <b>Kokoro v1.0 ONNX</b>. 100% free, offline, and natural speech without pronunciation artifacts.</p>
     </td>
     <td width="50%" valign="top">
-      <h3>🖥️ High-DPI Real UI Screen Capture</h3>
-      <p>Never renders synthetic mockups. Headless Chromium (<b>Playwright</b> with <code>--4k</code>) captures authentic website interfaces and renders authentic system terminals at full 4K UHD.</p>
+      <h3>🖥️ Authentic Real UI Window Capture</h3>
+      <p>Zero synthetic mockups. Headless Chromium (<b>Playwright</b>) and <b>Pygments</b> render authentic dark-mode VS Code and macOS/Windows Terminal windows with real syntax themes and glassmorphic drop shadows.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>🎨 Cinematic Obsidian Anti-Banding System</h3>
-      <p>Deep obsidian <code>#0A0D14</code> layered with dual-stop radial sapphire and amethyst spotlights, <b>2.5% Gaussian film grain</b>, and a <b>12% dotted matrix</b> to eliminate YouTube dark color banding.</p>
+      <h3>🔤 Syllable-Weighted Subtitle Synchronization</h3>
+      <p>Eliminates linear drift. <code>tools/subtitle_engine.py</code> calculates word durations based on English syllable weights and punctuation pauses, keeping on-screen captions in perfect lockstep with spoken narration.</p>
     </td>
     <td width="50%" valign="top">
-      <h3>🔤 Dynamic Word-Pop Karaoke Typography</h3>
-      <p>High-contrast, viral Shorts chunking capped at 3–4 words at <code>y=3120</code>. The active spoken word illuminates in Electric Yellow <code>(255, 205, 70)</code> with a natural 1.06× scale bounce.</p>
+      <h3>🔊 Procedural Sound Design & Mastering</h3>
+      <p>Integrated <code>tools/sound_engine.py</code> automatically synthesizes UI sound effects (whooshes, pops, ticks, chimes) and mixes ducked ambient synth pads mastered to <b>-15.0 LUFS</b> broadcast standards.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <h3>🚀 Hardware-Accelerated Streaming Pipeline</h3>
-      <p>Direct RGB24 pipe to <code>ffmpeg</code> standard input. Auto-probes hardware encoders (<b>Intel QSV</b>, <b>NVIDIA NVENC</b>, <b>Media Foundation</b>) with peak RAM usage under 350 MB.</p>
+      <p>Direct RGB24 pipe to <code>ffmpeg</code> standard input. Auto-probes hardware encoders (<b>Intel QSV</b>, <b>NVIDIA NVENC</b>, <b>Media Foundation</b>) with peak RAM usage under 350 MB and exact sample-duration targeting.</p>
     </td>
     <td width="50%" valign="top">
       <h3>🛡️ Mathematical QA Gate</h3>
-      <p>Integrated <code>qa.py</code> automated gate verifies <b>zero stream decode errors</b> (<code>ffmpeg -v error -f null -</code>), enforces YouTube loudness (<b>-14.0 to -16.0 LUFS</b>), and guarantees zero static holds.</p>
+      <p>Integrated <code>qa.py</code> automated gate verifies <b>zero stream decode errors</b> (<code>ffmpeg -v error -f null -</code>), enforces YouTube loudness (<b>-14.0 to -16.5 LUFS</b>), and guarantees zero static holds.</p>
     </td>
   </tr>
 </table>
@@ -204,23 +207,40 @@ Creators can organize all their personal assets inside their own dedicated chann
 
 > **🔒 Privacy Guarantee:** Personal folders (such as `TechXKenil/`) and `channel.json` are strictly excluded in `.gitignore`. Your personal channel identity, private skills, internal video roadmaps, and voice settings remain local to your machine and are **never** pushed to public GitHub.
 
-### 4️⃣ Manual CLI Workflow
-If you prefer running production manually:
+### 4️⃣ One-Command Studio Orchestrator (`tools/orchestrator.py`)
+Execute the full 6-stage autonomous production studio (TTS synthesis, phonetic normalization, procedural SFX mixing, real UI window snapshotting, hardware-accelerated video compositing, and QA gates) in a single command:
 
 ```bash
-# 1. Activate environment
-source .venv/bin/activate
+# Render full long-form explainer video
+python tools/orchestrator.py build --project python/ai_dev_blueprint --channel TechXKenil --format 1080p30
 
-# 2. Synthesize neural narration & audio timeline (Kokoro ONNX)
-python VideoFiles/pilot_human_editing_short_4k60/tts_short.py
+# Render 4K 60FPS explainer
+python tools/orchestrator.py build --project python/ai_dev_blueprint --channel TechXKenil --format 4k60
 
-# 3. Render 30s High-Retention Vertical Short (2160×3840 4K UHD @ 60 FPS)
-python VideoFiles/pilot_human_editing_short_4k60/render_short_4k60.py
+# Render for guest / white-label channel (e.g. AI Wolfie)
+python tools/orchestrator.py build --project python/ai_dev_blueprint --channel Aiwolfie --format 1080p30
+```
 
-# 4. Render 20s Horizontal Explainer (3840×2160 4K UHD @ 60 FPS)
-python VideoFiles/demo_4k60_horizontal/render_demo_4k60.py
+### 5️⃣ Modular Tool Suite
+If you prefer running individual pipeline components independently:
 
-# 5. Run automated 4K 60FPS QA verification gates
+```bash
+# 1. Phonetic speech normalization & Kokoro TTS testing
+python tools/lexicon.py
+
+# 2. Authentic Real UI Code & Terminal window snapshotting (Playwright Chromium)
+python tools/capture_code.py
+
+# 3. Procedural UI sound effects & -15.0 LUFS broadcast mastering
+python tools/sound_engine.py
+
+# 4. Syllable-weighted forced-alignment subtitle engine
+python tools/subtitle_engine.py
+
+# 5. Dynamic multi-channel profile inspection
+python tools/channel_config.py --channel TechXKenil
+
+# 6. Run automated 4K 60FPS QA verification gates
 python tools/qa.py VideoFiles/pilot_human_editing_short_4k60/pilot_short_4k60.mp4 short
 python tools/qa.py VideoFiles/demo_4k60_horizontal/demo_4k60_horizontal.mp4 long
 ```
@@ -278,6 +298,7 @@ techxkenil-video-engine/
 ├── tools/                    # Shared production libraries
 │   ├── render_core.py        # 4K 60FPS vector compositor, overscan canvas, karaoke
 │   ├── video_pipeline.py     # Hardware-accelerated streaming pipeline (QSV/NVENC/MF)
+│   ├── real_footage.py       # Authentic footage compliance, licensing logger, grading
 │   ├── channel_config.py     # Modular channel profile & branding loader
 │   ├── motion.py             # Springs, supersampling, blur, keyframes
 │   ├── humanize.py           # Easing, karaoke, SFX synthesizer, master()
@@ -293,6 +314,7 @@ techxkenil-video-engine/
 ├── agents/                   # Agent configurations & knowledge base
 │   ├── rules/                # Modular video production rules
 │   └── skills/               # Custom Antigravity skills
+│       ├── real-world-footage/ # Authentic footage, YouTube 2026 originality, license logger
 │       ├── motion-editing/   # Core motion graphics skill
 │       ├── humanized-video/  # Humanized pacing & variation
 │       ├── real-ui/          # Authentic UI screen capture enforcement

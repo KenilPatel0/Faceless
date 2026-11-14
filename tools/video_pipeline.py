@@ -124,7 +124,7 @@ class StreamingVideoPipeline:
         self.cmd = self._build_ffmpeg_command()
         
         # Start FFmpeg subprocess
-        self.proc = subprocess.Popen(self.cmd, stdin=subprocess.PIPE)
+        self.proc = subprocess.Popen(self.cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
         self.frame_count = 0
         self.t_start = time.time()
 
@@ -150,8 +150,17 @@ class StreamingVideoPipeline:
         # Audio & container flags
         cmd.extend([
             "-c:a", "aac",
-            "-b:a", "192k",
-            "-shortest",
+            "-b:a", "192k"
+        ])
+
+        if self.total_frames:
+            # Enforce exact duration alignment without abrupt mid-syllable truncation
+            exact_dur = self.total_frames / float(self.fps)
+            cmd.extend(["-t", f"{exact_dur:.3f}"])
+        else:
+            cmd.extend(["-shortest"])
+
+        cmd.extend([
             "-movflags", "+faststart",
             self.output_path
         ])
@@ -183,9 +192,18 @@ class StreamingVideoPipeline:
 
     def close(self):
         """Flushes stdin and waits for FFmpeg to finish encoding."""
+        stderr_output = ""
         if self.proc.stdin:
             self.proc.stdin.close()
-        self.proc.wait()
+        
+        stdout_data, stderr_data = self.proc.communicate()
+        if stderr_data:
+            stderr_output = stderr_data.decode("utf-8", errors="replace")
+
+        if self.proc.returncode != 0:
+            err_tail = "\n".join(stderr_output.strip().splitlines()[-10:])
+            raise RuntimeError(f"FFmpeg encoding failed (code {self.proc.returncode}):\n{err_tail}")
+
         total_time = time.time() - self.t_start
         avg_fps = self.frame_count / max(0.001, total_time)
         print(f"✓ Video pipeline complete! Rendered {self.frame_count} frames in {total_time:.1f}s ({avg_fps:.1f} avg FPS)")

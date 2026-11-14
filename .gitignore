@@ -25,6 +25,9 @@ techxkenil/
 Kenil/
 kenil/
 channel.json
+kenil_footage/
+creator_footage/
+licenses/
 
 # Private Channel Metadata & Publishing Copies (local only)
 *youtube_metadata*.md

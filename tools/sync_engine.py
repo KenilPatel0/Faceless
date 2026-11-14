@@ -27,6 +27,7 @@ STRICTLY_PRIVATE_FILES = [
     "TechXKenil/docs/IDEAS.md",
     "TechXKenil/channel_profile.json",
     "TechXKenil/README.md",
+    "TechXKenil/REAL_FOOTAGE_PLAYBOOK.md",
     "channel.json",
     ".env"
 ]
@@ -47,6 +48,11 @@ SYNC_PAIRS = [
         "agents/skills/real-ui/SKILL.md",
         "TechXKenil/skills/techxkenil-real-ui/SKILL.md",
         "real-ui"
+    ),
+    (
+        "agents/skills/real-world-footage/SKILL.md",
+        "TechXKenil/skills/techxkenil-real-world-footage/SKILL.md",
+        "real-world-footage"
     ),
     (
         "agents/rules/video-production-rules.md",
@@ -121,6 +127,11 @@ def sanitize_public_to_private(content: str, kind: str) -> str:
     elif kind == "real-ui":
         content = content.replace("name: real-ui", "name: techxkenil-real-ui")
         content = content.replace("# Real UI Capture Skill", "# TechXKenil Real UI Capture Skill")
+    elif kind == "real-world-footage":
+        content = content.replace("name: real-world-footage", "name: techxkenil-real-world-footage")
+        content = content.replace("# Real-World Footage Skill", "# TechXKenil Real-World Footage Skill")
+        content = content.replace("creator_footage/", "kenil_footage/")
+        content = content.replace("[CREATOR: capture ...]", "[KENIL: capture ...]")
     return content
 
 def sanitize_private_to_public(content: str, kind: str) -> str:
@@ -134,6 +145,11 @@ def sanitize_private_to_public(content: str, kind: str) -> str:
     elif kind == "real-ui":
         content = content.replace("name: techxkenil-real-ui", "name: real-ui")
         content = content.replace("# TechXKenil Real UI Capture Skill", "# Real UI Capture Skill")
+    elif kind == "real-world-footage":
+        content = content.replace("name: techxkenil-real-world-footage", "name: real-world-footage")
+        content = content.replace("# TechXKenil Real-World Footage Skill", "# Real-World Footage Skill")
+        content = content.replace("kenil_footage/", "creator_footage/")
+        content = content.replace("[KENIL: capture ...]", "[CREATOR: capture ...]")
     return content
 
 def perform_sync(direction: str = "bidirectional"):

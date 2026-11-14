@@ -300,6 +300,153 @@ class OverscanCanvas:
         return self.frame.crop((x0, y0, x0 + self.W, y0 + self.H))
 
 
+# -----------------------------------------------------------------------------
+# Declarative Scene Components
+# -----------------------------------------------------------------------------
+
+def spring(t: float, freq: float = 2.2, zeta: float = 0.72) -> float:
+    """Natural spring physics curve with ~4% overshoot. Settles in ~0.5s."""
+    if t <= 0.0:
+        return 0.0
+    w = 2.0 * math.pi * freq
+    wd = w * math.sqrt(1.0 - zeta ** 2)
+    return 1.0 - math.exp(-zeta * w * t) * (math.cos(wd * t) + zeta * w / wd * math.sin(wd * t))
+
+def bezier_point(p0: Tuple[float, float], p1: Tuple[float, float], p2: Tuple[float, float], t: float) -> Tuple[float, float]:
+    """Quadratic Bezier curve point."""
+    u = 1.0 - t
+    x = u * u * p0[0] + 2.0 * u * t * p1[0] + t * t * p2[0]
+    y = u * u * p0[1] + 2.0 * u * t * p1[1] + t * t * p2[1]
+    return (x, y)
+
+def draw_cursor(dr: ImageDraw.Draw, pos: Tuple[float, float], scale: float = 1.0):
+    """Draws an authentic mouse cursor."""
+    x, y = pos
+    s = scale
+    pts = [
+        (x, y), (x, y + 28 * s), (x + 8 * s, y + 21 * s),
+        (x + 14 * s, y + 33 * s), (x + 19 * s, y + 30 * s),
+        (x + 13 * s, y + 19 * s), (x + 23 * s, y + 19 * s)
+    ]
+    dr.polygon(pts, fill=(255, 255, 255), outline=(15, 20, 30))
+
+def render_real_asset_frame(
+    canvas: OverscanCanvas,
+    asset_img: Image.Image,
+    rel_t: float,
+    box: Optional[Tuple[float, float, float, float]] = None
+):
+    """
+    Pastes a genuine UI screen capture (VS Code, Terminal, Website) onto the canvas
+    with realistic shadow, rounded corners, and spring scale entrance.
+    """
+    p_enter = min(1.0, spring(rel_t * 1.5))
+    if box is None:
+        # Default center stage inside safe content bounds
+        w = min(1480, int(asset_img.width / canvas.scale))
+        h = min(680, int(asset_img.height / canvas.scale))
+        cx = (canvas.W - w) // 2
+        cy = 135
+        box = (cx, cy, cx + w, cy + h)
+
+    x0, y0 = canvas.to_canvas(box[0], box[1])
+    target_w = int((box[2] - box[0]) * canvas.scale)
+    target_h = int((box[3] - box[1]) * canvas.scale)
+
+    # Scale asset to fit target box
+    resized = asset_img.resize((target_w, target_h), Image.Resampling.LANCZOS)
+    canvas.frame.paste(resized, (int(x0), int(y0)), resized if resized.mode == "RGBA" else None)
+
+def render_brand_card(
+    canvas: OverscanCanvas,
+    channel_name: str,
+    tagline: str,
+    badge: str,
+    rel_t: float,
+    logo_img: Optional[Image.Image] = None
+):
+    """Renders the official Brand Intro card with glowing ring logo."""
+    p_scale = min(1.0, spring(rel_t * 1.8))
+    cx, cy = canvas.W // 2, canvas.H // 2 - 20
+    
+    # Draw radial glow
+    canvas.draw_card((cx - 360, cy - 240, cx + 360, cy + 240), radius=28, fill=(16, 22, 38), outline=(70, 220, 255, 140), width=2)
+
+    # Logo
+    if logo_img:
+        logo_sz = int(220 * canvas.scale * p_scale)
+        if logo_sz > 10:
+            resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
+            lx, ly = canvas.to_canvas(cx - 110, cy - 180)
+            canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
+    else:
+        # Ring badge
+        canvas.draw_pill((cx - 60, cy - 140), badge, size=28, text_color=(70, 220, 255), bg_color=(24, 32, 54), outline_color=(70, 220, 255))
+
+    # Channel Name & Tagline
+    canvas.draw_text((cx, cy + 85), channel_name.upper(), size=44, fill=(255, 255, 255), anchor="mm")
+    canvas.draw_text((cx, cy + 145), tagline.upper(), size=22, fill=(70, 220, 255), anchor="mm")
+
+def render_outro_card(
+    canvas: OverscanCanvas,
+    channel_name: str,
+    tagline: str,
+    rel_t: float,
+    duration: float = 8.0,
+    logo_img: Optional[Image.Image] = None
+):
+    """
+    Renders the conversion outro card:
+    - Channel name & tagline
+    - Red SUBSCRIBE pill button
+    - Cursor glides in on Bezier arc, clicks at t = 2.5s
+    - Ripple expands, button turns Emerald Green '✓ SUBSCRIBED!'
+    """
+    cx, cy = canvas.W // 2, canvas.H // 2 - 20
+    canvas.draw_card((cx - 400, cy - 260, cx + 400, cy + 260), radius=28, fill=(16, 22, 38), outline=(255, 70, 90, 140), width=2)
+
+    # Logo or Badge
+    if logo_img:
+        logo_sz = int(140 * canvas.scale)
+        resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
+        lx, ly = canvas.to_canvas(cx - 70, cy - 210)
+        canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
+
+    canvas.draw_text((cx, cy - 35), channel_name.upper(), size=40, fill=(255, 255, 255), anchor="mm")
+    canvas.draw_text((cx, cy + 15), tagline.upper(), size=20, fill=(185, 192, 225), anchor="mm")
+
+    # Subscribe Button Animation
+    t_click = 2.5
+    is_clicked = rel_t >= t_click
+    btn_col = (35, 195, 110) if is_clicked else (255, 30, 50)
+    btn_txt = "✓ SUBSCRIBED!" if is_clicked else "SUBSCRIBE"
+    
+    # Pulse scale on click
+    click_pulse = 1.0
+    if 0 <= (rel_t - t_click) < 0.4:
+        click_pulse = 1.0 - 0.08 * math.sin(math.pi * (rel_t - t_click) / 0.4)
+
+    bx0, by0, bx1, by1 = cx - 180 * click_pulse, cy + 70, cx + 180 * click_pulse, cy + 150
+    canvas.draw_card((bx0, by0, bx1, by1), radius=24, fill=btn_col, outline=(255, 255, 255, 180), width=2)
+    canvas.draw_text((cx, cy + 110), btn_txt, size=24, fill=(255, 255, 255), anchor="mm")
+
+    # Expanding Ripple Ring
+    if is_clicked and (rel_t - t_click) < 1.0:
+        rip_p = (rel_t - t_click) / 1.0
+        rip_r = 60 * rip_p * canvas.scale
+        rx, ry = canvas.to_canvas(cx, cy + 110)
+        canvas.draw.ellipse([rx - rip_r, ry - rip_r, rx + rip_r, ry + rip_r], outline=(255, 205, 70, int(255 * (1 - rip_p))), width=3)
+
+    # Animated Cursor Path
+    p_cur = min(1.0, rel_t / 3.0)
+    p0 = (canvas.W - 150, canvas.H - 120)
+    p1 = (cx + 80, cy + 220)
+    p2 = (cx + 10, cy + 115)
+    cur_x, cur_y = bezier_point(p0, p1, p2, p_cur)
+    cx_draw, cy_draw = canvas.to_canvas(cur_x, cur_y)
+    draw_cursor(canvas.draw, (cx_draw, cy_draw), scale=canvas.scale)
+
+
 def render_subtitles(img: Image.Image, text: str, profile: ResolutionProfile):
     """Draws burned-in standard subtitles at the designated safe zone."""
     if not text:
