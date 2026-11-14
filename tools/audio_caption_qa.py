@@ -17,7 +17,12 @@ from tools.caption_engine import CaptionTrack, VisualCaptionPlan
 
 
 def run_ffmpeg(args: List[str]) -> str:
-    ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
+    for c in [shutil.which("ffmpeg"), os.path.expanduser(r"~\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe"), "ffmpeg"]:
+        if c and (os.path.exists(c) or shutil.which(c)):
+            ffmpeg = c
+            break
+    else:
+        ffmpeg = "ffmpeg"
     res = subprocess.run([ffmpeg, "-hide_banner", "-nostats"] + args, capture_output=True, text=True)
     return res.stderr
 

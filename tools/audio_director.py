@@ -25,6 +25,13 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 
 
+def get_ffmpeg_path() -> str:
+    for c in [shutil.which("ffmpeg"), os.path.expanduser(r"~\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe"), "ffmpeg"]:
+        if c and (os.path.exists(c) or shutil.which(c)):
+            return c
+    return "ffmpeg"
+
+
 # ==============================================================================
 # 1. PROVIDER-NEUTRAL TTS CONTRACTS
 # ==============================================================================
@@ -289,14 +296,15 @@ class AudioMixer:
             
             duck_factor = 10.0 ** (-ducking_db / 20.0)
             amb_gain = np.where(is_speaking, 0.08 * duck_factor, 0.12).astype(np.float32)
-            master_buffer += amb * amb_gain
+            min_amb = min(len(amb), total_samples)
+            master_buffer[:min_amb] += (amb[:min_amb] * amb_gain[:min_amb])
 
         # 3. Save working stem
         tmp_stem = output_master_path + ".tmp.wav"
         sf.write(tmp_stem, master_buffer, self.sample_rate)
 
         # 4. Final EBU R128 Two-Pass Loudness Normalization via FFmpeg
-        ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
+        ffmpeg = get_ffmpeg_path()
         cmd = [
             ffmpeg, "-y", "-i", tmp_stem,
             "-af", f"loudnorm=I={self.target_lufs}:TP={self.max_true_peak}:LRA=7",

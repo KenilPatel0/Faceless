@@ -85,6 +85,25 @@ class AssetRegistry:
                 license=LicenseInfo(name="MIT_Engine", commercial_use_reviewed=True)
             ))
 
+        # Consistent Brand Master Clips
+        branding_clips = [
+            ("brand_intro_1080p", "media/branding/intro_1080p.mp4", 1920, 1080, 4.0),
+            ("brand_intro_4k", "media/branding/intro_4k.mp4", 3840, 2160, 4.0),
+            ("brand_intro_short", "media/branding/intro_short.mp4", 1080, 1920, 2.2),
+            ("brand_outro_1080p", "media/branding/outro_1080p.mp4", 1920, 1080, 7.0),
+            ("brand_outro_4k", "media/branding/outro_4k.mp4", 3840, 2160, 7.0),
+            ("brand_outro_short", "media/branding/outro_short.mp4", 1080, 1920, 3.8)
+        ]
+        for aid, p, w, h, d in branding_clips:
+            self.register(AssetMetadata(
+                asset_id=aid,
+                asset_type="footage_clip",
+                path=p,
+                source_type="authentic_capture",
+                license=LicenseInfo(name="Proprietary_Channel_Branding", commercial_use_reviewed=True),
+                width=w, height=h, duration_s=d
+            ))
+
     def register(self, asset: AssetMetadata):
         errs = asset.validate()
         if errs:

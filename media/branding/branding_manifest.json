@@ -1,0 +1,43 @@
+{
+  "channel": "TechXKenil",
+  "badge": "TXK",
+  "tagline": "AI \u2022 TECH \u2022 CODE",
+  "assets": {
+    "intro_1080p30": {
+      "path": "D:\\Faceless\\media\\branding\\intro_1080p.mp4",
+      "duration": 4.0,
+      "resolution": "1920x1080",
+      "fps": 30
+    },
+    "intro_4k60": {
+      "path": "D:\\Faceless\\media\\branding\\intro_4k.mp4",
+      "duration": 4.0,
+      "resolution": "3840x2160",
+      "fps": 60
+    },
+    "intro_1080p30_vert": {
+      "path": "D:\\Faceless\\media\\branding\\intro_short.mp4",
+      "duration": 2.2,
+      "resolution": "1080x1920",
+      "fps": 30
+    },
+    "outro_1080p30": {
+      "path": "D:\\Faceless\\media\\branding\\outro_1080p.mp4",
+      "duration": 7.0,
+      "resolution": "1920x1080",
+      "fps": 30
+    },
+    "outro_4k60": {
+      "path": "D:\\Faceless\\media\\branding\\outro_4k.mp4",
+      "duration": 7.0,
+      "resolution": "3840x2160",
+      "fps": 60
+    },
+    "outro_1080p30_vert": {
+      "path": "D:\\Faceless\\media\\branding\\outro_short.mp4",
+      "duration": 3.8,
+      "resolution": "1080x1920",
+      "fps": 30
+    }
+  }
+}

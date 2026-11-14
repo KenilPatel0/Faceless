@@ -283,3 +283,33 @@ def test_voice_profile_and_audio_mono_check():
         assert is_compat_stereo is True
         assert corr_stereo > 0.95
 
+
+def test_branding_engine_assets_and_manifest():
+    """Verifies that the consistent branding suite (intro and outro) is properly saved and registered."""
+    registry = AssetRegistry()
+    assert registry.get("brand_intro_1080p") is not None
+    assert registry.get("brand_outro_1080p") is not None
+    assert registry.get("brand_intro_4k") is not None
+    assert registry.get("brand_outro_4k") is not None
+    assert registry.get("brand_intro_short") is not None
+    assert registry.get("brand_outro_short") is not None
+
+    manifest_path = os.path.join(REPO_ROOT, "media", "branding", "branding_manifest.json")
+    assert os.path.exists(manifest_path)
+
+    import json
+    with open(manifest_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        assert "assets" in data
+        assert "intro_1080p30" in data["assets"]
+        assert "outro_1080p30" in data["assets"]
+        assert "intro_4k60" in data["assets"]
+        assert "outro_4k60" in data["assets"]
+
+    # Verify preview images
+    intro_preview = os.path.join(REPO_ROOT, "media", "branding", "intro_preview.jpg")
+    outro_preview = os.path.join(REPO_ROOT, "media", "branding", "outro_preview.jpg")
+    assert os.path.exists(intro_preview)
+    assert os.path.exists(outro_preview)
+
+

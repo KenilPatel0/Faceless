@@ -377,90 +377,145 @@ def render_brand_card(
     rel_t: float,
     logo_img: Optional[Image.Image] = None
 ):
-    """Renders the official Brand Intro card with glowing ring logo."""
+    """Renders the official Brand Intro card with glowing ring logo and concentric energy rings."""
+    sc = canvas.scale
     p_scale = min(1.0, spring(rel_t * 1.8))
     cx = canvas.W // 2
-    cy = int(canvas.H * 0.42) if canvas.profile.is_vertical else (canvas.H // 2 - 20)
-    card_w = min(420, int(canvas.W * 0.44))
-    card_h = 240
+    cy = int(canvas.H * 0.44) if canvas.profile.is_vertical else (canvas.H // 2 - 15)
+    card_w = min(480, int(canvas.W * 0.44))
+    card_h = 270 if not canvas.profile.is_vertical else 320
     
-    # Draw radial glow
-    canvas.draw_card((cx - card_w, cy - card_h, cx + card_w, cy + card_h), radius=28, fill=(16, 22, 38), outline=(70, 220, 255, 140), width=2)
+    # 1. Concentric Energy Rings
+    rot_deg = rel_t * 60.0
+    ring_r = int(145 * sc * p_scale)
+    ring_cx, ring_cy = canvas.to_canvas(cx, cy - (85 if not canvas.profile.is_vertical else 105))
+    glow_box = [ring_cx - ring_r - 20, ring_cy - ring_r - 20, ring_cx + ring_r + 20, ring_cy + ring_r + 20]
+    canvas.draw.ellipse(glow_box, outline=(70, 220, 255, 60), width=int(4 * sc))
+    canvas.draw.arc([ring_cx - ring_r, ring_cy - ring_r, ring_cx + ring_r, ring_cy + ring_r], start=rot_deg, end=rot_deg + 240, fill=CYAN, width=max(2, int(3 * sc)))
+    inner_r = int(ring_r * 0.82)
+    canvas.draw.arc([ring_cx - inner_r, ring_cy - inner_r, ring_cx + inner_r, ring_cy + inner_r], start=-rot_deg * 1.4, end=-rot_deg * 1.4 + 210, fill=PURPLE, width=max(2, int(2.5 * sc)))
 
-    # Logo
+    # 2. Main Frosted Obsidian Card
+    bx0, by0 = cx - int(card_w * p_scale), cy - int(card_h * p_scale)
+    bx1, by1 = cx + int(card_w * p_scale), cy + int(card_h * p_scale)
+    canvas.draw_card((bx0, by0, bx1, by1), radius=int(28 * sc), fill=(14, 18, 32), outline=(70, 220, 255, 140), width=max(1, int(2 * sc)))
+
+    # 3. Logo or Badge
     if logo_img:
-        logo_sz = int(200 * canvas.scale * p_scale)
+        logo_sz = int(170 * sc * p_scale)
         if logo_sz > 10:
             resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
-            lx, ly = canvas.to_canvas(cx - 100, cy - 170)
+            lx, ly = canvas.to_canvas(cx - int(85 * p_scale), cy - (170 if not canvas.profile.is_vertical else 190))
             canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
     else:
-        # Ring badge
-        canvas.draw_pill((cx - 60, cy - 140), badge, size=28, text_color=(70, 220, 255), bg_color=(24, 32, 54), outline_color=(70, 220, 255))
+        badge_y = cy - (90 if not canvas.profile.is_vertical else 110)
+        canvas.draw_pill((cx - 65, badge_y), badge, size=int(32 * sc), text_color=CYAN, bg_color=(22, 28, 48), outline_color=CYAN)
 
-    # Channel Name & Tagline
-    canvas.draw_text((cx, cy + 85), channel_name.upper(), size=44, fill=(255, 255, 255), anchor="mm")
-    canvas.draw_text((cx, cy + 145), tagline.upper(), size=22, fill=(70, 220, 255), anchor="mm")
+    # 4. Channel Name, Tagline & Quality Badge
+    name_y = cy + (75 if not canvas.profile.is_vertical else 70)
+    canvas.draw_text((cx, name_y), channel_name.upper(), size=int(46 * sc), fill=WHITE, anchor="mm")
+    tagline_y = name_y + int(50 * sc)
+    canvas.draw_text((cx, tagline_y), f"♦  {tagline.upper()}  ♦", size=int(20 * sc), fill=CYAN, anchor="mm")
+
+    quality_text = "PRACTICAL TECH EXPLAINERS • 4K UHD" if not canvas.profile.is_vertical else "ENGINEERING SHORTS"
+    pill_y = tagline_y + int(48 * sc)
+    canvas.draw_pill((cx - int(160 * sc), pill_y), quality_text, size=int(14 * sc), text_color=(190, 200, 235), bg_color=(18, 22, 38), outline_color=(70, 220, 255, 100))
 
 def render_outro_card(
     canvas: OverscanCanvas,
     channel_name: str,
     tagline: str,
     rel_t: float,
-    duration: float = 8.0,
-    logo_img: Optional[Image.Image] = None
+    duration: float = 7.0,
+    logo_img: Optional[Image.Image] = None,
+    click_time: float = 2.2
 ):
     """
     Renders the conversion outro card:
+    - YouTube End Screen safe zones (horizontal)
     - Channel name & tagline
     - Red SUBSCRIBE pill button
-    - Cursor glides in on Bezier arc, clicks at t = 2.5s
-    - Ripple expands, button turns Emerald Green '✓ SUBSCRIBED!'
+    - Cursor glides in on Bezier arc, clicks at t = click_time
+    - Ripple expands, golden bell notification illuminates, button turns Emerald Green '✓ SUBSCRIBED!'
     """
+    sc = canvas.scale
     cx = canvas.W // 2
-    cy = int(canvas.H * 0.42) if canvas.profile.is_vertical else (canvas.H // 2 - 20)
-    card_w = min(420, int(canvas.W * 0.45))
-    card_h = 260
-    canvas.draw_card((cx - card_w, cy - card_h, cx + card_w, cy + card_h), radius=28, fill=(16, 22, 38), outline=(255, 70, 90, 140), width=2)
+    cy = int(canvas.H * 0.44) if canvas.profile.is_vertical else (canvas.H // 2 - 15)
+
+    # 1. YouTube End Screen Safe Boxes (Horizontal 16:9 only)
+    if not canvas.profile.is_vertical:
+        box_w, box_h = int(380 * sc), int(214 * sc)
+        lx0, ly0 = int(120 * sc), cy - box_h // 2
+        canvas.draw_card((lx0, ly0, lx0 + box_w, ly0 + box_h), radius=int(18 * sc), fill=(14, 18, 30), outline=(70, 220, 255, 70), width=int(1.5 * sc))
+        canvas.draw_text((lx0 + box_w // 2, ly0 + box_h // 2 - 15), "▶  RECOMMENDED VIDEO", size=int(17 * sc), fill=CYAN, anchor="mm")
+        canvas.draw_text((lx0 + box_w // 2, ly0 + box_h // 2 + 18), "(YouTube End Screen Safe Zone)", size=int(12 * sc), fill=DIM, anchor="mm")
+
+        rx0, ry0 = canvas.W - int(120 * sc) - box_w, cy - box_h // 2
+        canvas.draw_card((rx0, ry0, rx0 + box_w, ry0 + box_h), radius=int(18 * sc), fill=(14, 18, 30), outline=(150, 110, 255, 70), width=int(1.5 * sc))
+        canvas.draw_text((rx0 + box_w // 2, ry0 + box_h // 2 - 15), "📋  BEST PLAYLIST", size=int(17 * sc), fill=PURPLE, anchor="mm")
+        canvas.draw_text((rx0 + box_w // 2, ry0 + box_h // 2 + 18), "(YouTube End Screen Safe Zone)", size=int(12 * sc), fill=DIM, anchor="mm")
+
+    # 2. Center Hero Conversion Card
+    card_w = min(460, int(canvas.W * 0.42))
+    card_h = 280 if not canvas.profile.is_vertical else 330
+    is_clicked = rel_t >= click_time
+
+    border_col = (35, 195, 110, 180) if is_clicked else (255, 70, 90, 140)
+    canvas.draw_card((cx - card_w, cy - card_h, cx + card_w, cy + card_h), radius=int(28 * sc), fill=(14, 18, 32), outline=border_col, width=max(1, int(2 * sc)))
 
     # Logo or Badge
     if logo_img:
-        logo_sz = int(130 * canvas.scale)
+        logo_sz = int(130 * sc)
         resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
-        lx, ly = canvas.to_canvas(cx - 65, cy - 205)
+        lx, ly = canvas.to_canvas(cx - int(65 * sc), cy - (190 if not canvas.profile.is_vertical else 220))
         canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
+    else:
+        badge_y = cy - (120 if not canvas.profile.is_vertical else 140)
+        canvas.draw_pill((cx - 50, badge_y), "TXK", size=int(26 * sc), text_color=WHITE, bg_color=(24, 32, 54), outline_color=(70, 220, 255))
 
-    canvas.draw_text((cx, cy - 35), channel_name.upper(), size=40, fill=(255, 255, 255), anchor="mm")
-    canvas.draw_text((cx, cy + 15), tagline.upper(), size=20, fill=(185, 192, 225), anchor="mm")
+    canvas.draw_text((cx, cy - (30 if not canvas.profile.is_vertical else 40)), channel_name.upper(), size=int(40 * sc), fill=WHITE, anchor="mm")
+    canvas.draw_text((cx, cy + (15 if not canvas.profile.is_vertical else 10)), f"♦ {tagline.upper()} ♦", size=int(18 * sc), fill=DIM, anchor="mm")
 
-    # Subscribe Button Animation
-    t_click = 2.5
-    is_clicked = rel_t >= t_click
-    btn_col = (35, 195, 110) if is_clicked else (255, 30, 50)
+    # 3. Conversion Subscribe Button Animation
+    btn_col = SUB_GREEN if is_clicked else SUB_RED
     btn_txt = "✓ SUBSCRIBED!" if is_clicked else "SUBSCRIBE"
     
-    # Pulse scale on click
     click_pulse = 1.0
-    if 0 <= (rel_t - t_click) < 0.4:
-        click_pulse = 1.0 - 0.08 * math.sin(math.pi * (rel_t - t_click) / 0.4)
+    if 0 <= (rel_t - click_time) < 0.35:
+        click_pulse = 1.0 - 0.10 * math.sin(math.pi * (rel_t - click_time) / 0.35)
 
-    bx0, by0, bx1, by1 = cx - 180 * click_pulse, cy + 70, cx + 180 * click_pulse, cy + 150
-    canvas.draw_card((bx0, by0, bx1, by1), radius=24, fill=btn_col, outline=(255, 255, 255, 180), width=2)
-    canvas.draw_text((cx, cy + 110), btn_txt, size=24, fill=(255, 255, 255), anchor="mm")
+    bw = int(185 * sc * click_pulse)
+    bh = int(36 * sc)
+    btn_y = cy + (100 if not canvas.profile.is_vertical else 115)
 
-    # Expanding Ripple Ring
-    if is_clicked and (rel_t - t_click) < 1.0:
-        rip_p = (rel_t - t_click) / 1.0
-        rip_r = 60 * rip_p * canvas.scale
-        rx, ry = canvas.to_canvas(cx, cy + 110)
-        canvas.draw.ellipse([rx - rip_r, ry - rip_r, rx + rip_r, ry + rip_r], outline=(255, 205, 70, int(255 * (1 - rip_p))), width=3)
+    canvas.draw_card((cx - bw, btn_y - bh, cx + bw, btn_y + bh), radius=int(24 * sc), fill=btn_col, outline=(255, 255, 255, 200), width=max(1, int(2 * sc)))
+    canvas.draw_text((cx, btn_y), btn_txt, size=int(24 * sc), fill=WHITE, anchor="mm")
 
-    # Animated Cursor Path
-    p_cur = min(1.0, rel_t / 3.0)
-    p0 = (canvas.W - 150, canvas.H - 120)
-    p1 = (cx + 80, cy + 220)
-    p2 = (cx + 10, cy + 115)
-    cur_x, cur_y = bezier_point(p0, p1, p2, p_cur)
+    # 4. Expanding Golden Shockwave Ripple Ring
+    if is_clicked and (rel_t - click_time) < 1.0:
+        rip_p = (rel_t - click_time) / 1.0
+        rip_r = int(120 * sc * rip_p)
+        rx, ry = canvas.to_canvas(cx, btn_y)
+        alpha = int(255 * (1.0 - rip_p))
+        canvas.draw.ellipse([rx - rip_r, ry - rip_r, rx + rip_r, ry + rip_r], outline=(255, 205, 70, alpha), width=max(2, int(4 * sc)))
+
+    # 5. Golden Notification Bell Badge
+    if is_clicked:
+        bell_x = cx + bw + int(36 * sc)
+        canvas.draw_pill((bell_x - int(20 * sc), btn_y - int(18 * sc)), "🔔", size=int(18 * sc), text_color=YELLOW, bg_color=(28, 34, 56), outline_color=YELLOW)
+
+    # 6. Smooth Bezier Mouse Cursor Glide
+    p0 = (canvas.W - int(120 * sc), canvas.H - int(100 * sc))
+    p1 = (cx + int(90 * sc), btn_y + int(120 * sc))
+    p2 = (cx + int(10 * sc), btn_y + int(10 * sc))
+    p_cur = min(1.0, rel_t / click_time)
+
+    if rel_t > click_time:
+        drift_p = min(1.0, (rel_t - click_time) / (duration - click_time))
+        cur_x, cur_y = bezier_point(p2, (cx + int(150 * sc), btn_y + int(80 * sc)), (canvas.W - int(140 * sc), canvas.H - int(110 * sc)), drift_p)
+    else:
+        cur_x, cur_y = bezier_point(p0, p1, p2, p_cur)
+
     cx_draw, cy_draw = canvas.to_canvas(cur_x, cur_y)
     draw_cursor(canvas.draw, (cx_draw, cy_draw), scale=canvas.scale)
 
