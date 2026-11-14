@@ -288,10 +288,11 @@ class AudioMixer:
             amb = generate_ambient_synth(total_dur, sr=self.sample_rate)
             # Duck music under active speech
             speech_env = np.abs(v_data)
-            # Smooth envelope
+            # Smooth envelope via fast FFT convolution
             kernel_sz = int(0.2 * self.sample_rate)
             kernel = np.ones(kernel_sz) / kernel_sz
-            smooth_env = np.convolve(speech_env, kernel, mode="same")
+            from scipy.signal import fftconvolve
+            smooth_env = fftconvolve(speech_env, kernel, mode="same")
             is_speaking = smooth_env > 0.02
             
             duck_factor = 10.0 ** (-ducking_db / 20.0)
