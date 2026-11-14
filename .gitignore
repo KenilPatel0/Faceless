@@ -12,6 +12,7 @@ ENV/
 .env.*.local
 
 # Models & Heavy Binary Assets
+kokoro_models/
 *.onnx
 *.bin
 *.wav
