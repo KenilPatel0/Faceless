@@ -17,8 +17,15 @@ import json
 import os
 import sys
 
-CHANNEL_NAME = "TechXKenil"
-CHANNEL_TAG = "TechXKenil"
+try:
+    from tools.channel_config import get_channel_config
+except ImportError:
+    from channel_config import get_channel_config
+
+channel_cfg = get_channel_config()
+CHANNEL_NAME = channel_cfg.get("channel_name", "TechChannel")
+CHANNEL_TAG = channel_cfg.get("channel_tag", "TechChannel")
+CHANNEL_HASHTAGS = " ".join(channel_cfg.get("hashtags", ["#Shorts", "#AI", "#TechExplained"]))
 
 def format_time(seconds):
     m = int(seconds // 60)
@@ -74,7 +81,7 @@ def build_metadata(
             "artificial intelligence",
             "tech explained",
             "software engineering",
-            "techxkenil"
+            CHANNEL_TAG.lower()
         ]
     
     tags_string = ", ".join(tags_list)
@@ -119,7 +126,7 @@ def build_metadata(
         
     output.append(f"\n{pinned_question.split('?')[0]}? Let me know in the comments.")
     output.append(f"\nSubscribe to {CHANNEL_NAME} for practical, honest tech and AI breakdowns.")
-    output.append("\n#AI #TechXKenil #TechExplained #ComputerScience #SoftwareEngineering")
+    output.append(f"\n{CHANNEL_HASHTAGS}")
     output.append("```\n")
 
     output.append(f"## 3. Tags ({len(tags_string)}/500 characters, no hashtags)")

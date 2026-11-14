@@ -16,6 +16,14 @@ import urllib.parse
 import urllib.request
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
+try:
+    from tools.channel_config import get_channel_config
+except ImportError:
+    from channel_config import get_channel_config
+
+channel_cfg = get_channel_config()
+BRAND_NAME = channel_cfg.get("channel_name", "TechChannel")
+
 W, H = 1280, 720  # Standard YouTube Thumbnail resolution (16:9)
 
 # Colors matching TechXKenil design system
@@ -161,7 +169,7 @@ def generate_thumbnail(
 
     # 6. Channel Tag (Top Right)
     f_brand = get_font(28)
-    draw.text((W - 80, 80), "TechXKenil", font=f_brand, fill=(160, 170, 210), anchor="rm")
+    draw.text((W - 80, 80), BRAND_NAME, font=f_brand, fill=(160, 170, 210), anchor="rm")
 
     # 7. Safe Zone check: YouTube duration badge occupies (1100, 660) to (1260, 700)
     # Ensure nothing critical is in bottom-right corner

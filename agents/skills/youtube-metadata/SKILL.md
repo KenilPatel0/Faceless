@@ -1,11 +1,11 @@
 ---
 name: youtube-metadata
-description: Research-backed YouTube SEO and metadata generator for tech, AI, and faceless channels. Generates high-CTR titles (under 60 chars), 4-zone search-optimized descriptions with exact timestamps, categorized tag lists (under 500 chars), and engagement-driving pinned comments strictly adhering to YouTube algorithm best practices and TechXKenil brand guidelines.
+description: Research-backed YouTube SEO and metadata generator for tech, AI, and faceless channels. Generates high-CTR titles (under 60 chars), 4-zone search-optimized descriptions with exact timestamps, categorized tag lists (under 500 chars), and engagement-driving pinned comments strictly adhering to YouTube algorithm best practices and channel brand guidelines.
 ---
 
 # youtube-metadata — Research-Backed YouTube SEO & Metadata Engine
 
-A production-ready framework and automated CLI for generating high-converting, algorithm-optimized metadata for YouTube videos and shorts. Calibrated specifically for the **TechXKenil** brand voice (honest, practical, calm, zero sensationalist hype) and modern YouTube search/recommendation mechanics.
+A production-ready framework and automated CLI for generating high-converting, algorithm-optimized metadata for YouTube videos and shorts. Calibrated specifically for authentic, calm, practical tech brand voices (honest, practical, calm, zero sensationalist hype) and modern YouTube search/recommendation mechanics.
 
 ---
 
@@ -65,7 +65,7 @@ What you'll learn in this breakdown:
 [ ZONE 4: Community & Retention Loop ]
 [Engagement Question prompt for comment velocity]
 [Channel Subscribe line]
-[8-10 Hashtags: #AI #TechXKenil #TopicSpecific]
+[8-10 Hashtags: #AI #ChannelTag #TopicSpecific]
 ```
 
 ### Chapter Formatting Rules:
@@ -86,7 +86,7 @@ Tags act as secondary clues for the recommendation engine (Suggested Videos / "U
   1. *Primary Exact Target:* `"how ai answers in milliseconds"`
   2. *Core Tech Entities:* `"tensor cores"`, `"kv caching"`, `"hbm3e"`, `"nvidia h100"`
   3. *Search Intent & Synonyms:* `"chatgpt speed"`, `"time to first token"`, `"why is ai so fast"`
-  4. *Broad Niche & Channel Tag:* `"computer science"`, `"artificial intelligence"`, `"techxkenil"`
+  4. *Broad Niche & Channel Tag:* `"computer science"`, `"artificial intelligence"`, `"channelname"`
 
 ---
 

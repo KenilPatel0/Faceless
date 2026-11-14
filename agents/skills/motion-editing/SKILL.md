@@ -1,11 +1,11 @@
 ---
-name: techxkenil-motion-editing
-description: Use whenever you animate, render, edit or export a TechXKenil short or long video and want smooth, professional motion - spring/eased animation, staggered reveals, anti-aliased sub-pixel rendering, motion blur on moving elements, clean transitions, editing craft (J/L cuts, rhythm, emphasis) and YouTube-correct encoding. Pairs with techxkenil-humanized-video (variation, sound, QA) and TechXKenil_Video_Rules.md (brand lock).
+name: motion-editing
+description: Use whenever you animate, render, edit or export a short or long faceless video and want smooth, professional motion — spring/eased animation, staggered reveals, anti-aliased sub-pixel rendering, motion blur on moving elements, clean transitions, editing craft (J/L cuts, rhythm, emphasis) and YouTube-correct encoding. Pairs with humanized-video and channel brand configuration.
 ---
 
-# TechXKenil Motion + Editing Skill
+# Motion + Editing Skill
 
-Layer order: **brand lock** (`TechXKenil_Video_Rules.md`) -> **humanized layer** (`techxkenil-humanized-video`: variation, original value, sound, QA) -> **this skill** (how motion is built, rendered, edited and exported). Code: `scripts/motion.py` (+ `humanize.py`, `qa.py`). Reference demo: `scripts/demo_smooth.py smooth|naive`. Sources and confidence: `references/research-notes.md`.
+Layer order: **channel brand profile** -> **humanized layer** (`humanized-video`: variation, sound, QA) -> **this skill** (how motion is built, rendered, edited and exported). Code: `scripts/motion.py` (+ `humanize.py`, `qa.py`). Reference demo: `scripts/demo_smooth.py smooth|naive`. Sources and confidence: `references/research-notes.md`.
 
 ## 1. The five things that make motion look smooth (in priority order)
 1. **Right easing/physics** - never linear. Entrances `ease_out_expo`, exits `ease_in_cubic`, moves `ease_in_out`, "alive" objects `spring()` (freq 2.2, zeta 0.72, about 4% overshoot, settles in ~0.6 s).
@@ -42,23 +42,9 @@ Snap start/end times to frames (`frame_align`). Hold finished states for >= 0.4 
 - **Speed ramps** are for screen recordings only: ease a boring 3 s wait into 0.5 s (`setpts` with an eased curve), return to 1x before the result appears.
 - **Screen recordings:** crop to the relevant area, zoom to 120-150% on the action, add a cursor ripple on clicks, mute system sounds, keep real mistakes if you explain them.
 - **Typography/layout:** two sizes minimum (headline vs label), generous margins, one accent color per scene leading, consistent corner radius, 8-pt spacing grid; keep content inside the safe areas in the humanized skill.
-- **Color:** the palette is fixed; grade by contrast only (slightly lifted blacks, no pure #000 on gradients) and add grain (2-3%) - it also prevents banding in the dark gradient after YouTube re-encodes.
+- **Color:** grade by contrast only (slightly lifted blacks, no pure #000 on gradients) and add grain (2-3%) - it also prevents banding in dark gradients after YouTube re-encodes.
 - **Chapter cards (long videos):** a 0.8 s heading wipe at each new section keeps viewers oriented and matches the chapter list in the description.
 
 ## 5. Rendering performance (1 CPU core)
 - Cache the static background; render only moving layers at 2x; run blur with `auto_samples` only while something moves.
 - Typical cost: a 3.5 s 720x1280 smooth demo renders in about a minute; a 30 s short in a few minutes; an 8-10 min long video in 15-30 min with blur and supersampling (use `S=1` for text-only list scenes if time matters).
-- Run renders in the background, log to a file, one process per output file.
-
-## 6. Export (YouTube-correct)
-Use `open_encoder(path, w, h, fps, audio)`: MP4, H.264 High, yuv420p, **BT.709 converted and tagged**, closed GOP of 2 s, CRF 14 capped at 12 Mbps, faststart (moov first), AAC-LC 192k at 48 kHz. YouTube's reference bitrates for SDR 1080p are 8 Mbps (24-30 fps) and 12 Mbps (48-60 fps); flat vector graphics need far less, so CRF is used with a cap. Shorts: 1080x1920. Long: 1920x1080. Audio goes through `master()` first (about -14 to -15 LUFS).
-
-## 7. Workflow
-1. Storyboard each beat: what moves, how (easing/spring), when (seconds from narration timings), what stays still.
-2. Write the animation as pure functions of time `layer(t)`; no state between frames (so blur sub-frames work).
-3. Render moving elements through `SS` -> `blur_layer` when fast; composite over the cached background; camera -> finish (grain) -> captions.
-4. Scrub the result at 0.5x and frame-by-frame at the fastest moment: no ghosts, no snapping, no text collisions.
-5. `qa.py` gate from the humanized skill, then deliver.
-
-## 8. Anti-patterns
-Linear motion; integer pixel positions; blur applied to static text; fewer than ~4 blur samples on fast motion; bounce/elastic everywhere; everything entering at once; the same transition every scene; whoosh on every cut; animation that hides or delays the information; 24 fps with fast-moving text; skipping the BT.709 tag; hard cuts mid-sentence.

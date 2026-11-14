@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-capture_ui.py — Real UI Capture Tool for TechXKenil Video Production
+capture_ui.py — Real UI Capture Tool for Faceless Video Production
 Captures genuine real-world UIs (Websites, macOS Terminal, Windows UI) instead of synthetic mockups.
 
 Usage:

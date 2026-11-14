@@ -1,4 +1,4 @@
-"""TechXKenil humanized motion + audio helpers. Pillow / numpy / ffmpeg only (no paid APIs).
+"""Humanized motion + audio helpers for Faceless Video Engine. Pillow / numpy / ffmpeg only (no paid APIs).
 Import into any render script:  from humanize import *
 """
 import math, random, re, subprocess

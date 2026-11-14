@@ -67,7 +67,7 @@ Whenever generating thumbnail prompts, provide:
 
 ## 5. Channel Rule Integration
 
-Per TechXKenil production rules:
+Per channel production rules:
 - **Tone:** Honest, calm, grounded, curious.
 - Every video delivery MUST conclude with this prompt so the creator can copy-paste it directly into ChatGPT.
 

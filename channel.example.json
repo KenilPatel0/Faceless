@@ -1,0 +1,41 @@
+{
+  "channel_name": "YourChannelName",
+  "creator_name": "YourName",
+  "channel_tag": "YourChannelName",
+  "niche": "AI and Tech",
+  "tagline": "AI • TECH • CODE",
+  "badge": "YCN",
+  "experience_years": 3,
+  "voice": {
+    "engine": "kokoro-onnx",
+    "voice_id": "am_michael",
+    "speed": 1.1,
+    "lang": "en-us"
+  },
+  "intro": {
+    "text": "I'm {creator_name}, and this is {channel_name}.",
+    "badge_text": "YCN",
+    "badge_ring_color": [150, 110, 255],
+    "name_color": [255, 255, 255],
+    "tagline_color": [70, 220, 255]
+  },
+  "outro": {
+    "short_narration": "Subscribe to {channel_name} for more {niche}.",
+    "button_text": "SUBSCRIBE",
+    "button_color": [255, 30, 50],
+    "tagline": "AI • TECH • CODE"
+  },
+  "branding_watermark": {
+    "enabled": true,
+    "text": "YourChannelName",
+    "color": [160, 170, 210]
+  },
+  "hashtags": [
+    "#Shorts",
+    "#AI",
+    "#TechExplained",
+    "#ArtificialIntelligence",
+    "#ComputerScience",
+    "#SoftwareEngineering"
+  ]
+}

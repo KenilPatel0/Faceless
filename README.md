@@ -172,7 +172,16 @@ Or generate an in-depth long-form explainer:
 Create an 8-minute deep dive video on "Is Coding Still Worth It in the AI Era?" with full graphics and chapters.
 ```
 
-### 3️⃣ Manual CLI Workflow
+### 3️⃣ Configure Your Channel Identity (White-Label Setup)
+Customize your channel name, watermark, intro/outro cards, and voice in seconds:
+```bash
+cp channel.example.json channel.json
+```
+Edit `channel.json` with your channel name, logo badge, and voice settings. The engine automatically reads your profile across all video rendering, metadata generation, and thumbnail creation.
+
+> **🔒 Privacy Guarantee:** Custom channel profiles (like `channel.json` or private creator spaces like `Kenil/`) are listed in `.gitignore`, keeping personal channel names, voice choices, and private video roadmaps completely safe from accidental public commits.
+
+### 4️⃣ Manual CLI Workflow
 If you prefer running production manually:
 
 ```bash
@@ -235,27 +244,33 @@ techxkenil-video-engine/
 ├── requirements.txt          # Python core dependencies
 ├── LICENSE                   # MIT License (Kenil Ribadiya)
 ├── README.md                 # Project documentation & showcases
+├── channel.example.json      # White-label channel profile template
 ├── .env.example              # Optional cloud provider keys
 │
 ├── tools/                    # Shared production libraries
+│   ├── channel_config.py     # Modular channel profile & branding loader
 │   ├── motion.py             # Springs, supersampling, blur, keyframes
 │   ├── humanize.py           # Easing, karaoke, SFX synthesizer, master()
 │   ├── qa.py                 # Automated video & audio QA gate
-│   └── capture_ui.py         # Headless Chromium screen capture & terminal generator
+│   ├── capture_ui.py         # Headless Chromium screen capture & terminal generator
+│   ├── generate_metadata.py  # High-CTR YouTube SEO & chapter generator
+│   └── generate_thumbnail.py # Automated high-CTR thumbnail generator
 │
-├── VideoFiles/               # Centralized local video suites (git-ignored, local only)
+├── templates/                # Channel profile & production templates
+│   ├── channel.example.json  # Starter JSON configuration
+│   └── channel_profile_template.md # Channel branding & persona template
 │
 ├── agents/                   # Agent configurations & knowledge base
-│   ├── skills/               # Custom Antigravity skills
-│   │   ├── techxkenil-motion-editing/ # Core motion graphics skill
-│   │   ├── techxkenil-humanized-video/ # Humanized pacing & variation
-│   │   ├── generate-thumbnail/         # High-CTR thumbnail generator
-│   │   └── youtube-metadata/           # Algorithm SEO & chapter generator
-│   └── md_files/             # Project guidelines & brand memory
-│       ├── GEMINI.md         # Master channel production rules
-│       └── brand.md          # Visual design system & color palettes
+│   ├── rules/                # Modular video production rules
+│   └── skills/               # Custom Antigravity skills
+│       ├── motion-editing/   # Core motion graphics skill
+│       ├── humanized-video/  # Humanized pacing & variation
+│       ├── real-ui/          # Authentic UI screen capture enforcement
+│       ├── generate-thumbnail/ # High-CTR thumbnail generator
+│       └── youtube-metadata/ # Algorithm SEO & chapter generator
 │
-├── VideoFiles/               # Centralized local video suites (git-ignored)
+├── VideoFiles/               # Centralized local video suites (git-ignored, local only)
+├── Kenil/                    # Private local channel space (git-ignored, local only)
 ├── fonts/                    # High-legibility typography (Inter, Bebas Neue)
 └── media/                    # Showcase demos & permanent SFX library
 ```
