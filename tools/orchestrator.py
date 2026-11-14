@@ -52,6 +52,13 @@ from tools.procedural_scenes import (
     render_speculative_race,
     render_verdict_recap
 )
+from dataclasses import asdict
+from tools.story_director import StoryDirector, VisualBible
+from tools.asset_registry import AssetRegistry
+from tools.story_validator import StoryValidator
+from tools.audio_director import AudioDirector, VoiceProfile, AudioMixer, prepare_spoken_script
+from tools.caption_engine import CaptionTrack, CaptionCue, VisualCaptionPlan
+from tools.audio_caption_qa import verify_audio_compliance, verify_caption_compliance
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
     """Dynamically imports SCENES from data.py or data.json."""
@@ -69,7 +76,17 @@ def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
         with open(json_path, "r", encoding="utf-8") as f:
             return json.load(f)
     else:
-        raise FileNotFoundError(f"No data.py or data.json found in {project_dir}")
+        # Search for any data python script in the directory (e.g. longdata_*.py)
+        import glob
+        alt_files = glob.glob(os.path.join(project_dir, "*data*.py"))
+        if alt_files:
+            alt_path = alt_files[0]
+            spec = importlib.util.spec_from_file_location("project_data", alt_path)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            if hasattr(mod, "SCENES"):
+                return mod.SCENES
+        raise FileNotFoundError(f"No data.py, data.json, or *data*.py found in {project_dir}")
 
 def synthesize_speech(
     scenes: List[Dict[str, Any]],
@@ -264,6 +281,30 @@ def prepare_real_ui_assets(scenes: List[Dict[str, Any]], project_dir: str, is_4k
             print(f"  ⚖️ Capturing Real Split Comparison for: {sid}")
             render_split_code_window(left_code, "naive.py", right_code, "clean.py", out_png, width=1600, is_4k=is_4k)
 
+def export_caption_products(timeline: List[Dict[str, Any]], project_dir: str, is_short: bool = False):
+    """Generates Layer A (CaptionTrack) -> subtitles.srt & subtitles.vtt, and Layer B (VisualCaptionPlan)."""
+    track = CaptionTrack(language="en")
+    for s in timeline:
+        raw_text = s.get("text") or s.get("narration") or ""
+        track.add_cue(CaptionCue(
+            cue_id=f"cue_{s.get('id')}",
+            start_s=s["start_time"],
+            end_s=s["end_time"],
+            text=raw_text
+        ))
+    srt_path = os.path.join(project_dir, "subtitles.srt")
+    vtt_path = os.path.join(project_dir, "subtitles.vtt")
+    track.export_srt(srt_path)
+    track.export_vtt(vtt_path)
+    print(f"✓ Layer A Captions exported: {srt_path} & {vtt_path}")
+
+    # Validate Layer B presentation
+    vis_plan = VisualCaptionPlan(track, is_short=is_short)
+    valid, errs, warns = verify_caption_compliance(vis_plan)
+    if not valid:
+        print(f"⚠️ Caption compliance warnings: {'; '.join(errs)}")
+    return track, vis_plan
+
 def composite_video(
     project_dir: str,
     channel_cfg: Dict[str, Any],
@@ -301,6 +342,9 @@ def composite_video(
             if fn.endswith(".png"):
                 sid = fn.replace("_window.png", "")
                 cached_assets[sid] = Image.open(os.path.join(assets_dir, fn)).convert("RGBA")
+
+    # Export Layer A (SRT/VTT) and build Layer B Presentation Plan
+    caption_track, vis_caption_plan = export_caption_products(timeline, project_dir, is_short=profile.is_vertical)
 
     # Subtitle track
     sub_track = SubtitleTrack(timeline, is_short=profile.is_vertical)
@@ -426,6 +470,38 @@ def main():
 
     # Stage 1: Load Scenes
     scenes = load_project_scenes(project_dir)
+
+    # Stage 1.2: Storytelling & Scene Direction Intelligence
+    print("\n" + "=" * 70)
+    print("📖 STAGE 1.2: Storytelling & Scene Direction Intelligence")
+    print("=" * 70)
+    story_dir = StoryDirector()
+    story_brief = story_dir.create_brief_from_scenes(
+        project_id=os.path.basename(project_dir),
+        title=os.path.basename(project_dir).replace("_", " "),
+        scenes=scenes,
+        aspect_ratio="9:16" if "vert" in args.format else "16:9",
+        channel_name=channel_cfg.get("channel_name", "TechXKenil")
+    )
+    beats = story_dir.segment_script_into_beats(scenes)
+    scene_plans = story_dir.plan_scenes(story_brief, beats, scenes)
+
+    registry = AssetRegistry()
+    validator = StoryValidator(registry)
+    is_valid, s_errs, s_warns = validator.validate_production_plan(story_brief, beats, scene_plans)
+    if not is_valid:
+        print(f"⚠️ Story validation errors: {'; '.join(s_errs)}")
+    else:
+        print(f"✓ Story plan validated: {len(beats)} beats, {len(scene_plans)} directed scenes.")
+
+    story_plan_out = os.path.join(project_dir, "story_plan.json")
+    with open(story_plan_out, "w", encoding="utf-8") as f:
+        json.dump({
+            "brief": asdict(story_brief),
+            "beats": [asdict(b) for b in beats],
+            "scenes": [asdict(sp) for sp in scene_plans]
+        }, f, indent=2)
+    print(f"✓ Storyboard production plan saved: {story_plan_out}")
 
     # Stage 1.5: Story-Aware Animation Planning (Animation Director)
     print("\n" + "=" * 70)

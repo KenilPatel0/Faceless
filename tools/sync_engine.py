@@ -80,6 +80,56 @@ SYNC_PAIRS = [
         "rules"
     ),
     (
+        "agents/skills/storytelling-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-storytelling-director/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/skills/audio-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-audio-director/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/skills/caption-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-caption-director/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/rules/storytelling-rules.md",
+        "TechXKenil/rules/storytelling-rules.md",
+        "rules"
+    ),
+    (
+        "agents/rules/audio-caption-rules.md",
+        "TechXKenil/rules/audio-caption-rules.md",
+        "rules"
+    ),
+    (
+        "agents/rules/asset-rules.md",
+        "TechXKenil/rules/asset-rules.md",
+        "rules"
+    ),
+    (
+        "agents/skills/scene-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-scene-director/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/skills/asset-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-asset-director/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/skills/voice-production/SKILL.md",
+        "TechXKenil/skills/techxkenil-voice-production/SKILL.md",
+        "animation-director"
+    ),
+    (
+        "agents/skills/audio-mixing/SKILL.md",
+        "TechXKenil/skills/techxkenil-audio-mixing/SKILL.md",
+        "animation-director"
+    ),
+    (
         "GEMINI.md",
         "TechXKenil/GEMINI.md",
         "gemini"
