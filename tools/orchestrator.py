@@ -19,11 +19,12 @@ import sys
 import json
 import time
 import argparse
+import subprocess
 import importlib.util
 from typing import Dict, Any, List, Optional, Tuple
 import numpy as np
 import soundfile as sf
-from PIL import Image
+from PIL import Image, ImageDraw
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
@@ -137,10 +138,10 @@ def synthesize_speech(
     print(f"✓ Timeline generated: {tl_path} ({current_time:.2f}s total speech)")
     return raw_wav_path, tl_path, current_time
 
-def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str) -> Tuple[str, float]:
-    """Stage 3: Procedural SFX & Broadcast Mastering (-15 LUFS)."""
+def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str, target_lufs: float = -14.0) -> Tuple[str, float]:
+    """Stage 3: Procedural SFX & Broadcast Mastering (-14.0 LUFS target)."""
     print("\n" + "=" * 70)
-    print("🔊 STAGE 3: Procedural Sound Design & Audio Mastering (-15.0 LUFS)")
+    print(f"🔊 STAGE 3: Procedural Sound Design & Audio Mastering ({target_lufs} LUFS)")
     print("=" * 70)
 
     with open(tl_path, "r", encoding="utf-8") as f:
@@ -167,7 +168,7 @@ def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str) -> T
         output_master_path=master_wav_path,
         events=events,
         include_ambient=True,
-        target_lufs=-15.0
+        target_lufs=target_lufs
     )
     return master_wav_path, total_dur
 
@@ -315,7 +316,7 @@ def composite_video(
 
             # 3. Slice overscan frame with camera drift
             frame = canvas.slice_frame(p_scene, drift_amp=6.0)
-            dr_frame = Image.Draw(frame)
+            dr_frame = ImageDraw.Draw(frame)
 
             # 4. Render synchronized subtitles (safe zone at bottom center)
             sub_y = profile.subtitle_y
@@ -391,7 +392,9 @@ def main():
     raw_wav, tl_path, dur = synthesize_speech(scenes, channel_cfg, project_dir)
 
     # Stage 3: Sound Design & Mastering
-    master_wav, mastered_dur = prepare_sound_design(raw_wav, tl_path, project_dir)
+    is_short = "vert" in args.format or dur <= 60.0
+    target_lufs = -14.0 if is_short else -14.5
+    master_wav, mastered_dur = prepare_sound_design(raw_wav, tl_path, project_dir, target_lufs=target_lufs)
 
     # Stage 4: Real UI Capture
     is_4k = "4k" in args.format

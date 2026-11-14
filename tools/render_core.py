@@ -339,15 +339,27 @@ def render_real_asset_frame(
     """
     Pastes a genuine UI screen capture (VS Code, Terminal, Website) onto the canvas
     with realistic shadow, rounded corners, and spring scale entrance.
+    Handles both 16:9 horizontal and 9:16 vertical safe boundaries.
     """
     p_enter = min(1.0, spring(rel_t * 1.5))
     if box is None:
-        # Default center stage inside safe content bounds
-        w = min(1480, int(asset_img.width / canvas.scale))
-        h = min(680, int(asset_img.height / canvas.scale))
-        cx = (canvas.W - w) // 2
-        cy = 135
-        box = (cx, cy, cx + w, cy + h)
+        if canvas.profile.is_vertical:
+            # 9:16 Vertical Shorts safe framing: 92% width, vertically centered above captions
+            max_w = int(canvas.W * 0.92)
+            aspect = asset_img.height / float(asset_img.width)
+            w = max_w
+            h = min(int(w * aspect), int(canvas.profile.content_max_y * 0.65))
+            cx = (canvas.W - w) // 2
+            cy = int(canvas.H * 0.38) - (h // 2)
+            box = (cx, cy, cx + w, cy + h)
+        else:
+            # 16:9 Horizontal Widescreen safe framing
+            w = min(1500, int(asset_img.width / canvas.scale))
+            aspect = asset_img.height / float(asset_img.width)
+            h = min(int(w * aspect), 680)
+            cx = (canvas.W - w) // 2
+            cy = (canvas.profile.content_max_y - h) // 2 + 50
+            box = (cx, cy, cx + w, cy + h)
 
     x0, y0 = canvas.to_canvas(box[0], box[1])
     target_w = int((box[2] - box[0]) * canvas.scale)
@@ -367,17 +379,20 @@ def render_brand_card(
 ):
     """Renders the official Brand Intro card with glowing ring logo."""
     p_scale = min(1.0, spring(rel_t * 1.8))
-    cx, cy = canvas.W // 2, canvas.H // 2 - 20
+    cx = canvas.W // 2
+    cy = int(canvas.H * 0.42) if canvas.profile.is_vertical else (canvas.H // 2 - 20)
+    card_w = min(420, int(canvas.W * 0.44))
+    card_h = 240
     
     # Draw radial glow
-    canvas.draw_card((cx - 360, cy - 240, cx + 360, cy + 240), radius=28, fill=(16, 22, 38), outline=(70, 220, 255, 140), width=2)
+    canvas.draw_card((cx - card_w, cy - card_h, cx + card_w, cy + card_h), radius=28, fill=(16, 22, 38), outline=(70, 220, 255, 140), width=2)
 
     # Logo
     if logo_img:
-        logo_sz = int(220 * canvas.scale * p_scale)
+        logo_sz = int(200 * canvas.scale * p_scale)
         if logo_sz > 10:
             resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
-            lx, ly = canvas.to_canvas(cx - 110, cy - 180)
+            lx, ly = canvas.to_canvas(cx - 100, cy - 170)
             canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
     else:
         # Ring badge
@@ -402,14 +417,17 @@ def render_outro_card(
     - Cursor glides in on Bezier arc, clicks at t = 2.5s
     - Ripple expands, button turns Emerald Green '✓ SUBSCRIBED!'
     """
-    cx, cy = canvas.W // 2, canvas.H // 2 - 20
-    canvas.draw_card((cx - 400, cy - 260, cx + 400, cy + 260), radius=28, fill=(16, 22, 38), outline=(255, 70, 90, 140), width=2)
+    cx = canvas.W // 2
+    cy = int(canvas.H * 0.42) if canvas.profile.is_vertical else (canvas.H // 2 - 20)
+    card_w = min(420, int(canvas.W * 0.45))
+    card_h = 260
+    canvas.draw_card((cx - card_w, cy - card_h, cx + card_w, cy + card_h), radius=28, fill=(16, 22, 38), outline=(255, 70, 90, 140), width=2)
 
     # Logo or Badge
     if logo_img:
-        logo_sz = int(140 * canvas.scale)
+        logo_sz = int(130 * canvas.scale)
         resized_logo = logo_img.resize((logo_sz, logo_sz), Image.Resampling.LANCZOS)
-        lx, ly = canvas.to_canvas(cx - 70, cy - 210)
+        lx, ly = canvas.to_canvas(cx - 65, cy - 205)
         canvas.frame.paste(resized_logo, (int(lx), int(ly)), resized_logo)
 
     canvas.draw_text((cx, cy - 35), channel_name.upper(), size=40, fill=(255, 255, 255), anchor="mm")
