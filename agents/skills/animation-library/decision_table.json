@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-11-14",
+  "decision_table": {
+    "hook": {
+      "primary": ["T3", "C2"],
+      "secondary": ["E8", "T7"],
+      "avoid": ["E5", "E9"],
+      "cues": ["question", "surprising claim", "nobody tells you", "why can't", "stop paying", "secret"],
+      "note": "T3 hero text with C2 punch-in on key word. Use E8 or T7 if hook is framed as a question or prompt."
+    },
+    "definition": {
+      "primary": ["E1", "T3"],
+      "secondary": ["T8"],
+      "avoid": ["C5"],
+      "cues": ["is", "means", "simply put", "defined as", "what is"],
+      "note": "Line-draw/whiteboard reveal or kinetic headline with T8 callout labels."
+    },
+    "comparison": {
+      "primary": ["E3"],
+      "secondary": ["T4"],
+      "avoid": ["E1"],
+      "cues": ["vs", "versus", "difference", "while", "instead of", "unlike", "on the other hand", "compared to"],
+      "note": "Split-screen A vs B with T4 keyword emphasis on contrasting traits."
+    },
+    "process": {
+      "primary": ["E2"],
+      "secondary": ["T8", "C3"],
+      "avoid": ["T3"],
+      "cues": ["first", "then", "next", "loop", "step", "how it works", "pipeline", "architecture", "stage"],
+      "note": "Diagram build with staggered nodes and arrows. Avoid big T3 headline over diagram."
+    },
+    "list_item": {
+      "primary": ["E4"],
+      "secondary": ["T4"],
+      "avoid": ["E2"],
+      "cues": ["number one", "tip", "rule", "item", "pattern", "blueprint"],
+      "note": "Numbered cards sliding into progress stack with T4 keyword emphasis."
+    },
+    "stat": {
+      "primary": ["T6", "E5"],
+      "secondary": ["C2"],
+      "avoid": ["unverified_numbers"],
+      "cues": ["percent", "%", "times faster", "x", "benchmarks", "latency", "ms", "gigabytes", "gb"],
+      "note": "Stat counter or chart reveal. Strictly requires source field per honesty gate."
+    },
+    "example_prompt": {
+      "primary": ["T7", "T5"],
+      "secondary": ["E8"],
+      "avoid": ["E10"],
+      "cues": ["quoted prompt", "you type", "ask it", "prompt:", "input", "say to it"],
+      "note": "Chat UI bubble or terminal typewriter text. Avoid unrelated metaphor footage."
+    },
+    "code": {
+      "primary": ["E6"],
+      "secondary": ["T8", "E7"],
+      "avoid": ["T3"],
+      "cues": ["function", "class", "def ", "import ", "const ", "var ", "pipeline", "commit", "test", "widget", "syntax"],
+      "note": "Syntax-colored code view with diff highlighting and callouts."
+    },
+    "ui_demo": {
+      "primary": ["E7"],
+      "secondary": ["T8", "C2"],
+      "avoid": ["E11"],
+      "cues": ["open", "click", "in the app", "terminal", "browser", "dashboard", "interface", "tool"],
+      "note": "Real screen recording with authentic cursor path and punch-in."
+    },
+    "myth_fact": {
+      "primary": ["E3"],
+      "secondary": ["T4"],
+      "avoid": ["E2"],
+      "cues": ["myth", "actually", "in reality", "people think", "the truth is", "misconception"],
+      "note": "Two-pane comparison with strike-through on myth and highlight on reality."
+    },
+    "analogy": {
+      "primary": ["E10", "E1"],
+      "secondary": ["C1"],
+      "avoid": ["T6"],
+      "cues": ["like a", "imagine", "think of it as", "metaphor", "similar to", "analogy"],
+      "note": "Metaphor footage with slow push-in or simple whiteboard line-draw icons."
+    },
+    "opinion": {
+      "primary": ["E10", "E7"],
+      "secondary": ["T4"],
+      "avoid": ["E5", "E11"],
+      "cues": ["I think", "in my experience", "honestly", "my verdict", "I recommend", "we found"],
+      "note": "Metaphor footage or creator screen recording with T4 emphasis; requires original element."
+    },
+    "payoff": {
+      "primary": ["T3"],
+      "secondary": ["C2"],
+      "avoid": ["new_complex_visuals"],
+      "cues": ["so", "that's why", "the takeaway", "in summary", "bottom line", "result"],
+      "note": "Clean kinetic headline with C2 punch-in. C5/C6 allowed once as climax payoff."
+    },
+    "cta": {
+      "primary": ["outro_card"],
+      "secondary": [],
+      "avoid": ["all_others"],
+      "cues": ["subscribe", "comment", "drop a comment", "leave a like", "share"],
+      "note": "Official channel outro card with animated subscribe button conversion."
+    }
+  }
+}

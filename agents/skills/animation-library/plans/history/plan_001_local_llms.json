@@ -1,0 +1,21 @@
+{
+  "brief": {
+    "format": "short",
+    "duration_target_s": 30.0,
+    "topic": "Stop Paying for AI Local LLMs",
+    "topic_type": "opinion",
+    "audience_level": "intermediate",
+    "has_real_assets": true,
+    "style_pack": "S1",
+    "color_accent": "accent_cyan"
+  },
+  "assumptions": ["intermediate developers"],
+  "beats": [
+    {"id": 1, "t": [0.0, 3.0], "beat_type": "hook", "text": "Stop paying monthly for AI subscriptions.", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 2, "t": [3.0, 10.0], "beat_type": "code", "text": "Run Ollama locally on your GPU in seconds.", "primary": "E6", "transition_out": "C3", "captions": "T1"},
+    {"id": 3, "t": [10.0, 20.0], "beat_type": "ui_demo", "text": "Open-webui provides full ChatGPT parity privately.", "primary": "E7", "transition_out": "C3", "captions": "T1"},
+    {"id": 4, "t": [20.0, 26.0], "beat_type": "payoff", "text": "Zero subscription fees, infinite tokens.", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 5, "t": [26.0, 30.0], "beat_type": "cta", "text": "Subscribe to TechXKenil.", "primary": "outro_card", "captions": "T1"}
+  ],
+  "outro": "master_consistent"
+}

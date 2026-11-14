@@ -1,0 +1,102 @@
+{
+  "brief": {
+    "format": "long",
+    "duration_target_s": 120.0,
+    "topic": "Architecture of Modern AI Agents",
+    "topic_type": "how_it_works",
+    "audience_level": "developer",
+    "has_real_assets": true,
+    "style_pack": "S1",
+    "color_accent": "accent_emerald",
+    "constraints": ["developer tone", "real code"]
+  },
+  "assumptions": [
+    "developer audience",
+    "verified source citations included",
+    "master consistent intro outro"
+  ],
+  "beats": [
+    {
+      "id": 1,
+      "t": [0.0, 6.0],
+      "beat_type": "hook",
+      "text": "How does an AI that only predicts the next token take real actions?",
+      "primary": "T3",
+      "secondary": ["C2"],
+      "transition_out": "C3",
+      "captions": "T2"
+    },
+    {
+      "id": 2,
+      "t": [6.0, 15.0],
+      "beat_type": "definition",
+      "text": "An agent is not a mysterious living brain. It is an LLM bound to a runtime orchestration loop.",
+      "primary": "E1",
+      "secondary": ["T8", "C1"],
+      "transition_out": "C3",
+      "captions": "T2"
+    },
+    {
+      "id": 3,
+      "t": [15.0, 30.0],
+      "beat_type": "process",
+      "text": "The core loop executes in three deterministic phases: think, act, and observe.",
+      "primary": "E2",
+      "secondary": ["T8", "C1"],
+      "transition_out": "C4",
+      "captions": "T2"
+    },
+    {
+      "id": 4,
+      "t": [30.0, 50.0],
+      "beat_type": "code",
+      "text": "Tools are exposed as JSON schemas. When the model outputs tool calls, Python executes them safely.",
+      "primary": "E6",
+      "secondary": ["T8", "C1"],
+      "transition_out": "C3",
+      "captions": "T2"
+    },
+    {
+      "id": 5,
+      "t": [50.0, 70.0],
+      "beat_type": "ui_demo",
+      "text": "Watching the runtime trace reveals API calls occurring in under fifty milliseconds.",
+      "primary": "E7",
+      "secondary": ["T8", "C2", "C1"],
+      "transition_out": "C4",
+      "captions": "T2"
+    },
+    {
+      "id": 6,
+      "t": [70.0, 85.0],
+      "beat_type": "stat",
+      "text": "Proper validation guards reduce hallucinated tool invocation loops by ninety-two percent.",
+      "primary": "T6",
+      "secondary": ["C2", "C1"],
+      "transition_out": "C3",
+      "source": "SWE-bench Verified 2026 Evaluation Suite",
+      "captions": "T2"
+    },
+    {
+      "id": 7,
+      "t": [85.0, 105.0],
+      "beat_type": "payoff",
+      "text": "Now you understand the complete architecture behind modern agent systems.",
+      "primary": "T3",
+      "secondary": ["C2", "C1"],
+      "transition_out": "C8",
+      "effects": ["C5:once"],
+      "captions": "T2"
+    },
+    {
+      "id": 8,
+      "t": [105.0, 120.0],
+      "beat_type": "cta",
+      "text": "Subscribe to TechXKenil for real-world engineering deep dives.",
+      "primary": "outro_card",
+      "secondary": ["C1"],
+      "captions": "T2"
+    }
+  ],
+  "outro": "master_consistent"
+}

@@ -48,6 +48,65 @@ class AnimationDirector:
     def __init__(self, registry: Optional[AnimationRegistry] = None):
         self.registry = registry or REGISTRY
         self.validator = AnimationPlanValidator(self.registry)
+        self.decision_table = self._load_decision_table()
+
+    def _load_decision_table(self) -> Dict[str, Any]:
+        dt_path = os.path.join(REPO_ROOT, "agents", "skills", "animation-library", "decision_table.json")
+        if os.path.exists(dt_path):
+            try:
+                with open(dt_path, "r", encoding="utf-8") as f:
+                    return json.load(f).get("decision_table", {})
+            except Exception:
+                pass
+        return {}
+
+    def classify_beat_type(self, text: str, is_first: bool = False, is_last: bool = False) -> str:
+        """Classifies a narration beat into one of the 14 standard beat types."""
+        t_low = text.lower()
+        if is_last or any(w in t_low for w in ["subscribe", "comment below", "leave a like"]):
+            return "cta"
+        if is_first or any(w in t_low for w in ["nobody tells you", "why can't", "stop paying", "secret"]):
+            return "hook"
+        if any(w in t_low for w in ["vs", "versus", "difference between", "instead of", "unlike"]):
+            return "comparison"
+        if any(w in t_low for w in ["myth", "actually", "in reality", "people think"]):
+            return "myth_fact"
+        if any(w in t_low for w in ["def ", "class ", "import ", "python", "function", "syntax", "code"]):
+            return "code"
+        if any(w in t_low for w in ["percent", "%", "times faster", "benchmark", "latency", "ms"]):
+            return "stat"
+        if any(w in t_low for w in ["first", "then", "next", "loop", "step", "pipeline", "architecture"]):
+            return "process"
+        if any(w in t_low for w in ["number one", "tip", "rule", "pattern"]):
+            return "list_item"
+        if any(w in t_low for w in ["open", "click", "in the app", "terminal", "browser", "dashboard"]):
+            return "ui_demo"
+        if any(w in t_low for w in ["you type", "ask it", "prompt:", "input query"]):
+            return "example_prompt"
+        if any(w in t_low for w in ["like a", "imagine", "think of it as"]):
+            return "analogy"
+        if any(w in t_low for w in ["i think", "in my experience", "honestly", "my verdict"]):
+            return "opinion"
+        if any(w in t_low for w in ["so", "that's why", "takeaway", "in summary", "bottom line"]):
+            return "payoff"
+        return "definition"
+
+    def select_spec_technique(self, beat_type: str, has_assets: bool = False) -> Tuple[str, List[str], List[str]]:
+        """Returns (primary_id, secondary_ids, avoid_ids) using decision_table.json."""
+        entry = self.decision_table.get(beat_type, {})
+        if not entry:
+            return "T3", ["C1"], []
+
+        primaries = entry.get("primary", ["T3"])
+        secondaries = entry.get("secondary", ["C1"])
+        avoid = entry.get("avoid", [])
+
+        # Honor asset availability
+        primary = primaries[0] if primaries else "T3"
+        if primary == "E7" and not has_assets:
+            primary = "E2" if "E2" in primaries else "T7"
+
+        return primary, secondaries, avoid
 
     def parse_brief_from_prompt(self, prompt: str, default_aspect: str = "16:9") -> CreativeBrief:
         """Extracts a structured CreativeBrief from a user prompt with transparent defaults."""

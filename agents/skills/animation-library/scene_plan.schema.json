@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TechXKenilScenePlan",
+  "description": "Validated Scene Plan contract for TechXKenil Prompt-to-Animation Decision Engine",
+  "type": "object",
+  "required": ["brief", "assumptions", "beats", "outro"],
+  "properties": {
+    "brief": {
+      "type": "object",
+      "required": ["format", "duration_target_s", "topic_type", "style_pack"],
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": ["short", "long"]
+        },
+        "duration_target_s": {
+          "type": "number",
+          "minimum": 5.0,
+          "maximum": 900.0
+        },
+        "topic": {
+          "type": "string"
+        },
+        "topic_type": {
+          "type": "string",
+          "enum": [
+            "comparison",
+            "how_it_works",
+            "list",
+            "opinion",
+            "tool_demo",
+            "news",
+            "story",
+            "tutorial",
+            "process"
+          ]
+        },
+        "audience_level": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced", "developer"]
+        },
+        "has_real_assets": {
+          "type": "boolean"
+        },
+        "style_pack": {
+          "type": "string",
+          "enum": ["S1", "S2", "S3"]
+        },
+        "color_accent": {
+          "type": "string"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "beats": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "t", "beat_type", "text", "primary", "captions"],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "t": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {"type": "number"}
+          },
+          "beat_type": {
+            "type": "string",
+            "enum": [
+              "hook",
+              "definition",
+              "comparison",
+              "process",
+              "list_item",
+              "stat",
+              "example_prompt",
+              "code",
+              "ui_demo",
+              "myth_fact",
+              "analogy",
+              "opinion",
+              "payoff",
+              "cta"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "primary": {
+            "type": "string"
+          },
+          "secondary": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "transition_out": {
+            "type": "string"
+          },
+          "captions": {
+            "type": "string",
+            "enum": ["T1", "T2"]
+          },
+          "effects": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "outro": {
+      "type": "string"
+    }
+  }
+}

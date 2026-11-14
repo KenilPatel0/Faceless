@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-11-14",
+  "rules": {
+    "retention_anchor": {
+      "short_max_seconds": 3.0,
+      "long_max_seconds": 6.0,
+      "valid_anchor_events": [
+        "scene_transition",
+        "hero_text_reveal",
+        "keyword_emphasis",
+        "camera_punch_in",
+        "diagram_step_reveal",
+        "card_slide",
+        "stat_counter_start"
+      ]
+    },
+    "static_hold_ceiling": {
+      "short_max_seconds": 4.0,
+      "long_max_seconds": 9.0,
+      "mitigation": "C1 slow push-in (Ken Burns) applied continuously"
+    },
+    "scene_length": {
+      "short": {
+        "min_seconds": 2.0,
+        "max_seconds": 4.0,
+        "target_seconds": 3.0
+      },
+      "long": {
+        "min_seconds": 5.0,
+        "max_seconds": 12.0,
+        "target_seconds": 8.0
+      }
+    },
+    "heavy_effects_budget": {
+      "C5": {
+        "name": "Glitch / RGB split",
+        "max_per_video": 1,
+        "min_timestamp_seconds": 2.0
+      },
+      "C6": {
+        "name": "Screen shake",
+        "max_per_video": 1,
+        "min_timestamp_seconds": 2.0
+      },
+      "C4": {
+        "name": "Match cut / morph",
+        "max_per_short": 2,
+        "max_per_long": 6
+      }
+    },
+    "repeat_limits": {
+      "max_consecutive_same_primary": 2,
+      "max_consecutive_same_transition": 2
+    },
+    "one_idea_per_screen": {
+      "max_simultaneous_hero_text": 1,
+      "disallow_hero_text_during_diagram_build": true
+    },
+    "captions": {
+      "short_format": "T1",
+      "long_format": "T2",
+      "safety_clearance_px": 80
+    },
+    "honesty_gate": {
+      "verified_source_required_for": ["T6", "E5"],
+      "fallback_qualitative_primary": "T3",
+      "synthetic_ui_forbidden": true
+    },
+    "variety_vs_consistency": {
+      "brand_layer_fixed": {
+        "style_pack": "S1",
+        "typography": "Inter Display Bold",
+        "voice": "Kokoro am_michael 1.1x",
+        "intro_outro_template": "master_consistent"
+      },
+      "scene_layer_variable": {
+        "min_differences_vs_last_3_plans": 3,
+        "variable_elements": [
+          "hook_type",
+          "primary_visual_per_beat",
+          "transition_set",
+          "color_accent",
+          "scene_order"
+        ]
+      },
+      "original_element_mandatory": true
+    },
+    "stock_footage_cap": {
+      "max_runtime_ratio": 0.40,
+      "license_logging_required": true
+    }
+  }
+}

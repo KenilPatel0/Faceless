@@ -1,0 +1,701 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-11-14",
+  "catalog": {
+    "T1": {
+      "id": "T1",
+      "name": "Word-highlight captions (karaoke)",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["all"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.10,
+      "max_duration_s": 0.80,
+      "default_duration_s": 0.25,
+      "params": {
+        "active_scale": {"type": "number", "default": 1.06, "min": 1.0, "max": 1.20},
+        "active_color": {"type": "color", "default": [255, 205, 70]}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "word-timestamp driven from TTS forced alignment; highlight in/out 0-2 frames",
+      "renderer_binding": "render_core.render_karaoke_shorts"
+    },
+    "T2": {
+      "id": "T2",
+      "name": "Two-line sentence captions",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["long", "short"],
+      "beat_types": ["all"],
+      "avoid_beat_types": [],
+      "min_duration_s": 1.0,
+      "max_duration_s": 6.0,
+      "default_duration_s": 3.0,
+      "params": {
+        "font_size": {"type": "number", "default": 40, "min": 24, "max": 60},
+        "max_words_per_line": {"type": "number", "default": 9, "min": 3, "max": 12},
+        "bottom_clearance_px": {"type": "number", "default": 70, "min": 50, "max": 120}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "phrase/sentence clause driven; small, clean at bottom center",
+      "renderer_binding": "render_core.render_subtitles"
+    },
+    "T3": {
+      "id": "T3",
+      "name": "Kinetic headline (hero text)",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["hook", "definition", "payoff"],
+      "avoid_beat_types": ["process", "code"],
+      "min_duration_s": 1.5,
+      "max_duration_s": 4.5,
+      "default_duration_s": 2.5,
+      "params": {
+        "in_ms": {"type": "number", "default": 300, "min": 200, "max": 400},
+        "out_ms": {"type": "number", "default": 200, "min": 100, "max": 300},
+        "ease": {"type": "string", "default": "ease_out_cubic"},
+        "max_words": {"type": "number", "default": 6, "min": 1, "max": 8}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "in 250-350ms with overshoot ease-out, hold, out 200ms",
+      "renderer_binding": "render_core.render_kinetic_headline"
+    },
+    "T4": {
+      "id": "T4",
+      "name": "Keyword emphasis",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["comparison", "list_item", "myth_fact", "opinion"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.20,
+      "max_duration_s": 1.0,
+      "default_duration_s": 0.40,
+      "params": {
+        "mode": {"type": "choice", "default": "scale_pop", "choices": ["scale_pop", "color_change", "box_highlight", "underline_sweep"]},
+        "scale": {"type": "number", "default": 1.15, "min": 1.05, "max": 1.30},
+        "color": {"type": "string", "default": "accent_cyan"}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "single word in sentence pop tied to audio transient",
+      "renderer_binding": "render_core.render_word_emphasis"
+    },
+    "T5": {
+      "id": "T5",
+      "name": "Typewriter / terminal text",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["code", "example_prompt"],
+      "avoid_beat_types": [],
+      "min_duration_s": 1.0,
+      "max_duration_s": 5.0,
+      "default_duration_s": 2.0,
+      "params": {
+        "cps": {"type": "number", "default": 18.0, "min": 8.0, "max": 35.0},
+        "cursor_blink": {"type": "boolean", "default": true},
+        "terminal_window": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "characters type out sequentially with cursor jitter",
+      "renderer_binding": "capture_code.render_terminal_typing"
+    },
+    "T6": {
+      "id": "T6",
+      "name": "Stat counter",
+      "family": "typography",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["stat"],
+      "avoid_beat_types": ["analogy"],
+      "min_duration_s": 1.5,
+      "max_duration_s": 4.0,
+      "default_duration_s": 2.5,
+      "params": {
+        "start_val": {"type": "number", "default": 0},
+        "end_val": {"type": "number", "default": 100},
+        "unit": {"type": "string", "default": "%"},
+        "label": {"type": "string", "default": ""},
+        "source": {"type": "string", "default": ""}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": 2,
+      "timing_spec": "number counts up/down with unit and one-line label; linear or ease-out",
+      "requires_source": true,
+      "renderer_binding": "render_core.render_stat_counter"
+    },
+    "T7": {
+      "id": "T7",
+      "name": "Chat / message UI",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["example_prompt", "hook"],
+      "avoid_beat_types": [],
+      "min_duration_s": 2.0,
+      "max_duration_s": 6.0,
+      "default_duration_s": 3.5,
+      "params": {
+        "messages": {"type": "array", "default": []},
+        "typing_dots": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "messages appear in bubbles (user prompt, AI reply, typing dots)",
+      "renderer_binding": "render_core.render_chat_ui"
+    },
+    "T8": {
+      "id": "T8",
+      "name": "Callout label / lower-third",
+      "family": "typography",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["definition", "process", "code", "ui_demo"],
+      "avoid_beat_types": [],
+      "min_duration_s": 1.5,
+      "max_duration_s": 5.0,
+      "default_duration_s": 3.0,
+      "params": {
+        "target_xy": {"type": "array", "default": [0, 0]},
+        "label": {"type": "string", "default": ""},
+        "pointer_line": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "small label with arrow or line pointing at key screen element",
+      "renderer_binding": "render_core.render_callout_label"
+    },
+    "E1": {
+      "id": "E1",
+      "name": "Line-draw / whiteboard reveal",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["definition", "analogy"],
+      "avoid_beat_types": ["hook", "comparison"],
+      "min_duration_s": 2.0,
+      "max_duration_s": 6.0,
+      "default_duration_s": 3.5,
+      "params": {
+        "supersample": {"type": "number", "default": 2},
+        "stroke_width": {"type": "number", "default": 4},
+        "draw_duration_ms": {"type": "number", "default": 600}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "strokes draw in supersampled 2x; simple icons/shapes appear as explained",
+      "renderer_binding": "render_core.render_line_draw"
+    },
+    "E2": {
+      "id": "E2",
+      "name": "Diagram build (nodes and arrows)",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["process"],
+      "avoid_beat_types": ["hook", "list_item", "myth_fact"],
+      "min_duration_s": 3.0,
+      "max_duration_s": 12.0,
+      "default_duration_s": 6.0,
+      "params": {
+        "nodes": {"type": "array", "default": []},
+        "edges": {"type": "array", "default": []},
+        "stagger_ms": {"type": "number", "default": 100, "min": 80, "max": 120},
+        "arrow_draw_ms": {"type": "number", "default": 500, "min": 400, "max": 600},
+        "active_glow": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "boxes pop in with stagger 80-120ms, arrows draw 400-600ms, active node glows",
+      "renderer_binding": "render_core.render_diagram_build"
+    },
+    "E3": {
+      "id": "E3",
+      "name": "Split-screen comparison (A vs B)",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["comparison", "myth_fact"],
+      "avoid_beat_types": [],
+      "min_duration_s": 3.0,
+      "max_duration_s": 10.0,
+      "default_duration_s": 5.0,
+      "params": {
+        "left_title": {"type": "string", "default": "Option A"},
+        "right_title": {"type": "string", "default": "Option B"},
+        "rows": {"type": "array", "default": []},
+        "verdict": {"type": "string", "default": ""}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "two panes, mirrored layout, attribute rows revealed in sync, verdict at end",
+      "renderer_binding": "render_core.render_split_comparison"
+    },
+    "E4": {
+      "id": "E4",
+      "name": "Numbered cards (listicle)",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["list_item"],
+      "avoid_beat_types": ["process"],
+      "min_duration_s": 2.0,
+      "max_duration_s": 8.0,
+      "default_duration_s": 4.0,
+      "params": {
+        "step_number": {"type": "number", "default": 1},
+        "title": {"type": "string", "default": ""},
+        "progress_stack": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "large number + short title; card slides in; previous card shrinks to progress stack",
+      "renderer_binding": "render_core.render_numbered_card"
+    },
+    "E5": {
+      "id": "E5",
+      "name": "Chart reveal",
+      "family": "explainer",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["stat"],
+      "avoid_beat_types": ["hook", "opinion"],
+      "min_duration_s": 2.5,
+      "max_duration_s": 8.0,
+      "default_duration_s": 4.5,
+      "params": {
+        "chart_type": {"type": "choice", "default": "bar", "choices": ["bar", "line", "donut"]},
+        "data": {"type": "array", "default": []},
+        "source": {"type": "string", "default": ""}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": 2,
+      "timing_spec": "bars grow or lines draw with key point highlighted; verified numbers only",
+      "requires_source": true,
+      "renderer_binding": "render_core.render_chart_reveal"
+    },
+    "E6": {
+      "id": "E6",
+      "name": "Code view with diff / highlight",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["code"],
+      "avoid_beat_types": [],
+      "min_duration_s": 3.0,
+      "max_duration_s": 10.0,
+      "default_duration_s": 5.0,
+      "params": {
+        "language": {"type": "string", "default": "python"},
+        "snippet": {"type": "string", "default": ""},
+        "highlight_lines": {"type": "array", "default": []},
+        "diff": {"type": "boolean", "default": false},
+        "line_numbers": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "syntax-colored code, lines highlight one at a time, diff in green/red",
+      "renderer_binding": "capture_code.render_code_window"
+    },
+    "E7": {
+      "id": "E7",
+      "name": "Real UI / screen recording with cursor guidance",
+      "family": "explainer",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["ui_demo"],
+      "avoid_beat_types": [],
+      "min_duration_s": 3.0,
+      "max_duration_s": 12.0,
+      "default_duration_s": 6.0,
+      "params": {
+        "recording_path": {"type": "string", "default": ""},
+        "cursor_path": {"type": "array", "default": []},
+        "click_ripple": {"type": "boolean", "default": true},
+        "punch_in_rect": {"type": "array", "default": [0, 0, 100, 100]}
+      },
+      "needs_assets": true,
+      "cost": "high",
+      "max_per_video": null,
+      "timing_spec": "real capture with smooth cursor path, click ripple, and punch-in on active region",
+      "renderer_binding": "tools.capture_ui"
+    },
+    "E8": {
+      "id": "E8",
+      "name": "Search-bar / prompt-box animation",
+      "family": "explainer",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["hook", "example_prompt"],
+      "avoid_beat_types": [],
+      "min_duration_s": 2.0,
+      "max_duration_s": 5.0,
+      "default_duration_s": 3.0,
+      "params": {
+        "placeholder": {"type": "string", "default": "Ask anything..."},
+        "typed_query": {"type": "string", "default": ""}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "search or prompt field with text typed and result appearing",
+      "renderer_binding": "render_core.render_search_bar"
+    },
+    "E9": {
+      "id": "E9",
+      "name": "Timeline / roadmap",
+      "family": "explainer",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["process"],
+      "avoid_beat_types": ["hook"],
+      "min_duration_s": 3.0,
+      "max_duration_s": 10.0,
+      "default_duration_s": 5.0,
+      "params": {
+        "milestones": {"type": "array", "default": []},
+        "orientation": {"type": "choice", "default": "horizontal", "choices": ["horizontal", "vertical"]}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": 1,
+      "timing_spec": "line with milestone nodes lighting up sequentially",
+      "renderer_binding": "render_core.render_timeline"
+    },
+    "E10": {
+      "id": "E10",
+      "name": "Metaphor footage / photo with motion",
+      "family": "explainer",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["analogy", "opinion"],
+      "avoid_beat_types": ["example_prompt"],
+      "min_duration_s": 2.0,
+      "max_duration_s": 6.0,
+      "default_duration_s": 3.5,
+      "params": {
+        "clip_path": {"type": "string", "default": ""},
+        "ken_burns_scale": {"type": "number", "default": 1.05, "min": 1.02, "max": 1.10},
+        "max_total_ratio": {"type": "number", "default": 0.40}
+      },
+      "needs_assets": true,
+      "cost": "medium",
+      "max_per_video": null,
+      "timing_spec": "real/public-domain footage or still with slow push-in; capped at 40% video runtime",
+      "renderer_binding": "real_footage.render_metaphor_clip"
+    },
+    "E11": {
+      "id": "E11",
+      "name": "Abstract AI visuals (token stream, network nodes)",
+      "family": "explainer",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["process", "definition"],
+      "avoid_beat_types": ["ui_demo", "opinion"],
+      "min_duration_s": 2.5,
+      "max_duration_s": 8.0,
+      "default_duration_s": 4.5,
+      "params": {
+        "mode": {"type": "choice", "default": "token_stream", "choices": ["token_stream", "attention_lines", "network_nodes"]},
+        "density": {"type": "choice", "default": "medium", "choices": ["low", "medium", "high"]}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": 2,
+      "timing_spec": "code-drawn particles, attention matrices, nodes, text tokens flowing into box",
+      "renderer_binding": "render_core.render_abstract_tokens"
+    },
+    "C1": {
+      "id": "C1",
+      "name": "Slow push-in (Ken Burns)",
+      "family": "camera",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["all"],
+      "avoid_beat_types": [],
+      "min_duration_s": 1.0,
+      "max_duration_s": 15.0,
+      "default_duration_s": 4.0,
+      "params": {
+        "scale_start": {"type": "number", "default": 1.0},
+        "scale_end": {"type": "number", "default": 1.04, "min": 1.03, "max": 1.06},
+        "drift_amp": {"type": "number", "default": 4.0, "min": 2.0, "max": 8.0}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "continuous 3-6% push-in over scene; satisfies zero-static-hold mandate",
+      "renderer_binding": "render_core.push_in"
+    },
+    "C2": {
+      "id": "C2",
+      "name": "Punch-in on beat",
+      "family": "camera",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["hook", "stat", "payoff"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.15,
+      "max_duration_s": 0.45,
+      "default_duration_s": 0.25,
+      "params": {
+        "scale_delta": {"type": "number", "default": 0.12, "min": 0.08, "max": 0.18},
+        "ease": {"type": "string", "default": "ease_out_cubic"}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "quick 8-15% zoom on key word or claim; max 1 per 5s",
+      "renderer_binding": "render_core.punch_in"
+    },
+    "C3": {
+      "id": "C3",
+      "name": "Slide / push transition",
+      "family": "transition",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["all"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.25,
+      "max_duration_s": 0.45,
+      "default_duration_s": 0.30,
+      "params": {
+        "direction": {"type": "choice", "default": "left", "choices": ["left", "right", "up", "down"]},
+        "motion_blur": {"type": "boolean", "default": true}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "next scene pushes previous along one axis with motion blur on moving layers",
+      "renderer_binding": "render_core.transition_slide"
+    },
+    "C4": {
+      "id": "C4",
+      "name": "Match cut / morph",
+      "family": "transition",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "beat_types": ["comparison", "process"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.30,
+      "max_duration_s": 0.60,
+      "default_duration_s": 0.40,
+      "params": {
+        "shared_object": {"type": "string", "default": "node_card"}
+      },
+      "needs_assets": false,
+      "cost": "high",
+      "max_per_video": 2,
+      "timing_spec": "shape, icon, or card persists across cut into next scene",
+      "renderer_binding": "render_core.transition_morph"
+    },
+    "C5": {
+      "id": "C5",
+      "name": "Glitch / RGB split",
+      "family": "transition",
+      "fit": "rare",
+      "formats": ["short", "long"],
+      "beat_types": ["payoff"],
+      "avoid_beat_types": ["definition", "hook_first_2s"],
+      "min_duration_s": 0.12,
+      "max_duration_s": 0.26,
+      "default_duration_s": 0.18,
+      "params": {
+        "rgb_shift_px": {"type": "number", "default": 6, "min": 2, "max": 12},
+        "duration_frames": {"type": "number", "default": 6, "min": 4, "max": 8}
+      },
+      "needs_assets": false,
+      "cost": "heavy",
+      "max_per_video": 1,
+      "constraints": ["max_1x_per_video", "disallowed_in_first_2s"],
+      "timing_spec": "4-8 frame distortion for climax/punchline; at most once per video",
+      "renderer_binding": "render_core.fx_glitch"
+    },
+    "C6": {
+      "id": "C6",
+      "name": "Screen shake",
+      "family": "camera",
+      "fit": "rare",
+      "formats": ["short", "long"],
+      "beat_types": ["payoff"],
+      "avoid_beat_types": ["hook_first_2s"],
+      "min_duration_s": 0.15,
+      "max_duration_s": 0.35,
+      "default_duration_s": 0.22,
+      "params": {
+        "amplitude_px": {"type": "number", "default": 8, "min": 4, "max": 16},
+        "decay": {"type": "string", "default": "exponential"}
+      },
+      "needs_assets": false,
+      "cost": "heavy",
+      "max_per_video": 1,
+      "constraints": ["max_1x_per_video", "disallowed_in_first_2s"],
+      "timing_spec": "short decaying shake on climax; at most once per video",
+      "renderer_binding": "render_core.fx_shake"
+    },
+    "C7": {
+      "id": "C7",
+      "name": "Stacked split-screen",
+      "family": "camera",
+      "fit": "rare",
+      "formats": ["short", "long"],
+      "beat_types": ["example_prompt"],
+      "avoid_beat_types": [],
+      "min_duration_s": 2.0,
+      "max_duration_s": 6.0,
+      "default_duration_s": 3.5,
+      "params": {
+        "panes": {"type": "number", "default": 2, "min": 2, "max": 3},
+        "divider_width": {"type": "number", "default": 2}
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "max_per_video": 1,
+      "timing_spec": "two or three vertical layers when prompt and output must be seen together",
+      "renderer_binding": "render_core.render_stacked_split"
+    },
+    "C8": {
+      "id": "C8",
+      "name": "J-cut / L-cut",
+      "family": "editorial",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "beat_types": ["all"],
+      "avoid_beat_types": [],
+      "min_duration_s": 0.15,
+      "max_duration_s": 0.45,
+      "default_duration_s": 0.25,
+      "params": {
+        "audio_lead_s": {"type": "number", "default": 0.20, "min": 0.10, "max": 0.35}
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "max_per_video": null,
+      "timing_spec": "audio leads or trails the visual cut smoothly",
+      "renderer_binding": "video_pipeline.apply_j_cut"
+    },
+    "S1": {
+      "id": "S1",
+      "name": "Brand dark (default)",
+      "family": "style",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "params": {
+        "background": [8, 12, 28],
+        "grid_step": 90,
+        "grid_color": [26, 38, 70],
+        "typography": "Inter Display Bold"
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "timing_spec": "dark navy/purple base with TXK logo, 90px blueprint grid",
+      "renderer_binding": "render_core.background_obsidian"
+    },
+    "S2": {
+      "id": "S2",
+      "name": "Light film grain",
+      "family": "style",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "params": {
+        "grain_intensity": 0.025,
+        "warmth": 1.02
+      },
+      "needs_assets": false,
+      "cost": "low",
+      "timing_spec": "subtle 2.5% grain and slight warmth on real-world footage",
+      "renderer_binding": "render_core.apply_grain"
+    },
+    "S3": {
+      "id": "S3",
+      "name": "Liquid glass cards",
+      "family": "style",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "params": {
+        "blur_radius": 16,
+        "border_color": [255, 255, 255, 30]
+      },
+      "needs_assets": false,
+      "cost": "medium",
+      "timing_spec": "translucent frosted cards with subtle depth and 1px borders",
+      "renderer_binding": "render_core.render_glass_card"
+    },
+    "S4": {
+      "id": "S4",
+      "name": "Cutout / paper craft",
+      "family": "style",
+      "fit": "skip",
+      "reason": "Handmade collage feel; high effort in code; does not fit channel.",
+      "needs_assets": false
+    },
+    "S5": {
+      "id": "S5",
+      "name": "Y2K / VHS / chrome",
+      "family": "style",
+      "fit": "skip",
+      "reason": "Ironic nostalgia; clashes with calm, honest engineering explainer tone.",
+      "needs_assets": false
+    },
+    "F1": {
+      "id": "F1",
+      "name": "Hook pattern interrupt",
+      "family": "format",
+      "fit": "core",
+      "formats": ["short", "long"],
+      "timing_spec": "first 1-2s starts mid-action or surprising claim; no initial logo card"
+    },
+    "F2": {
+      "id": "F2",
+      "name": "Seamless loop ending",
+      "family": "format",
+      "fit": "situational",
+      "formats": ["short"],
+      "timing_spec": "last visual or line seamlessly connects back to first beat"
+    },
+    "F3": {
+      "id": "F3",
+      "name": "Vox-style essay",
+      "family": "format",
+      "fit": "core",
+      "formats": ["long"],
+      "timing_spec": "calm voice-over + real footage/screen; info-dense visuals every 8-10s"
+    },
+    "F4": {
+      "id": "F4",
+      "name": "POV scenario",
+      "family": "format",
+      "fit": "situational",
+      "formats": ["short", "long"],
+      "timing_spec": "developer scenario framing (e.g. asking AI for login screen); pairs with T7/E6"
+    },
+    "F5": {
+      "id": "F5",
+      "name": "Brainrot stack",
+      "family": "format",
+      "fit": "skip",
+      "reason": "Clashes with honest, developer-first engineering tone."
+    }
+  }
+}

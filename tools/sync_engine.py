@@ -130,6 +130,11 @@ SYNC_PAIRS = [
         "animation-director"
     ),
     (
+        "agents/skills/animation-library/SKILL.md",
+        "TechXKenil/skills/techxkenil-animation-library/SKILL.md",
+        "animation-library"
+    ),
+    (
         "GEMINI.md",
         "TechXKenil/GEMINI.md",
         "gemini"
@@ -202,6 +207,8 @@ def sanitize_public_to_private(content: str, kind: str) -> str:
         content = content.replace("# Real-World Footage Skill", "# TechXKenil Real-World Footage Skill")
         content = content.replace("creator_footage/", "kenil_footage/")
         content = content.replace("[CREATOR: capture ...]", "[KENIL: capture ...]")
+    elif kind == "animation-library":
+        content = content.replace("name: animation-library", "name: techxkenil-animation-library")
     return content
 
 def sanitize_private_to_public(content: str, kind: str) -> str:
@@ -220,6 +227,8 @@ def sanitize_private_to_public(content: str, kind: str) -> str:
         content = content.replace("# TechXKenil Real-World Footage Skill", "# Real-World Footage Skill")
         content = content.replace("kenil_footage/", "creator_footage/")
         content = content.replace("[KENIL: capture ...]", "[CREATOR: capture ...]")
+    elif kind == "animation-library":
+        content = content.replace("name: techxkenil-animation-library", "name: animation-library")
     return content
 
 def perform_sync(direction: str = "bidirectional"):

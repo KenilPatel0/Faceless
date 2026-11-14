@@ -8,9 +8,13 @@ Implements Part II and Part V (Section 32) of the Animation Intelligence Impleme
 """
 
 import os
+import sys
 import json
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Any, Union, Tuple
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 
 @dataclass
 class ParameterSchema:
@@ -47,6 +51,7 @@ class AnimationRegistry:
         self._entries: Dict[str, AnimationDefinition] = {}
         self._aliases: Dict[str, str] = {}
         self._register_core_mvp_pack()
+        self._register_spec_2026_pack()
 
     def register(self, definition: AnimationDefinition, aliases: Optional[List[str]] = None):
         """Registers a new animation definition."""
@@ -620,6 +625,82 @@ class AnimationRegistry:
             renderer="motion.transition",
             qa_tags=["visual_continuity"]
         ))
+
+    def _register_spec_2026_pack(self):
+        """Loads and registers the 2026 TechXKenil Animation Library specification taxonomy (T1-T8, E1-E11, C1-C8, S1-S5, F1-F5)."""
+        spec_path = os.path.join(REPO_ROOT, "agents", "skills", "animation-library", "registry.json")
+        if not os.path.exists(spec_path):
+            return
+
+        try:
+            with open(spec_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            catalog = data.get("catalog", {})
+        except Exception:
+            return
+
+        spec_to_internal_aliases = {
+            "T1": ["type.karaoke_highlight"],
+            "T2": ["type.phrase_reveal"],
+            "T3": ["type.scale_punch"],
+            "T4": ["type.word_pop"],
+            "T5": ["type.typewriter"],
+            "T6": ["data.stat_counter"],
+            "T8": ["type.lower_third"],
+            "E2": ["diagram.step_reveal"],
+            "E3": ["edit.split_screen"],
+            "E4": ["card.staggered_column"],
+            "E5": ["data.bar_reveal"],
+            "E6": ["ui.code_line_focus"],
+            "C1": ["camera.drift"],
+            "C2": ["camera.punch"],
+            "C3": ["transition.directional_wipe"],
+            "cta": ["brand.outro_cta", "outro_card"]
+        }
+
+        for item_id, item in catalog.items():
+            cost = item.get("cost", "low")
+            complexity = "high" if cost == "heavy" else ("medium" if cost == "medium" else "low")
+            params = item.get("params", {})
+            schema_params = {}
+            if isinstance(params, dict):
+                for p_name, p_val in params.items():
+                    if isinstance(p_val, dict):
+                        schema_params[p_name] = p_val
+                    else:
+                        schema_params[p_name] = {"default": p_val}
+
+            defn = AnimationDefinition(
+                id=item_id,
+                family=item.get("family", "explainer"),
+                name=item.get("name", item_id),
+                description=item.get("timing_spec", "") or item.get("reason", ""),
+                intent_tags=item.get("beat_types", []),
+                content_signals=item.get("formats", []),
+                complexity=complexity,
+                default_intensity=2,
+                duration_seconds={
+                    "min": item.get("min_duration_s", 0.5),
+                    "default": item.get("default_duration_s", 2.0),
+                    "max": item.get("max_duration_s", 10.0)
+                },
+                supports=["scale", "opacity", "position"],
+                parameters=schema_params,
+                requires_assets=item.get("needs_assets", False),
+                audio_sync=["word_timestamp"] if item_id == "T1" else ["sfx_transient"],
+                fallback=None,
+                renderer=item.get("renderer_binding", ""),
+                qa_tags=[item.get("fit", "core")]
+            )
+            aliases = spec_to_internal_aliases.get(item_id, [])
+            self.register(defn, aliases=aliases)
+
+            # Also ensure internal IDs alias back to spec IDs
+            for alias in aliases:
+                self._aliases[alias] = item_id
+
+        # Also register 'outro_card' alias to cta if not present
+        self._aliases["outro_card"] = "cta"
 
 # Global registry instance
 REGISTRY = AnimationRegistry()

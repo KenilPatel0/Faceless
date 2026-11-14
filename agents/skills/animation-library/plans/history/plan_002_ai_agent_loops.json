@@ -1,0 +1,21 @@
+{
+  "brief": {
+    "format": "short",
+    "duration_target_s": 30.0,
+    "topic": "The ReAct Loop Explained",
+    "topic_type": "how_it_works",
+    "audience_level": "beginner",
+    "has_real_assets": false,
+    "style_pack": "S1",
+    "color_accent": "accent_purple"
+  },
+  "assumptions": ["beginner audience"],
+  "beats": [
+    {"id": 1, "t": [0.0, 3.0], "beat_type": "hook", "text": "How do agents think and execute?", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 2, "t": [3.0, 12.0], "beat_type": "process", "text": "Reason, Act, Observe, in continuous cycles.", "primary": "E2", "transition_out": "C3", "captions": "T1"},
+    {"id": 3, "t": [12.0, 20.0], "beat_type": "example_prompt", "text": "Type a query, watch tools trigger automatically.", "primary": "T7", "transition_out": "C3", "captions": "T1"},
+    {"id": 4, "t": [20.0, 26.0], "beat_type": "payoff", "text": "That is how autonomous software works.", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 5, "t": [26.0, 30.0], "beat_type": "cta", "text": "Subscribe for more.", "primary": "outro_card", "captions": "T1"}
+  ],
+  "outro": "master_consistent"
+}

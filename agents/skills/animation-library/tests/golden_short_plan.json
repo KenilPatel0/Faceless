@@ -1,0 +1,81 @@
+{
+  "brief": {
+    "format": "short",
+    "duration_target_s": 30.0,
+    "topic": "AI Agent vs Chatbot",
+    "topic_type": "comparison",
+    "audience_level": "beginner",
+    "has_real_assets": false,
+    "style_pack": "S1",
+    "color_accent": "accent_cyan",
+    "constraints": ["no stats", "30 sec"]
+  },
+  "assumptions": [
+    "beginner audience",
+    "no unverified statistics",
+    "standard intro and outro cards"
+  ],
+  "beats": [
+    {
+      "id": 1,
+      "t": [0.0, 3.0],
+      "beat_type": "hook",
+      "text": "Chatbot or agent: what is the difference?",
+      "primary": "T3",
+      "secondary": ["C2"],
+      "transition_out": "C3",
+      "captions": "T1"
+    },
+    {
+      "id": 2,
+      "t": [3.0, 7.0],
+      "beat_type": "comparison",
+      "text": "A chatbot answers. An agent acts.",
+      "primary": "E3",
+      "secondary": ["T4:answers,acts", "C1"],
+      "transition_out": "C3",
+      "captions": "T1"
+    },
+    {
+      "id": 3,
+      "t": [7.0, 13.0],
+      "beat_type": "process",
+      "text": "An agent loops: think, act, observe.",
+      "primary": "E2",
+      "secondary": ["T8", "C1"],
+      "transition_out": "C4",
+      "captions": "T1"
+    },
+    {
+      "id": 4,
+      "t": [13.0, 19.0],
+      "beat_type": "example_prompt",
+      "text": "Ask: book me a flight.",
+      "primary": "T7",
+      "secondary": ["T5", "C1"],
+      "transition_out": "C3",
+      "captions": "T1"
+    },
+    {
+      "id": 5,
+      "t": [19.0, 24.0],
+      "beat_type": "payoff",
+      "text": "Tools and guardrails make it safe.",
+      "primary": "T3",
+      "secondary": ["C2", "C1"],
+      "transition_out": "C8",
+      "effects": ["C5:once"],
+      "captions": "T1"
+    },
+    {
+      "id": 6,
+      "t": [24.0, 30.0],
+      "beat_type": "cta",
+      "text": "Subscribe to TechXKenil for more deep dives.",
+      "primary": "outro_card",
+      "secondary": ["C1"],
+      "captions": "T1"
+    }
+  ],
+  "outro": "master_consistent"
+}

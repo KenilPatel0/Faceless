@@ -1,0 +1,21 @@
+{
+  "brief": {
+    "format": "short",
+    "duration_target_s": 30.0,
+    "topic": "Why VRAM Bandwidth Dominates LLM Inference",
+    "topic_type": "list",
+    "audience_level": "intermediate",
+    "has_real_assets": false,
+    "style_pack": "S1",
+    "color_accent": "accent_yellow"
+  },
+  "assumptions": ["intermediate hardware enthusiasts"],
+  "beats": [
+    {"id": 1, "t": [0.0, 3.0], "beat_type": "hook", "text": "Why your high compute GPU is waiting on memory.", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 2, "t": [3.0, 10.0], "beat_type": "definition", "text": "Token generation is memory bandwidth bound.", "primary": "E1", "transition_out": "C3", "captions": "T1"},
+    {"id": 3, "t": [10.0, 20.0], "beat_type": "list_item", "text": "Three reasons DDR5 cannot match HBM3 speeds.", "primary": "E4", "transition_out": "C3", "captions": "T1"},
+    {"id": 4, "t": [20.0, 26.0], "beat_type": "payoff", "text": "Choose memory bus width over raw teraflops.", "primary": "T3", "transition_out": "C3", "captions": "T1"},
+    {"id": 5, "t": [26.0, 30.0], "beat_type": "cta", "text": "Subscribe for hardware blueprints.", "primary": "outro_card", "captions": "T1"}
+  ],
+  "outro": "master_consistent"
+}
