@@ -61,6 +61,15 @@ from tools.stickman_director_scenes import (
     render_director_scene_06,
     render_director_scene_07
 )
+from tools.storytelling_scenes import (
+    render_story_library_sprint,
+    render_story_token_slice,
+    render_story_forklift_prefill,
+    render_story_sticky_cache,
+    render_story_memory_mountain,
+    render_story_intern_draft,
+    render_story_relay_outro
+)
 from tools.avatar_engine import AvatarEngine
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
@@ -211,6 +220,37 @@ def prepare_sound_design(raw_wav_path: str, tl_path: str, project_dir: str, targ
             events.append((st + 0.3, "whoosh"))  # Recap
             events.append((st + 4.9, "tick"))    # Mouse click
             events.append((st + 5.2, "chime"))   # Subscribed success
+        elif vtype == "story_library_sprint":
+            events.append((st + 0.8, "tick"))    # writing
+            events.append((st + 2.0, "whoosh"))  # sprint takeoff
+            events.append((st + 3.0, "pop"))     # screeching halt
+            events.append((st + 3.2, "chime"))   # 28ms milestone
+        elif vtype == "story_token_slice":
+            events.append((st + 0.8, "pop"))     # knife chop
+            events.append((st + 1.8, "tick"))    # token puzzle locks
+            events.append((st + 3.5, "chime"))   # 4096-dim vector map
+        elif vtype == "story_forklift_prefill":
+            events.append((st + 0.6, "whoosh"))  # lever pull
+            events.append((st + 1.2, "pop"))     # forklift arm lift
+            events.append((st + 2.5, "chime"))   # 0.2ms prefill lock
+        elif vtype == "story_sticky_cache":
+            events.append((st + 0.5, "tick"))    # panic alarm
+            events.append((st + 1.5, "pop"))     # sticky note snap
+            events.append((st + 4.5, "chime"))   # 85 tok/s savior chime
+        elif vtype == "story_memory_mountain":
+            events.append((st + 0.5, "whoosh"))  # silicon highway
+            events.append((st + 2.0, "tick"))    # boulder groan
+            events.append((st + 4.0, "pop"))     # traffic jam warning
+        elif vtype == "story_intern_draft":
+            events.append((st + 0.5, "whoosh"))  # intern sprint
+            events.append((st + 2.0, "tick"))    # professor stamp
+            events.append((st + 2.5, "chime"))   # approved chime
+            events.append((st + 3.2, "pop"))     # 3x speedup
+        elif vtype == "story_relay_outro":
+            events.append((st + 0.5, "whoosh"))  # relay race
+            events.append((st + 4.5, "tick"))    # dropkick leap
+            events.append((st + 4.7, "pop"))     # subscribe hit
+            events.append((st + 5.0, "chime"))   # confetti chime
         elif vtype in ["code", "terminal"]:
             events.append((st + 0.5, "chime"))
         elif vtype in ["diagram", "split"]:
@@ -370,6 +410,20 @@ def composite_video(
                 render_director_scene_06(canvas, rel_t, dur, cur_scene)
             elif vtype == "outro_conversion":
                 render_director_scene_07(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
+            elif vtype == "story_library_sprint":
+                render_story_library_sprint(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_token_slice":
+                render_story_token_slice(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_forklift_prefill":
+                render_story_forklift_prefill(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_sticky_cache":
+                render_story_sticky_cache(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_memory_mountain":
+                render_story_memory_mountain(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_intern_draft":
+                render_story_intern_draft(canvas, rel_t, dur, cur_scene)
+            elif vtype == "story_relay_outro":
+                render_story_relay_outro(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
             elif vtype == "brand":
                 render_brand_card(canvas, channel_name, tagline, badge, rel_t, logo_img=logo_img)
             elif sid == timeline[-1]["id"] and rel_t > 2.0:
