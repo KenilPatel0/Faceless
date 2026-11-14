@@ -1,6 +1,11 @@
 """QA gate. Usage: python3 qa.py video.mp4 short|long      (exit code 1 = fix before upload)"""
-import re, subprocess, sys
-def run(args): return subprocess.run(["ffmpeg", "-hide_banner", "-nostats"] + args, capture_output=True, text=True).stderr
+import os, re, shutil, subprocess, sys
+
+FFMPEG = shutil.which("ffmpeg") or os.path.expanduser(r"~\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe")
+if not os.path.exists(FFMPEG) and not shutil.which("ffmpeg"):
+    FFMPEG = "ffmpeg"
+
+def run(args): return subprocess.run([FFMPEG, "-hide_banner", "-nostats"] + args, capture_output=True, text=True).stderr
 def decode_errors(p): return len([l for l in run(["-v", "error", "-i", p, "-f", "null", "-"]).splitlines() if l.strip()])
 def loudness(p):
     s = run(["-i", p, "-filter_complex", "ebur128=peak=true", "-f", "null", "-"])

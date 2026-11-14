@@ -60,3 +60,11 @@ Before delivering any video:
 2. Check duration: Short ~30s, Long 8–10 min.
 3. Mastered loudness: Target -14 to -15 LUFS integrated via `master()`.
 4. Inspect contact sheet for clipped text, overlapping elements, or static holds (>4s on Shorts, >9s on Long).
+
+---
+
+## 7. Outro Conversion & Safe Area Clearance
+- **Subscribe Button Transition:** The outro card displays a red `(255, 30, 50)` `"SUBSCRIBE"` pill button. An authentic cursor glides in on a Bezier curve, clicks with a pulse and ripple ring exactly as the narration says "subscribe", and the button converts into emerald green `(35, 195, 110)` `"✓ SUBSCRIBED!"`.
+- **Vertical Clearance:** Content bounds must strictly stay above `y = 915px`, reserving an 80px safe buffer above burned-in captions centered at `y = 1010`.
+- **Harmonic Anti-Freeze Micro-Motion:** Active cards utilize subtle harmonic oscillations (`smooth_float` +/-3.5px) to maintain visual vitality and eliminate static holds.
+

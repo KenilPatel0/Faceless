@@ -49,3 +49,4 @@ Use this template to configure your custom channel branding, persona, design lan
 1. Copy `channel.example.json` to `channel.json` in the root folder.
 2. Edit the values with your channel name, badge, and voice settings.
 3. When using Antigravity or CLI scripts, your channel profile is loaded automatically!
+

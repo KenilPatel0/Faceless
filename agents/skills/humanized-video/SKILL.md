@@ -48,10 +48,13 @@ Script style: first person, contractions, short sentences, one small aside per m
 - **Typing:** code/prompt text types at 8-14 chars/s with uneven rhythm (`typed`).
 - **Transitions:** 0.25-0.40 s, placed on a sentence end; overlap exit and next entrance by ~0.1 s.
 
-## 5. Editing rhythm
+## 5. Editing rhythm & Voice-Visual Synchronization
+- **Strict Voice-Visual Sync:** Never reveal visual elements before the voice introduces them. Every spoken beat MUST have a synchronized visual focal point:
+  - If a beat introduces a concept, enter that specific card.
+  - If a beat expands on an existing point, highlight the active card brightly while softly dimming previous ones.
+  - Never allow "silent beats" where the narration speaks for 10+ seconds over an unchanged screen.
 - **Shorts (30 s):** first visual payoff <= 1.5 s; something visibly changes (new element, zoom step, highlight, cut) every **2-4 s**; no static hold > 4 s; narration ~160-180 wpm (voice at 1.1 is ~174 wpm).
-- **Long (8-10 min):** first 60 s: a change every 5-10 s; after that a small change every 10-20 s (next bullet, highlight, zoom) and a bigger pattern interrupt (new scene type, demo, question, sound change) every 30-60 s; a teaser/open loop about every 90 s; a recap near the end. Don't over-edit calm explanations - shots of 20-40 s are fine **if something moves inside them**.
-- **No static content-area hold > 4 s in shorts, > 9 s in long videos** (QA enforces this).
+- **Long (8-10 min):** a visual progression every 5-15 s; active cards use `smooth_float` harmonic breathing (+/-3.5px) so no scene ever produces a static hold > 9s.
 - **Reveal slightly ahead of the voice:** show each visual 0.1-0.2 s BEFORE the word it illustrates; cut on sentence ends.
 - Keep on-screen words short (2-5 words); the narration carries the sentence.
 
@@ -69,7 +72,7 @@ Use `speak_humanized`: per-sentence speed variation of +/-4% around 1.1, ~5% slo
 - `finish()` adds grain (2-4%) and vignette (12-18%) on export; soft shadows under cards (blur ~20, ~35% alpha); consistent corner radii; max two accent colors per scene; at least two text sizes for hierarchy.
 - Slight card rotation (+/-1 deg) is allowed on "sticker" elements only. Keep text upright.
 - Hand-drawn underline/circle for emphasis (`hand_line`), cursor demos, typing animations, and real screenshots/recordings beat decorative shapes.
-- Layout safety: shorts keep content inside x 90-990, y 220-1500 (brand tag at y 150, captions at y 1560); long keeps content above y 960 (captions at y 1010).
+- Layout safety: shorts keep content inside x 90-990, y 220-1500 (brand tag at y 150, captions at y 1560); long keeps content strictly above y 915 (captions centered at y 1010, ensuring an 80px safe clearance zone).
 - Captions: shorts may use word highlight (`word_timings` + `draw_karaoke`, active word yellow); long videos keep calm small captions without karaoke.
 
 ## 9. Workflow

@@ -61,13 +61,22 @@ This engine supports white-label and multi-creator channel workflows:
 
 ## 6. Intro & Outro Cards
 - **Intro Card:** Ring badge containing channel abbreviation, bold white channel name, accent tagline.
-- **Outro Card:** Channel name, accent tagline, pulsing pill button (`SUBSCRIBE`).
-  - Short outro narration: `"Subscribe to {Channel} for more {Niche}."`
-  - Long outro narration: closing call-to-action played over outro card.
+- **Outro Card & Conversion Sequence:**
+  - Starts with channel name, accent tagline, and red pill button (`SUBSCRIBE` in `(255, 30, 50)`).
+  - An authentic cursor glides in on a Bezier curve and clicks the button at the exact spoken word "subscribe".
+  - Click triggers a scale pulse compression and expanding gold ripple ring.
+  - The button converts into vibrant emerald green `(35, 195, 110)` with `"✓ SUBSCRIBED!"` while the cursor drifts away.
 
 ---
 
-## 7. Production Workflow
+## 7. Motion & Subtitle Safety Rules
+- **Strict Subtitle Clearance:** Subtitles are placed at `y = 1010` (bottom center). The content layer must NEVER exceed `y = 915px`, maintaining an 80px safe clearance zone to eliminate all text overlap.
+- **Continuous Camera Push-In (Anti-Freeze):** Every scene applies `push_in(img, p_scene, amount=0.035, drift_amp=4.0)` to the content layer before rendering subtitles and watermarks. This ensures every pixel moves continuously and passes zero-static-hold QA gates.
+- **Voice-Visual Synchronicity:** Every spoken beat must map to a distinct visual event. Never reveal cards or bars before they are introduced in the narration.
+
+---
+
+## 8. Production Workflow
 1. **Script Adaptation:** Receive topic &rarr; adapt length &rarr; generate beat data.
 2. **Neural TTS:** Generate per-beat audio + duration timeline JSON (`tl.json`).
 3. **Pillow Vector Renderer:** Draw frames with sub-pixel anti-aliasing, pipe raw RGB to `ffmpeg` with audio, render MP4.

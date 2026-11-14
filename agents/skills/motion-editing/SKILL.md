@@ -48,3 +48,30 @@ Snap start/end times to frames (`frame_align`). Hold finished states for >= 0.4 
 ## 5. Rendering performance (1 CPU core)
 - Cache the static background; render only moving layers at 2x; run blur with `auto_samples` only while something moves.
 - Typical cost: a 3.5 s 720x1280 smooth demo renders in about a minute; a 30 s short in a few minutes; an 8-10 min long video in 15-30 min with blur and supersampling (use `S=1` for text-only list scenes if time matters).
+
+## 6. Outro Subscribe-to-Green Conversion Sequence
+The closing call-to-action must be visually synchronized with the spoken word "subscribe":
+1. **Entrance (0.0s – 1.0s):** Channel name, tagline, and Red pill button `(255, 30, 50)` `"SUBSCRIBE"` spring into view.
+2. **Cursor Glide (1.2s – 3.8s):** A sleek system cursor enters from off-screen bottom-right along a smooth quadratic Bezier arc (`bezier_point((1650, 950), (1350, 650), (W/2 + 30, 610), t)`).
+3. **The Click (3.8s – 4.2s):** Exactly as the voice speaks "subscribe", the cursor reaches the button:
+   - Scale pulse compresses to `0.95`, then rebounds to `1.03`.
+   - Expanding gold ripple ring (`(255, 205, 70)`).
+4. **State Transition (4.0s onward):** The pill button morphs into vibrant Emerald Green `(35, 195, 110)` with crisp text `"✓ SUBSCRIBED!"`.
+5. **Cursor Exit:** The cursor smoothly glides away to the lower right, leaving the green subscribed button alive with a gentle harmonic pulse.
+
+## 7. Harmonic Micro-Motion (Anti-Freeze Rule)
+To prevent YouTube QA static hold flags (>4s on Shorts, >9s on Long videos):
+- **Never render a 100% frozen frame:** Even when an explanation is calm, active focal cards or metric badges must maintain gentle harmonic floating:
+  ```python
+  def smooth_float(t, freq=1.4, amp=3.5, phase=0.0):
+      return amp * math.sin(t * freq * 2 * math.pi + phase)
+  ```
+- Apply vertical micro-motion (`+/-3.5px`) to active card containers, stat pills, or key badges. This creates a breathing, premium feel without distracting from readability.
+
+## 8. Strict Clearance & Safe Areas (Zero Text Collisions)
+- **Bottom Caption Reserve:** Subtitles are placed at `y = 1010` (centered) with font size 40 and 5px outline.
+- **Rule:** Content layer bounds must NEVER exceed `y = 915px`. This leaves a permanent minimum **80px clean buffer** above the subtitle band.
+- **Side Panel Alignment:** When rendering dual-column layouts (list + callout panel), dedicate fixed coordinate boundaries:
+  - Left column: `x = 120` to `x = 1140`
+  - Right column: `x = 1200` to `x = 1800`
+- **Never overlap variable fields:** Ensure category badges (`prefix`) and secondary explanations (`side`) have dedicated, non-overlapping `y` coordinates.
