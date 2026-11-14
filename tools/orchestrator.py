@@ -52,6 +52,15 @@ from tools.procedural_scenes import (
     render_speculative_race,
     render_verdict_recap
 )
+from tools.stickman_director_scenes import (
+    render_director_scene_01,
+    render_director_scene_02,
+    render_director_scene_03,
+    render_director_scene_04,
+    render_director_scene_05,
+    render_director_scene_06,
+    render_director_scene_07
+)
 from tools.avatar_engine import AvatarEngine
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
@@ -348,19 +357,19 @@ def composite_video(
 
             # 2. Render Scene Visuals
             if vtype == "hook_stopwatch":
-                render_hook_stopwatch(canvas, rel_t, dur, cur_scene)
+                render_director_scene_01(canvas, rel_t, dur, cur_scene)
             elif vtype == "token_fracture":
-                render_token_fracture(canvas, rel_t, dur, cur_scene)
+                render_director_scene_02(canvas, rel_t, dur, cur_scene)
             elif vtype == "prefill_matrix":
-                render_prefill_matrix(canvas, rel_t, dur, cur_scene)
+                render_director_scene_03(canvas, rel_t, dur, cur_scene)
             elif vtype == "kv_cache_split":
-                render_kv_cache_split(canvas, rel_t, dur, cur_scene)
+                render_director_scene_04(canvas, rel_t, dur, cur_scene)
             elif vtype == "silicon_memory_stream":
-                render_silicon_memory_stream(canvas, rel_t, dur, cur_scene)
+                render_director_scene_05(canvas, rel_t, dur, cur_scene)
             elif vtype == "speculative_race":
-                render_speculative_race(canvas, rel_t, dur, cur_scene)
+                render_director_scene_06(canvas, rel_t, dur, cur_scene)
             elif vtype == "outro_conversion":
-                render_verdict_recap(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
+                render_director_scene_07(canvas, rel_t, dur, cur_scene, logo_img=logo_img)
             elif vtype == "brand":
                 render_brand_card(canvas, channel_name, tagline, badge, rel_t, logo_img=logo_img)
             elif sid == timeline[-1]["id"] and rel_t > 2.0:
