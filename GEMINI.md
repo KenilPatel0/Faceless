@@ -88,11 +88,20 @@ This engine supports white-label and multi-creator channel workflows:
 
 ---
 
-## 8. Workspace Directory Organization
-- `tools/` — Modular production utilities (`channel_config.py`, `generate_metadata.py`, `generate_thumbnail.py`, `capture_ui.py`, `humanize.py`, `motion.py`, `qa.py`).
+## 9. Workspace Directory Organization
+- `tools/` — Modular production utilities (`channel_config.py`, `sync_engine.py`, `generate_metadata.py`, `generate_thumbnail.py`, `capture_ui.py`, `humanize.py`, `motion.py`, `qa.py`).
 - `templates/` — Starter channel profile templates (`channel.example.json`, `channel_profile_template.md`).
 - `agents/skills/` — Autonomous agent skills (`humanized-video`, `motion-editing`, `real-ui`, `youtube-metadata`, `thumbnail-prompt`, etc.).
 - `fonts/` — Typography assets (Inter Display Bold).
 - `media/` — Demo media assets.
 - `VideoFiles/` — Centralized storage for completed video projects and renders.
 - `TechXKenil/` — (Optional / Git-ignored) Private local channel space containing Kenil's channel branding, roadmap, and private rules.
+
+---
+
+## 10. Dual-Space Maintenance & Sync Mandate
+Whenever any improvement is made to video animation, editing rules, audio mastering, or skills:
+1. Update both the **public framework** (`agents/skills/`, `agents/rules/`, `tools/`) and **Kenil's workspace** (`TechXKenil/`).
+2. Run `python tools/sync_engine.py sync` to propagate and adapt enhancements automatically.
+3. Run `python tools/sync_engine.py verify` to guarantee zero private data leaks before committing to GitHub.
+4. Refer to `SYNC_PROTOCOL.md` for complete architecture and privacy invariants.
