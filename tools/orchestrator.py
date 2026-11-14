@@ -39,6 +39,9 @@ from tools.render_core import (
     PROFILES, OverscanCanvas, render_real_asset_frame,
     render_brand_card, render_outro_card, get_font
 )
+from tools.animation_registry import REGISTRY
+from tools.animation_director import AnimationDirector, CreativeBrief
+from tools.animation_timeline import TimelineResolver
 
 def load_project_scenes(project_dir: str) -> List[Dict[str, Any]]:
     """Dynamically imports SCENES from data.py or data.json."""
@@ -364,6 +367,25 @@ def main():
 
     # Stage 1: Load Scenes
     scenes = load_project_scenes(project_dir)
+
+    # Stage 1.5: Story-Aware Animation Planning (Animation Director)
+    print("\n" + "=" * 70)
+    print("🎬 STAGE 1.5: Story-Aware Animation Planning (Animation Director)")
+    print("=" * 70)
+    director = AnimationDirector()
+    aspect_ratio = "9:16" if "vert" in args.format else "16:9"
+    brief = director.parse_brief_from_prompt(
+        prompt=os.path.basename(project_dir).replace("_", " "),
+        default_aspect=aspect_ratio
+    )
+    brief.brand_profile = channel_cfg.get("channel_name", "TechXKenil")
+    animation_plan = director.plan_video(scenes, brief)
+    
+    plan_out_path = os.path.join(project_dir, "animation_plan.json")
+    with open(plan_out_path, "w", encoding="utf-8") as f:
+        json.dump(animation_plan, f, indent=2)
+    print(f"✓ Validated AnimationPlan saved: {plan_out_path}")
+    print(f"  Total planned scenes: {len(animation_plan['scenes'])}")
 
     # Stage 2: TTS Synthesis
     raw_wav, tl_path, dur = synthesize_speech(scenes, channel_cfg, project_dir)

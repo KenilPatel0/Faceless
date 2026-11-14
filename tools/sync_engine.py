@@ -55,8 +55,28 @@ SYNC_PAIRS = [
         "real-world-footage"
     ),
     (
+        "agents/skills/animation-director/SKILL.md",
+        "TechXKenil/skills/techxkenil-animation-director/SKILL.md",
+        "animation-director"
+    ),
+    (
         "agents/rules/video-production-rules.md",
         "TechXKenil/rules/video-production-rules.md",
+        "rules"
+    ),
+    (
+        "agents/rules/animation-selection.md",
+        "TechXKenil/rules/animation-selection.md",
+        "rules"
+    ),
+    (
+        "agents/rules/visual-rhythm.md",
+        "TechXKenil/rules/visual-rhythm.md",
+        "rules"
+    ),
+    (
+        "agents/rules/platform-safe-layout.md",
+        "TechXKenil/rules/platform-safe-layout.md",
         "rules"
     ),
     (

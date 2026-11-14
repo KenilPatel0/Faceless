@@ -103,6 +103,10 @@ This engine supports white-label and multi-creator channel workflows:
 ## 10. Workspace Directory Organization
 - `tools/` — Modular production utilities:
   - `orchestrator.py` — Unified end-to-end studio pipeline runner.
+  - `animation_director.py` — Story-aware motion planner and AnimationPlan generator.
+  - `animation_registry.py` — Declarative catalog of motion graphics techniques and schemas.
+  - `animation_timeline.py` — Rational FPS frame resolver and deterministic state evaluator.
+  - `animation_validator.py` — AnimationPlan QA and motion density validator.
   - `lexicon.py` / `lexicon.json` — Phonetic dictionary and pronunciation normalizer for Kokoro TTS.
   - `subtitle_engine.py` — Syllable-weighted caption and karaoke timing engine.
   - `capture_code.py` — Authentic VS Code and Terminal window renderer (Playwright Chromium).
@@ -114,7 +118,8 @@ This engine supports white-label and multi-creator channel workflows:
   - `real_footage.py` — Stock footage licensing, compliance verification, and tracking.
   - `qa.py` — Automated broadcast loudness and freeze-detection QA gate.
 - `templates/` — Starter channel profile templates (`channel.example.json`, `channel_profile_template.md`).
-- `agents/skills/` — Autonomous agent skills (`real-world-footage`, `humanized-video`, `motion-editing`, `real-ui`, `youtube-metadata`, `thumbnail-prompt`, etc.).
+- `agents/skills/` — Autonomous agent skills (`animation-director`, `real-world-footage`, `humanized-video`, `motion-editing`, `real-ui`, `youtube-metadata`, `thumbnail-prompt`, etc.).
+- `agents/rules/` — Core constraints (`animation-selection.md`, `visual-rhythm.md`, `platform-safe-layout.md`, `video-production-rules.md`).
 - `fonts/` — Typography assets (Inter Display Bold).
 - `media/` — Demo media assets.
 - `VideoFiles/` — Centralized storage for completed video projects and renders.
