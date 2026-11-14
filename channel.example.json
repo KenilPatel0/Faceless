@@ -7,9 +7,10 @@
   "badge": "YCN",
   "experience_years": 3,
   "voice": {
-    "engine": "kokoro-onnx",
-    "voice_id": "am_michael",
-    "speed": 1.1,
+    "engine": "windows-sapi",
+    "voice_id": "Microsoft David Desktop",
+    "speed": 1.0,
+    "rate": 1,
     "lang": "en-us"
   },
   "intro": {

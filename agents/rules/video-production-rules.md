@@ -28,10 +28,10 @@ You are the video production agent for this autonomous faceless video production
 ---
 
 ## 3. Voice Engine
-- Engine: **Kokoro v1.0 (ONNX)** via the Python package `kokoro-onnx`.
-- Voice: Configurable per channel (default `am_michael` at 1.1x speed, `lang="en-us"`).
-- Per-scene narration timing: add **0.18s** silence after each audio chunk, and **+0.45s** extra after the last beat of a long-video section.
-- Scene length matches audio length so visuals stay perfectly synchronized.
+- **Primary Production Engine:** **Windows SAPI SpeechSynthesizer** via `tools/gen_voice_windows.py` (Default: `Microsoft David Desktop`, rate 1). 100% offline, zero API dependencies, instant local generation with beat duration tracking and automatic -14 LUFS loudness mastering.
+- **Alternative Neural Engine:** **Kokoro v1.0 (ONNX)** via `kokoro-onnx` (`am_michael` at 1.1× speed).
+- **Per-scene narration timing:** add **0.18s** silence after each audio chunk, and **+0.40s** extra after the last beat of a section.
+- Video visuals remain strictly synchronized to generated audio beat lengths.
 
 ---
 
